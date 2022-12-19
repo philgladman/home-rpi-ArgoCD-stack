@@ -54,17 +54,13 @@ then run the following command to turn this off to free up port 53 for pihole `s
 
 ## Step 5.) - Fork this git repo
 - Since we will be using ArgoCD to deploy everything, you will need your own repository for Argo to pull its config from.
-- Copy(fork) this repo by by clicking [here](https://github.com/philgladman/home-rpi-ArgoCD-stack/fork)
+- Copy(fork) this repo by clicking [here](https://github.com/philgladman/home-rpi-ArgoCD-stack/fork)
 - Once you have successfully forked this repo, move on to step 6.)
 
 ## Step 6.) - Deploy ArgoCD
 - clone your newly forked git repo locally `git clone https://github.com/<your-github-username>/home-rpi-ArgoCD-stack.git`
 - cd into repo `cd home-rpi-ArgoCD-stack`
-- Lets create a local DNS name for our ArgoCD server, so we can acces the ArgoCD UI by a DNS name vs ip and port number. In my example, I use `argocd.phils-home.com`. You can use anything as this will only be accessible locally.
-- change the `custom.list` file to have your custom DNS name for argocd `sed -i "s|argocd.phils-home.com|<your-local-dns-name-for-argocd>|g" pihole/custom.list`
 - deploy argocd with `kubectl apply -k kustomize/argocd/.`
-- wait for all argocd pods to be up and running `kubectl get pods -n argocd -w`
-- when all pods are up, get ArgoCD admin password `kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 --decode && echo`
 
 ## Step 7.) - Configure samba
 - add a username for the smbuser, this will be the user/pass you will use to access the NAS `echo -n "username" > kustomize/samba/smbcredentials/smbuser`
@@ -77,22 +73,28 @@ then run the following command to turn this off to free up port 53 for pihole `s
 - label master node so pihole container will only run on master node since that is where we want the persistent data to be stored `kubectl label nodes $(hostname) disk=disk1`
 - Create password for pihole (replace `testpassword` with a custom password of your choice) `echo -n "testpassword" > kustomize/pihole/credentials/pihole-pass`
 - Lets create a local DNS name for pihole, argocd, and grafana so we can acces their UI's by a DNS name vs ip and port number. In my example, I use `pihole.phils-home.com`. You can use anything as this will only be accessible locally.
-- change the `custom.list` file as well as the ingress to have your custom DNS name for __pihole__ `sed -i "s|pihole.phils-home.com|<your-local-dns-name-for-pihole>|g" pihole/custom.list && sed -i "s|pihole.phils-home.com|<your-local-dns-name-for-pihole>|g" pihole/pihole-ingress.yaml`
-- change the `custom.list` file to have your custom DNS name for __argocd__ `sed -i "s|argocd.phils-home.com|<your-local-dns-name-for-argocd>|g" pihole/custom.list && sed -i "s|argocd.phils-home.com|<your-local-dns-name-for-argocd>|g" argocd/ingress.yaml`
-- change the `custom.list` file to have your custom DNS name for __grafana__ `sed -i "s|grafana.phils-home.com|<your-local-dns-name-for-grafana>|g" pihole/custom.list && sed -i "s|grafana.phils-home.com|<your-local-dns-name-for-grafana>|g" monitoring/grafana-ingress.yaml`
-- change the `custom.list` file to have the ip address of your nginx ingress controller `sed -i "s|192.168.1.x|$(kubectl get svc -n nginx-ingress nginx-ingress-ingress-nginx-controller -o jsonpath='{.status.loadBalancer.ingress[].ip}')|g" pihole/custom.list`
-- change metallb ipaddress that will be used for by pihole `sed -i "s|192.168.1.x|<your-available-metallb-ip>|g" pihole/pihole-svc.yaml`
-- change timezone in pihole to your local timezone `sed -i "s|America/New_York|<your-local-timezone>|g" pihole/pihole-cm.yaml`
+- change the `custom.list` file as well as the ingress to have your custom DNS name for __pihole__ `sed -i "s|pihole.phils-home.com|<your-local-dns-name-for-pihole>|g" kustomize/pihole/custom.list && sed -i "s|pihole.phils-home.com|<your-local-dns-name-for-pihole>|g" kustomize/pihole/pihole-ingress.yaml`
+- change the `custom.list` file to have your custom DNS name for __argocd__ `sed -i "s|argocd.phils-home.com|<your-local-dns-name-for-argocd>|g" kustomize/pihole/custom.list && sed -i "s|argocd.phils-home.com|<your-local-dns-name-for-argocd>|g" kustomize/argocd/ingress.yaml`
+- change the `custom.list` file to have your custom DNS name for __grafana__ `sed -i "s|grafana.phils-home.com|<your-local-dns-name-for-grafana>|g" kustomize/pihole/custom.list && sed -i "s|grafana.phils-home.com|<your-local-dns-name-for-grafana>|g" kustomize/monitoring/grafana-ingress.yaml`
+- change the `custom.list` file to have the ip address of your nginx ingress controller `sed -i "s|192.168.1.x|$(kubectl get svc -n nginx-ingress nginx-ingress-ingress-nginx-controller -o jsonpath='{.status.loadBalancer.ingress[].ip}')|g" kustomize/pihole/custom.list`
+- change metallb ipaddress that will be used for by pihole `sed -i "s|192.168.1.x|<your-available-metallb-ip>|g" kustomize/pihole/pihole-svc.yaml`
+- change timezone in pihole to your local timezone `sed -i "s|America/New_York|<your-local-timezone>|g" kustomize/pihole/pihole-cm.yaml`
 - copy the `custom.list` file with your pihole custom dns entry over to the `/mnt/pihole/pihole/` dir with this `sudo cp kustomize/pihole/custom.list /mnt/pihole/pihole/`
 
-## Step 9.) - Deploy Apps
+## Step 9.) - Commit changes back to repo
+- first we need to update our argocd files to point to your new repo `export NEW_REPO_URL=<your-new-git-repo-url>` (example = https://github.com/philgladman/home-rpi-ArgoCD-stack.git)
+- `sed -i "s|https://github.com/philgladman/home-rpi-ArgoCD-stack.git|$NEW_REPO_URL|g" kustomize/apps/parent-app/master-app.yaml && sed -i "s|https://github.com/philgladman/home-rpi-ArgoCD-stack.git|$NEW_REPO_URL|g" kustomize/apps/child-apps/ingress-app.yaml && sed -i "s|https://github.com/philgladman/home-rpi-ArgoCD-stack.git|$NEW_REPO_URL|g" kustomize/apps/child-apps/pihole-app.yaml && sed -i "s|https://github.com/philgladman/home-rpi-ArgoCD-stack.git|$NEW_REPO_URL|g" kustomize/apps/child-apps/ingress-app.yaml  && sed -i "s|https://github.com/philgladman/home-rpi-ArgoCD-stack.git|$NEW_REPO_URL|g" kustomize/apps/child-apps/samba-app.yaml`
+- Now that we have made changes to the repo, we need commit and push them back up to github. `git add --all && git commit -m "replacing values in files" && git push`.
+- FYI the passwords and usernames will NOT be be pushed up, as those are being ignored in the .gitignore file.
+
+## Step 10.) - Deploy Apps
 - `kubectl apply -k kustomize/.` 
-- Wait for pod to spin up
-- Now you just need to configure your router or your host to use the ip address of the udp/tcp pihole service as its DNS Server. You can get this ip address by running this command `kubectl get svc -n pihole pihole-dns-udp -o yaml -o jsonpath='{.status.loadBalancer.ingress[].ip}'`
+- Wait for all pods to be up and running. This may take up to 5 minutes
+- Once all pods are up, now you just need to configure your router or your host to use the ip address of the udp/tcp pihole service as its DNS Server. You can get this ip address by running this command `kubectl get svc -n pihole pihole-dns-udp -o yaml -o jsonpath='{.status.loadBalancer.ingress[].ip}'`
 - Once you have updated your DNS on your host to point to pihole, you should be able to access your pihole by this custom DNS name, without having to port forward
 - In your browser, connect to your pihole custome DNS name (ex = `pihole.phils-home.com/admin`) and login.
 - Pihole is up and running! Dont forget to configure your router or host to use pihole as its DNS Server.
 
 ## MISC
-- Get Grafana password `kubectl get secret --namespace monitoring loki-stack-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo`
-- Get ArgoCD password `kubectl get secret --namespace argocd argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 --decode ; echo`
+- Grafana username=`admin` & password=`kubectl get secret --namespace monitoring loki-stack-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo`
+- ArgoCD username=`admin` & password=`kubectl get secret --namespace argocd argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 --decode ; echo`

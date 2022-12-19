@@ -12,7 +12,6 @@ Deploy Grafana, Loki, Promtail, NAS, pihole, and wireguard via GitOps(ArgoCD) on
 - If you already have a Raspberry pi configured with K3s, MetalLb, and Nginx ingress, please move on to [Step 1.)](README.md#step-1---setup-external-drive-for-nas)
 
 
-# NAS
 ## Step 1.) - Setup external drive for NAS
 - now that the Raspberry pi is up and running with K3s, lets prepare the external drive
 - Plug in external drive to rpi.

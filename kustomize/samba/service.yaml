@@ -1,0 +1,36 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: samba
+  name: samba
+spec:
+  ports:
+  - port: 139
+    protocol: TCP
+    targetPort: 139
+    name: smb-139
+  - port: 445
+    protocol: TCP
+    targetPort: 445
+    name: smb-445
+  selector:
+    app: samba
+  type: ClusterIP
+---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   labels:
+#     app: samba-svc-2
+#   name: samba-svc-2
+# spec:
+#   ports:
+#   - port: 445
+#     protocol: TCP
+#     targetPort: 445
+#     name: smb-445
+#   selector:
+#     app: samba
+#   type: ClusterIP

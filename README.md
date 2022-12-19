@@ -71,17 +71,18 @@ then run the following command to turn this off to free up port 53 for pihole `s
 - `sudo mkdir -p /mnt/pihole/pihole`
 - `sudo mkdir -p /mnt/pihole/dnsmasq.d`
 - label master node so pihole container will only run on master node since that is where we want the persistent data to be stored `kubectl label nodes $(hostname) disk=disk1`
-- Create password for pihole (replace `testpassword` with a custom password of your choice) `echo -n "testpassword" > kustomize/pihole/pihole-pass`
+- Create password for pihole (replace `testpassword` with a custom password of your choice) `echo -n "testpassword" > kustomize/pihole/credentials/pihole-pass`
 - Lets create a local DNS name for pihole, argocd, and grafana so we can acces their UI's by a DNS name vs ip and port number. In my example, I use `pihole.phils-home.com`. You can use anything as this will only be accessible locally.
 - change the `custom.list` file as well as the ingress to have your custom DNS name for __pihole__ `sed -i "s|pihole.phils-home.com|<your-local-dns-name-for-pihole>|g" pihole/custom.list && sed -i "s|pihole.phils-home.com|<your-local-dns-name-for-pihole>|g" pihole/pihole-ingress.yaml`
 - change the `custom.list` file to have your custom DNS name for __argocd__ `sed -i "s|argocd.phils-home.com|<your-local-dns-name-for-argocd>|g" pihole/custom.list && sed -i "s|argocd.phils-home.com|<your-local-dns-name-for-argocd>|g" argocd/ingress.yaml`
 - change the `custom.list` file to have your custom DNS name for __grafana__ `sed -i "s|grafana.phils-home.com|<your-local-dns-name-for-grafana>|g" pihole/custom.list && sed -i "s|grafana.phils-home.com|<your-local-dns-name-for-grafana>|g" monitoring/grafana-ingress.yaml`
 - change the `custom.list` file to have the ip address of your nginx ingress controller `sed -i "s|192.168.1.x|$(kubectl get svc -n nginx-ingress nginx-ingress-ingress-nginx-controller -o jsonpath='{.status.loadBalancer.ingress[].ip}')|g" pihole/custom.list`
-- change pihole ingress name to your pihole custom DNS name `sed -i "s|pihole.phils-home.com|<your-local-dns-name-for-pihole>|g" pihole/pihole-ingress.yaml`
 - change metallb ipaddress that will be used for by pihole `sed -i "s|192.168.1.x|<your-available-metallb-ip>|g" pihole/pihole-svc.yaml`
 - change timezone in pihole to your local timezone `sed -i "s|America/New_York|<your-local-timezone>|g" pihole/pihole-cm.yaml`
-- copy the `custom.list` file with your pihole custom dns entry over to the `/mnt/pihole/pihole/` dir with this `sudo cp pihole/custom.list /mnt/pihole/pihole/`
-- Deploy pihole `kubectl apply -k .` 
+- copy the `custom.list` file with your pihole custom dns entry over to the `/mnt/pihole/pihole/` dir with this `sudo cp kustomize/pihole/custom.list /mnt/pihole/pihole/`
+
+## Deploy Apps
+- `kubectl apply -k kustomize/.` 
 - Wait for pod to spin up
 - Now you just need to configure your router or your host to use the ip address of the udp/tcp pihole service as its DNS Server. You can get this ip address by running this command `kubectl get svc -n pihole pihole-dns-udp -o yaml -o jsonpath='{.status.loadBalancer.ingress[].ip}'`
 - Once you have updated your DNS on your host to point to pihole, you should be able to access your pihole by this custom DNS name, without having to port forward

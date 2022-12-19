@@ -19,5 +19,3 @@ spec:
             name: argocd-server  
             port:
               name: http
-
-

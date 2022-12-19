@@ -4,16 +4,20 @@ metadata:
   name: argocd-ui-ingress
   namespace: argocd
   annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
 spec:
   ingressClassName: nginx
   rules:
   - host: argocd.phils-home.com
     http:
       paths:
-      - pathType: Prefix
-        path: "/"
+      - path: /
+        pathType: Prefix
         backend:
           service:
-             name: argocd-server  
-             port:
-               number: 8080
+            name: argocd-server  
+            port:
+              name: http
+
+

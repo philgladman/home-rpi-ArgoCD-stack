@@ -14,6 +14,6 @@ spec:
         path: "/"
         backend:
           service:
-             name: loki-stack-grafana  
-             port:
-               number: 3000
+            name: loki-stack-grafana  
+            port:
+              number: 3000

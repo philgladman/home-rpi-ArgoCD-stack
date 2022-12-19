@@ -178,10 +178,9 @@ ingress-nginx:
 
     # -- Additional command line arguments to pass to nginx-ingress-controller
     # E.g. to specify the default SSL certificate you can use
-    extraArgs:
+    extraArgs: {}
     ## extraArgs:
     ##   default-ssl-certificate: "<namespace>/<secret_name>"
-      enable-ssl-passthrough: true
 
     # -- Additional environment variables to set
     extraEnvs: []

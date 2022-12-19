@@ -14,6 +14,6 @@ spec:
         path: "/admin"
         backend:
           service:
-             name: pihole-ui-svc  
-             port:
-               number: 8082
+            name: pihole-ui-svc  
+            port:
+              number: 8082

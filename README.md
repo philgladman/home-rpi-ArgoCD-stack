@@ -1,5 +1,5 @@
 # home-rpi-ArgoCD-stack
-Deploy Grafana, Loki, Promtail, NAS, pihole, and wireguard on a Raspberry Pi K3s Cluster
+Deploy Grafana, Loki, Promtail, NAS, pihole, and wireguard via GitOps(ArgoCD) on a Raspberry Pi K3s Cluster
 
 ## Prereq Steps
 ### Raspberry Pi Setup

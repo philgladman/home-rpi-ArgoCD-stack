@@ -54,30 +54,28 @@ then run the following command to turn this off to free up port 53 for pihole `s
 - label master node so samba container will only run on master node since it has the external drive connected `kubectl label nodes $(hostname) disk=disk1`
 
 ## Step 5.) - Deploy ArgoCD
-- clone git repo `git clone https://github.com/philgladman/home-rpi-NAS.git`
-- cd into repo `cd home-rpi-NAS`
+- clone git repo `git clone https://github.com/philgladman/home-rpi-ArgoCD-stack.git`
+- cd into repo `cd home-rpi-ArgoCD-stack`
+- Lets create a local DNS name for our ArgoCD server, so we can acces the ArgoCD UI by a DNS name vs ip and port number. In my example, I use `argocd.phils-home.com`. You can use anything as this will only be accessible locally.
+- change the `custom.list` file to have your custom DNS name for argocd `sed -i "s|argocd.phils-home.com|<your-local-dns-name-for-argocd>|g" pihole/custom.list`
 - deploy argocd with `kubectl apply -k kustomize/argocd/.`
 - wait for all argocd pods to be up and running `kubectl get pods -n argocd -w`
 - when all pods are up, get ArgoCD admin password `kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 --decode && echo`
-- port forward ArgoCD service `kubectl port-forward svc/argocd-server 8080:8080 -n argocd`
-- login to argocd `localhost:8080`, sign in with user=admin and password that you just retrieved
-- keep this tab open as you deploy the Apps in the next step
 
 ## Configure samba
 - add a username for the smbuser, this will be the user/pass you will use to access the NAS `echo -n "username" > kustomize/samba/smbcredentials/smbuser`
 - add a password for smbuser `echo -n "testpassword" > kustomize/samba/smbcredentials/smbpass`
-- deploy apps `kubectl apply -k kustomize/.` This will deploy a Master App, a Samba App, and a Nginx Ingress App.
 
 ## Configure pihole
 - Create the directories below on the master node in order to persist our pihole data.
 - `sudo mkdir -p /mnt/pihole/pihole`
 - `sudo mkdir -p /mnt/pihole/dnsmasq.d`
 - label master node so pihole container will only run on master node since that is where we want the persistent data to be stored `kubectl label nodes $(hostname) disk=disk1`
-- clone this repo `git clone https://github.com/philgladman/home-rpi-pihole.git`
-- cd into repo `cd home-rpi-pihole`
-- Create password for pihole (replace `testpassword` with a custom password of your choice) `echo -n "testpassword" > pihole/pihole-pass`
-- Lets create a local DNS name for our pihole server, so we can acces the pihole UI by a DNS name vs ip and port number. In my example, I use `pihole.phils-home.com`. You can use anything as this will only be accessible locally.
-- change the `custom.list` file to have your custom DNS name for pihole `sed -i "s|pihole.phils-home.com|<your-local-dns-name-for-pihole>|g" pihole/custom.list`
+- Create password for pihole (replace `testpassword` with a custom password of your choice) `echo -n "testpassword" > kustomize/pihole/pihole-pass`
+- Lets create a local DNS name for pihole, argocd, and grafana so we can acces their UI's by a DNS name vs ip and port number. In my example, I use `pihole.phils-home.com`. You can use anything as this will only be accessible locally.
+- change the `custom.list` file as well as the ingress to have your custom DNS name for __pihole__ `sed -i "s|pihole.phils-home.com|<your-local-dns-name-for-pihole>|g" pihole/custom.list && sed -i "s|pihole.phils-home.com|<your-local-dns-name-for-pihole>|g" pihole/pihole-ingress.yaml`
+- change the `custom.list` file to have your custom DNS name for __argocd__ `sed -i "s|argocd.phils-home.com|<your-local-dns-name-for-argocd>|g" pihole/custom.list && sed -i "s|argocd.phils-home.com|<your-local-dns-name-for-argocd>|g" argocd/ingress.yaml`
+- change the `custom.list` file to have your custom DNS name for __grafana__ `sed -i "s|grafana.phils-home.com|<your-local-dns-name-for-grafana>|g" pihole/custom.list && sed -i "s|grafana.phils-home.com|<your-local-dns-name-for-grafana>|g" monitoring/grafana-ingress.yaml`
 - change the `custom.list` file to have the ip address of your nginx ingress controller `sed -i "s|192.168.1.x|$(kubectl get svc -n nginx-ingress nginx-ingress-ingress-nginx-controller -o jsonpath='{.status.loadBalancer.ingress[].ip}')|g" pihole/custom.list`
 - change pihole ingress name to your pihole custom DNS name `sed -i "s|pihole.phils-home.com|<your-local-dns-name-for-pihole>|g" pihole/pihole-ingress.yaml`
 - change metallb ipaddress that will be used for by pihole `sed -i "s|192.168.1.x|<your-available-metallb-ip>|g" pihole/pihole-svc.yaml`

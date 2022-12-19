@@ -52,8 +52,13 @@ then run the following command to turn this off to free up port 53 for pihole `s
 ## Step 4.) - Label Master node
 - label master node so samba container will only run on master node since it has the external drive connected `kubectl label nodes $(hostname) disk=disk1`
 
-## Step 5.) - Deploy ArgoCD
-- clone git repo `git clone https://github.com/philgladman/home-rpi-ArgoCD-stack.git`
+## Step 5.) - Fork this git repo
+- Since we will be using ArgoCD to deploy everything, you will need your own repository for Argo to pull its config from.
+- Copy(fork) this repo by by clicking [here](https://github.com/philgladman/home-rpi-ArgoCD-stack/fork)
+- Once you have successfully forked this repo, move on to step 6.)
+
+## Step 6.) - Deploy ArgoCD
+- clone your newly forked git repo locally `git clone https://github.com/<your-github-username>/home-rpi-ArgoCD-stack.git`
 - cd into repo `cd home-rpi-ArgoCD-stack`
 - Lets create a local DNS name for our ArgoCD server, so we can acces the ArgoCD UI by a DNS name vs ip and port number. In my example, I use `argocd.phils-home.com`. You can use anything as this will only be accessible locally.
 - change the `custom.list` file to have your custom DNS name for argocd `sed -i "s|argocd.phils-home.com|<your-local-dns-name-for-argocd>|g" pihole/custom.list`
@@ -61,11 +66,11 @@ then run the following command to turn this off to free up port 53 for pihole `s
 - wait for all argocd pods to be up and running `kubectl get pods -n argocd -w`
 - when all pods are up, get ArgoCD admin password `kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 --decode && echo`
 
-## Step 6.) - Configure samba
+## Step 7.) - Configure samba
 - add a username for the smbuser, this will be the user/pass you will use to access the NAS `echo -n "username" > kustomize/samba/smbcredentials/smbuser`
 - add a password for smbuser `echo -n "testpassword" > kustomize/samba/smbcredentials/smbpass`
 
-## Step 7.) - Configure pihole
+## Step 8.) - Configure pihole
 - Create the directories below on the master node in order to persist our pihole data.
 - `sudo mkdir -p /mnt/pihole/pihole`
 - `sudo mkdir -p /mnt/pihole/dnsmasq.d`
@@ -80,7 +85,7 @@ then run the following command to turn this off to free up port 53 for pihole `s
 - change timezone in pihole to your local timezone `sed -i "s|America/New_York|<your-local-timezone>|g" pihole/pihole-cm.yaml`
 - copy the `custom.list` file with your pihole custom dns entry over to the `/mnt/pihole/pihole/` dir with this `sudo cp kustomize/pihole/custom.list /mnt/pihole/pihole/`
 
-## Step 8.) - Deploy Apps
+## Step 9.) - Deploy Apps
 - `kubectl apply -k kustomize/.` 
 - Wait for pod to spin up
 - Now you just need to configure your router or your host to use the ip address of the udp/tcp pihole service as its DNS Server. You can get this ip address by running this command `kubectl get svc -n pihole pihole-dns-udp -o yaml -o jsonpath='{.status.loadBalancer.ingress[].ip}'`

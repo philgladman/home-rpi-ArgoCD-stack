@@ -5,7 +5,7 @@ metadata:
 spec:
   accessModes:
   - ReadWriteOnce
-  storageClassName: pihole-storage
   resources:
     requests:
       storage: 5Gi
+  volumeName: pihole-pihole-pv

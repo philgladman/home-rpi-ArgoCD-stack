@@ -7,15 +7,14 @@ spec:
     storage: 1Gi
   accessModes:
   - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: pihole-storage
-  local:
-    path: /mnt/pihole/dnsmasq.d
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-        - matchExpressions:
-          - key: disk
-            operator: In
-            values:
-            - disk1  
+  persistentVolumeReclaimPolicy: Delete
+  mountOptions:
+    - nfsvers=4.1
+  csi:
+    driver: nfs.csi.k8s.io
+    readOnly: false
+    volumeHandle: unique-volumeid  # make sure it's a unique id in the cluster
+    volumeAttributes:
+      server: 10.43.184.230
+      # server: nfs-server.default.svc.cluster.local
+      share: /pihole

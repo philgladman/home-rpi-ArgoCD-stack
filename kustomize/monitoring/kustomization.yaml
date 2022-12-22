@@ -5,5 +5,9 @@ namespace: monitoring
 
 resources:
   - namespace.yaml
-  - release.yaml
+  - grafana-pv.yaml
+  - release2.yaml
   - grafana-ingress.yaml
+
+patches:
+  - path: grafana-pvc-patch.yaml

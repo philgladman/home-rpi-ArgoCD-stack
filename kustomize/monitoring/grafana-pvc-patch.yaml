@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: loki-stack-grafana
+spec:
+  volumeName: grafana-pv
+  storageClassName: ""

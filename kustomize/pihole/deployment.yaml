@@ -78,5 +78,3 @@ spec:
           persistentVolumeClaim:
             claimName: pihole-dnsmasq-claim
          ## path: /mnt/pihole/dnsmasq.d
-      nodeSelector:
-        disk: disk1

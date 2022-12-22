@@ -39,6 +39,6 @@ spec:
       volumes:
         - name: samba-persistent-storage
           persistentVolumeClaim:
-            claimName: my-claim
+            claimName: samba-claim
       nodeSelector:
         disk: disk1

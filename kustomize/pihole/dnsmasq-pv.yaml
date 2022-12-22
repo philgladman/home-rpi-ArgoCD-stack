@@ -17,4 +17,4 @@ spec:
     volumeAttributes:
       server: 10.43.184.230
       # server: nfs-server.default.svc.cluster.local
-      share: /pihole
+      share: /

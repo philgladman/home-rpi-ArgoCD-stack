@@ -10,8 +10,8 @@ namespace: pihole
 
 resources:
   - deployment.yaml
-  - dnsmasq-pv.yaml
-  - dnsmasq-pvc.yaml
+  # - dnsmasq-pv.yaml
+  # - dnsmasq-pvc.yaml
   - pihole-cm.yaml
   - pihole-ingress.yaml
   # - pihole-ns.yaml

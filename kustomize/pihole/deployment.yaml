@@ -41,8 +41,10 @@ spec:
         volumeMounts:
           - name: pihole
             mountPath: /etc/pihole
-          # - name: dnsmasq
-          #   mountPath: /etc/dnsmasq.d
+            subPath: pihole
+          - name: pihole
+            mountPath: /etc/dnsmasq.d
+            subPath: dnsmasq.d
       - name: cloudflare-proxy-dns
         image: docker.io/cloudflare/cloudflared:latest
         args: 
@@ -72,9 +74,9 @@ spec:
       volumes:
         - name: pihole
           persistentVolumeClaim:
-            claimName: pihole-pihole-claim
+            claimName: pihole-claim
          ## path: /mnt/pihole/pihole
         # - name: dnsmasq
         #   persistentVolumeClaim:
         #     claimName: pihole-dnsmasq-claim
-        #  ## path: /mnt/pihole/dnsmasq.d
+         ## path: /mnt/pihole/dnsmasq.d

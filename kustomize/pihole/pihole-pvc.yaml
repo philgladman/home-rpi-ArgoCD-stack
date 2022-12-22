@@ -9,3 +9,4 @@ spec:
     requests:
       storage: 5Gi
   volumeName: pihole-pihole-pv
+  storageClassName: ""

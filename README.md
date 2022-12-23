@@ -78,10 +78,6 @@ then run the following command to turn this off to free up port 53 for pihole `s
 - add a password for smbuser `echo -n "testpassword" > kustomize/samba/smbcredentials/smbpass`
 
 ## Step 9.) - Configure pihole
-- Create the directories below on the master node in order to persist our pihole data.
-- `sudo mkdir -p /mnt/pihole/pihole`
-- `sudo mkdir -p /mnt/pihole/dnsmasq.d`
-- label master node so pihole container will only run on master node since that is where we want the persistent data to be stored `kubectl label nodes $(hostname) disk=disk1`
 - Create password for pihole (replace `testpassword` with a custom password of your choice) `echo -n "testpassword" > kustomize/pihole/credentials/pihole-pass`
 - Lets create a local DNS name for pihole, argocd, and grafana so we can acces their UI's by a DNS name vs ip and port number. In my example, I use `pihole.phils-home.com`. You can use anything as this will only be accessible locally.
 - change the `custom.list` file as well as the ingress to have your custom DNS name for __pihole__ `sed -i "s|pihole.phils-home.com|<your-local-dns-name-for-pihole>|g" kustomize/pihole/custom.list && sed -i "s|pihole.phils-home.com|<your-local-dns-name-for-pihole>|g" kustomize/pihole/pihole-ingress.yaml`

@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: wireguard
+
+resources:
+  - wireguard-ns.yaml
+  - wireguard-cm.yaml
+  - storageclass.yaml
+  - wireguard-pv.yaml
+  - wireguard-pvc.yaml
+  - deployment.yaml
+  - wireguard-svc.yaml
+
+

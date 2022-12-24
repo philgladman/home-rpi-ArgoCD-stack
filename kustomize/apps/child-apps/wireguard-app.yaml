@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: wireguard-app
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/philgladman/home-rpi-ArgoCD-stack.git
+    targetRevision: nfs-server
+    path: kustomize/wireguard
+  destination: 
+    server: https://kubernetes.default.svc
+    namespace: myapp
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true

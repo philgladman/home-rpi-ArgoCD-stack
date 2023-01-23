@@ -30,13 +30,13 @@ Deploy Grafana, Loki, Promtail, NAS, NFS Server, pihole, and wireguard via GitOp
 
 ## Step 2.) - Mount volume for NAS and for NFS Server
 - Run the following on the master node
-- create directory to mount drives to `sudo mkdir /NAS-volume && sudo mkdir /nfs-vol`
+- create directory to mount drives to `sudo mkdir /nas-vol && sudo mkdir /nfs-vol`
 - create smbusers group for NAS volume `sudo groupadd smbusers -g 1010`
-- change group ownership for NAS volume `sudo chown root:smbusers -R /NAS-volume`
-- change directory permissions NAS volume `sudo chmod 770 -R /NAS-volume`
+- change group ownership for NAS volume `sudo chown root:smbusers -R /nas-vol`
+- change directory permissions NAS volume `sudo chmod 770 -R /nas-vol`
 - To make mount perisistent, edit /etc/fstab file with the following command `sudo vim /etc/fstab/` and add the following to the bottom of the existing mounts.
 ```bash
-/dev/sda1 /NAS-volume ext4 defaults 0 2
+/dev/sda1 /nas-vol ext4 defaults 0 2
 /dev/sdb1 /nfs-vol ext4 defaults 0 2
 ```
 - mount the drives `sudo mount -a`

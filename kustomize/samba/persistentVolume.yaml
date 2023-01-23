@@ -10,7 +10,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: my-local-storage
   local:
-    path: /NAS-volume
+    path: /nas-vol
   nodeAffinity:
     required:
       nodeSelectorTerms:

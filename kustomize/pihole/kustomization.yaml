@@ -14,4 +14,4 @@ resources:
   - pihole-ingress.yaml
   - pihole-pv.yaml
   - pihole-pvc.yaml
-  - pihole-svc.yaml
+  # - pihole-svc.yaml

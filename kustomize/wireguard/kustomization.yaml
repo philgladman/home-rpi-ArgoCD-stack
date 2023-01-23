@@ -10,6 +10,6 @@ resources:
   - wireguard-pv.yaml
   - wireguard-pvc.yaml
   - deployment.yaml
-  - wireguard-svc.yaml
+  # - wireguard-svc.yaml
 
 

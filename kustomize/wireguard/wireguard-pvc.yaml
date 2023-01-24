@@ -22,5 +22,5 @@ spec:
     requests:
       storage: 5Gi
   volumeName: wireguard-lib-modules-pv
-  storageClassName: my-local-storage
+  storageClassName: wireguard-local-storage
 

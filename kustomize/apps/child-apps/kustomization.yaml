@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: argocd
 
 resources:
-  - samba-app.yaml
+  # - samba-app.yaml
   - nfs-app.yaml
   - ingress-app.yaml
   - pihole-app.yaml

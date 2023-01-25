@@ -5,8 +5,8 @@ namespace: argocd
 
 resources:
   - samba-app.yaml
-  # - nfs-app.yaml
+  - nfs-app.yaml
   - ingress-app.yaml
-  # - pihole-app.yaml
-  # - monitoring-app.yaml
-  # - wireguard-app.yaml
+  - pihole-app.yaml
+  - monitoring-app.yaml
+  - wireguard-app.yaml

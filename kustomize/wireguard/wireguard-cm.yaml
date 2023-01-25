@@ -6,7 +6,7 @@ data:
   PUID: "1000"
   PGID: "1000"
   TZ: "NewYork/America"
-  SERVERURL: "this-is-a-test.mywire.org"
+  # SERVERURL: "this-is-a-test.mywire.org"
   SERVERPORT: "51820"
   PEERS: "philiphone,philmacbook"
   PEERDNS: "10.43.0.30"

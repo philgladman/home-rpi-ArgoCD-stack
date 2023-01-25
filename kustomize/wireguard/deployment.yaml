@@ -21,7 +21,7 @@ spec:
         - configMapRef:
             name: wireguard-configmap 
         env:
-          - name: SERVERURL:
+          - name: SERVERURL
             valueFrom:
               secretKeyRef:
                 name: wireguard-url

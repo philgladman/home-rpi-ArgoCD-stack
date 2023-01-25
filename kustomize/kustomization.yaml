@@ -4,4 +4,5 @@ kind: Kustomization
 resources:
   - samba/smbcredentials/
   - pihole/credentials/
+  - wireguard/wireguard-url/
   - apps/

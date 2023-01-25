@@ -6,8 +6,7 @@ metadata:
   name: wireguard
 spec:
   ports:
-  - port: 51821
-  ## Change back to 51820
+  - port: 51820
     protocol: UDP
     targetPort: 51820
     name: wireguard-udp

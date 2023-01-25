@@ -20,11 +20,12 @@ spec:
         envFrom:
         - configMapRef:
             name: wireguard-configmap 
-        - name: SERVERURL
-          valueFrom:
-            secretKeyRef:
-              name: wireguard-url
-              key: host-url        
+        env:
+          - name: SERVERURL:
+            valueFrom:
+              secretKeyRef:
+                name: wireguard-url
+                key: host-url     
         securityContext:
           privileged: true
           capabilities:

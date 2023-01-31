@@ -3,7 +3,12 @@ kind: Kustomization
 
 namespace: samba
 
+generatorOptions:
+  disableNameSuffixHash: true
+
 resources:
+  - smbcredentials.enc.yaml
+  - namespace.yaml
   - storageClass.yaml
   - persistentVolume.yaml
   - persistentVolumeClaim.yaml

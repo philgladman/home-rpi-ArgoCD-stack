@@ -24,8 +24,8 @@ spec:
           - name: SERVERURL
             valueFrom:
               secretKeyRef:
-                name: wireguard-url
-                key: host-url     
+                name: host-url
+                key: url    
         securityContext:
           privileged: true
           capabilities:

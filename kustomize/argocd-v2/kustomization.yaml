@@ -5,5 +5,5 @@ namespace: argocd
 
 resources:
   - argocd-ns.yaml
-  - release2.yaml
+  - release3.yaml
   - ingress.yaml

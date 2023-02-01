@@ -1,9 +1,41 @@
 apiVersion: v1
 data:
-    username: testuser
-    password: testpass
+    username: ENC[AES256_GCM,data:PqgP7NGCC7g=,iv:f0fcooWnSpsy3L50Fl0YO3frJJh0tp3reRP548auwsQ=,tag:v08QOFlekEszUoWfkM9qbA==,type:str]
+    password: ENC[AES256_GCM,data:bBSOu9G6J3Q=,iv:USuATM4cXeLIwSy/Qm2u6KPRDZWkRDQ8mZAnUuc4uOQ=,tag:InelO4Bjy5SJljl9SZlAeQ==,type:str]
 kind: Secret
 metadata:
     name: test1
     namespace: samba
     kustomize.config.k8s.io/behavior: replace
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2023-02-01T19:45:56Z"
+    mac: ENC[AES256_GCM,data:+I2yUHy7f19HH9piWO0H2CmgkwCnEXD2ydNJROGGeMdEZ4B7AFcKtBLOJPHcWsCq5aQZthgUVg524SzwXEO8E41NJx9UXb8qUCMyiWllL8yrNs53KEvxJRYUECG55apVQWYKXI9N1ns5i5KXdsauh7wijVXQtZaNtD7osYO72PY=,iv:7IqAVoE2E+xe9/67AQVVC1lzf8LEfJ+5Re+Y0l5oE80=,tag:KgPqUijHm+5C7HunhTSzgg==,type:str]
+    pgp:
+        - created_at: "2023-02-01T19:45:56Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQIMA13jbxIEUYaBAQ/+JvbuOGXU4s5abir5RdM9/yfIzEieMHpDSkgKi/GsArJy
+            dUxTlTC5uz1jjK/il76DSyDkt705Eny42wOv0Ef50/OpDSSOZfQiLO/s4mn8RIEZ
+            CTaI4vCSAXq44iaQXSoqRdeGiLmVcYEUeTBap3iwyx/o0DBb4kNCa6surlTMYu0i
+            UnDZbk3bsuvVzKBgph/n2sh5JBOrExIPvRrHMKltB2Lk3T+vGlNz2iz1eFVPXW/W
+            z4j4jPjXIBKewj+0xD9cb/Ly5q6wez+S2UAEqFNqnGp5M1Z063q/JXny30gPBTIo
+            OvNYqO5HBmN1Y0H2N1RAnCwMS25n9HfcgiIIg4t4S1332191SR7xaUSyNQaMzfeD
+            6JdZoiRjzw1ETuBY+fjypFud+BBVo22SENqMZeMpeJvndVF5/OnKxLUyN5lkmj7K
+            nnzpCRiCpGhnfiqdYxWJqqCfGzRS3uWKPe39UVYfx86tpXD419sUX1y0oUgf1S5T
+            yiwN4+kranjdUi/TV/p2QrDv6MnPMgDleByAHVUzwbbGQtl6zl0Q3bdvbPwIrKqh
+            Fa27drRvEezg1wkQoGr/EyHt0DbPpG6/Jzk1F5VwX8d3m+13nY0JLcaWTRkOxr4c
+            nQFMNk3LiUOD+C5h6tCSnd5Syz2DuccwDkrDzvTx3wLOrCpNigT528e+LKgY/HPU
+            ZgEJAhAelj9iPeaUwoxWmexhui4Nhk5cijBIl/pD+wFKrEgwzs6i5rUuU1GzTT4d
+            Qzl+7WRLtX+UJBProWbX2fRzJJ4ogjvA8HjFP4eRlLeW2TzgPUCsqnoVTExhQqB6
+            u1dKSyRP5A==
+            =jbF7
+            -----END PGP MESSAGE-----
+          fp: A895CF23FF129E6BA20E2871CCAE56820A470E76
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3

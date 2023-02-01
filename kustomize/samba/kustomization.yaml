@@ -15,4 +15,4 @@ resources:
   - service.yaml
 
 generators:
-  - smbcredentials.enc.yaml
+  - secret-generator.yaml

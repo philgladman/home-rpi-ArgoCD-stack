@@ -1862,9 +1862,9 @@ argo-cd:
     extraArgs: []
 
     # -- Environment variables to pass to repo server
-    env: []
-    # - name: XDG_CONFIG_HOME
-    #   value: /.config
+    env:
+    - name: XDG_CONFIG_HOME
+      value: /.config
 
     # -- envFrom to pass to repo server
     # @default -- `[]` (See [values.yaml])
@@ -1936,9 +1936,9 @@ argo-cd:
     - mountPath: /usr/local/bin/ksops
       name: custom-tools
       subPath: ksops
-    # - mountPath: /.config/kustomize/plugin/viaduct.ai/v1/ksops/ksops
-    #   name: custom-tools
-    #   subPath: ksops
+    - mountPath: /.config/kustomize/plugin/viaduct.ai/v1/ksops/ksops
+      name: custom-tools
+      subPath: ksops
 
     # -- Additional volumes to the repo server pod
     volumes:

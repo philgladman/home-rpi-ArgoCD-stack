@@ -10393,6 +10393,8 @@ spec:
         - --port=8081
         - --metrics-port=8084
         env:
+          - name: XDG_CONFIG_HOME
+            value: /.config
           - name: ARGOCD_RECONCILIATION_TIMEOUT
             valueFrom:
               configMapKeyRef:
@@ -10539,6 +10541,9 @@ spec:
           name: custom-tools
           subPath: kustomize
         - mountPath: /usr/local/bin/ksops
+          name: custom-tools
+          subPath: ksops
+        - mountPath: /.config/kustomize/plugin/viaduct.ai/v1/ksops/ksops
           name: custom-tools
           subPath: ksops
         - mountPath: /app/config/ssh

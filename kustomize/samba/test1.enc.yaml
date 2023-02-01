@@ -1,40 +1,9 @@
 apiVersion: v1
 data:
-    username: ENC[AES256_GCM,data:QCadhEbWlKk=,iv:07IAMEYTesF5iHvskwyPiR8yUQumq94zEHVsfSHNGZc=,tag:h+PHP0QRdDmXlp1SNYQyRA==,type:str]
-    password: ENC[AES256_GCM,data:k/seLdmyerc=,iv:O2u8KmYqZWlwlReP7qF5jXJWU6G7AwYmkGUZ8LWHdbY=,tag:wR4vF6gisfBaOs2c05XeYw==,type:str]
+    username: testuser
+    password: testpass
 kind: Secret
 metadata:
     name: test1
     namespace: samba
-sops:
-    kms: []
-    gcp_kms: []
-    azure_kv: []
-    hc_vault: []
-    age: []
-    lastmodified: "2023-02-01T19:25:04Z"
-    mac: ENC[AES256_GCM,data:LaohEiqTRVSlL9l/OYFdW9fr78ZhwgjodzIdaD2IudPriMv4hLTNa7mnhdR4glv9U/AZbXWAhh0AiM60F+Zmk04LW3pd76m0zNpX6nAXviOc2MDB+HosT+ivDOjvXQ8GEu9VEo2WSUBPBRDqfv/HmwbC/T5rSZWlBWIM3n5g5to=,iv:iLViZwPxIcrOhJRHq1L6lmZYzYNL/AVP+eyEYyt9PWI=,tag:nS/NW44GXoUOKsSYhv/vWw==,type:str]
-    pgp:
-        - created_at: "2023-02-01T19:25:03Z"
-          enc: |
-            -----BEGIN PGP MESSAGE-----
-
-            hQIMA13jbxIEUYaBARAAkY4Ilbn7F69D/Irfx8DTqRRWLZx8vUgyDqvE/JIIQ8Ti
-            bgUs2lQkqwkRbEip+4X56CmXSdOdMvNMdsX8WdRpUU/AD1eefagQjiQj+PDYwaA1
-            ujYaDl3vKkPD4FGvWEPUgW7w1skgpXZxF/YssZLE4LN3f68o3OZhdiGr1cysmm+a
-            J2uVpDC0hEYfVj9SIeG8t5uoViP9gWWg/fgtCVL3qZGSC8C0gIam6jUlHML0QuTl
-            px68OXlOi31RacYJOchamuFRCKdTsQ0ANAevVcUyi5D0hYwQx5ptXNdKn7cq8AUQ
-            +kx3zP1jPmQ2i39rEs8iRMSJDOxGMYQ6MXB4CTC37hlT/gM7Hrzz5ao3lPErLEXG
-            yCf1E2QrLd6yAGqfDIvvQOzU5BQB9xxp9zSK34ogB6bT+LSuPfp7AX/ZMJvMYvgQ
-            z83qAAZYIJF3WEJODJe2oZWraviWDnVycgvT8wk86MNUAXpBCa8xLnmfluFsqjib
-            jVCQw6727XPfFDb4zx45BkrbhoUFkWgoQquSVt6gxBMO7M0ZVkoktwVNTfJN+pbz
-            jluSQcz9U3YaGouhkHmXDCb/j3pHqgeAg03TGmwiCHyt4dIu3h6kweQ03d4vjHQ+
-            3sUNjk8wNUu6Ji1WlMJ+DcAKfoUO2TYkie61ar13zhfj683oiAeSt5ajQK/tSSrU
-            aAEJAhBnBqSuZk1dnXm/R+lGZg6npkp4HzRcWrNu/DD2lyo4eUSDFX6FMvKNi5ry
-            /UXOGOSSDyHCbyQn1jh4HJOXcqhole837QZrxMM7dpj0+IespngNkpQXHDwcp50p
-            s98xjBL41H/n
-            =YMGC
-            -----END PGP MESSAGE-----
-          fp: A895CF23FF129E6BA20E2871CCAE56820A470E76
-    encrypted_regex: ^(data|stringData)$
-    version: 3.7.3
+    kustomize.config.k8s.io/behavior: replace

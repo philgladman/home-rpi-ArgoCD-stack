@@ -16,4 +16,4 @@ resources:
 
 generators:
   - secret-generator.yaml
-  # - test1.yaml
+  - test1.yaml

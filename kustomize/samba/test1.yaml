@@ -2,10 +2,10 @@
 apiVersion: viaduct.ai/v1
 kind: ksops
 metadata:
-  name: test1
-  # annotations:
-  #   config.kubernetes.io/function: |
-  #       exec:
-  #         path: ksops
+  name: example-secret-generator
+  annotations:
+    config.kubernetes.io/function: |
+        exec:
+          path: ksops
 files:
   - test1.enc.yaml

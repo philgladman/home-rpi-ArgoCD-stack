@@ -138,6 +138,7 @@ kubectl create secret generic sops-gpg \
 
 ## Step 12.) - Configure wireguard
 ### Configure DYNU DNS (wireguard)
+- You will need a url to point to your public ip address. Here we are going to use DYNU to get a free domain.
 - Go to https://www.dynu.com/ and create an account
 - Once logged in with your new accout go to the [Control Plane](https://www.dynu.com/en-US/ControlPanel), and click on `DDNS Services`.
 - Click `Add`, and use Option 1 to create a custom domain to point to your public IP. For this we will use `www.test.com`.

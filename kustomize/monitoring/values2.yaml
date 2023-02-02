@@ -64,8 +64,8 @@ grafana:
   admin:
     ## Name of the secret. Can be templated.
     existingSecret: loki-stack-grafana
-    userKey: username
-    passwordKey: password
+    userKey: admin-user
+    passwordKey: admin-password
   sidecar:
     datasources:
       label: ""

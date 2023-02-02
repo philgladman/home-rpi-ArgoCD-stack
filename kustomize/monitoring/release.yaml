@@ -55,7 +55,7 @@ metadata:
 type: Opaque
 data:
   admin-user: "YWRtaW4="
-  admin-password: "SmZ6b3Foazg2U1J2akk0aEltbXRvVEFqcXZ2QkxkNUZxZWxMNDJSVA=="
+  admin-password: "UzZWbHJ1bTdZeVV5TlNISFNvcGJFN2hNOUJvU2xmazNBcm0zTGNuaQ=="
   ldap-toml: ""
 ---
 # Source: loki-stack/charts/loki/templates/secret.yaml
@@ -607,7 +607,7 @@ spec:
         checksum/config: 39058c38f82f311a94f9ee4ab0da3349b5e01dc237f923dbc35c30fe38cfeeff
         checksum/dashboards-json-config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
         checksum/sc-dashboard-provider-config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
-        checksum/secret: d9eb6787711aeca64d1ae5f9ec1c2e1ed7b74befaa65717eabfdc599807326f0
+        checksum/secret: 8dd5bbd29afba0d4feb522b2118f9783a691a37c2920e0b95a23ea89a396f916
     spec:      
       serviceAccountName: loki-stack-grafana
       automountServiceAccountToken: true

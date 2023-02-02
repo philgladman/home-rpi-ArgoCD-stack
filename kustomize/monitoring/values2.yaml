@@ -47,7 +47,7 @@ grafana:
   persistence:
     type: pvc
     enabled: true
-    # storageClassName: nfs-storage
+    # storageClassName: default
     accessModes:
       - ReadWriteOnce
     size: 10Gi
@@ -61,8 +61,6 @@ grafana:
     # existingClaim:
     ## Extra labels to apply to a PVC.
     extraPvcLabels: {}
-  adminUser: admin
-  # adminPassword: strongpassword
   sidecar:
     datasources:
       label: ""

@@ -9,7 +9,7 @@ generatorOptions:
 resources:
   - namespace.yaml
   - grafana-pv.yaml
-  - release2.yaml
+  - release.yaml
   - grafana-ingress.yaml
 
 patches:

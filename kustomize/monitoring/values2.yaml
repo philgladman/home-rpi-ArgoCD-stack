@@ -63,7 +63,7 @@ grafana:
     extraPvcLabels: {}
   admin:
     ## Name of the secret. Can be templated.
-    existingSecret: grafana-credentials
+    existingSecret: loki-stack-grafana
     userKey: username
     passwordKey: password
   sidecar:

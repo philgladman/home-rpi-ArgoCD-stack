@@ -625,12 +625,12 @@ spec:
             - name: REQ_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: grafana-credentials
+                  name: loki-stack-grafana
                   key: username
             - name: REQ_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: grafana-credentials
+                  name: loki-stack-grafana
                   key: password
             - name: REQ_URL
               value: http://localhost:3000/api/admin/provisioning/datasources/reload
@@ -661,12 +661,12 @@ spec:
             - name: GF_SECURITY_ADMIN_USER
               valueFrom:
                 secretKeyRef:
-                  name: grafana-credentials
+                  name: loki-stack-grafana
                   key: username
             - name: GF_SECURITY_ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: grafana-credentials
+                  name: loki-stack-grafana
                   key: password
             - name: GF_PATHS_DATA
               value: /var/lib/grafana/

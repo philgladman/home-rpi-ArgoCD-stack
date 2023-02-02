@@ -44,6 +44,23 @@ grafana:
         access: proxy
         jsonData:
           maxLines: 1000
+  persistence:
+    type: pvc
+    enabled: true
+    # storageClassName: default
+    accessModes:
+      - ReadWriteOnce
+    size: 10Gi
+    # annotations: {}
+    finalizers:
+      - kubernetes.io/pvc-protection
+    # selectorLabels: {}
+    ## Sub-directory of the PV to mount. Can be templated.
+    # subPath: ""
+    ## Name of an existing PVC. Can be templated.
+    # existingClaim:
+    ## Extra labels to apply to a PVC.
+    extraPvcLabels: {}
   sidecar:
     datasources:
       label: ""

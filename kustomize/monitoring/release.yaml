@@ -55,7 +55,7 @@ metadata:
 type: Opaque
 data:
   admin-user: "YWRtaW4="
-  admin-password: "S0dRa3d0cHR1RWxxWWdXQzVzcG9WVDNhNzhWVXM2UzJpNERHQjRYZw=="
+  admin-password: "WkdFZkJQNWVsYUpPS2dTOXhVVkh4ZDE2eFhoMWZFdGF4QmZLR1BzZQ=="
   ldap-toml: ""
 ---
 # Source: loki-stack/charts/loki/templates/secret.yaml
@@ -211,6 +211,27 @@ data:
       name: loki
       type: loki
       url: http://loki-stack:3100
+---
+# Source: loki-stack/charts/grafana/templates/pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: loki-stack-grafana
+  namespace: default
+  labels:
+    helm.sh/chart: grafana-6.43.5
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/instance: loki-stack
+    app.kubernetes.io/version: "8.3.5"
+    app.kubernetes.io/managed-by: Helm
+  finalizers:
+    - kubernetes.io/pvc-protection
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "10Gi"
 ---
 # Source: loki-stack/charts/grafana/templates/clusterrole.yaml
 kind: ClusterRole
@@ -586,7 +607,7 @@ spec:
         checksum/config: 39058c38f82f311a94f9ee4ab0da3349b5e01dc237f923dbc35c30fe38cfeeff
         checksum/dashboards-json-config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
         checksum/sc-dashboard-provider-config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
-        checksum/secret: 12afab033c740a36786966600be027dc3f6e44250da41627888cfd5bbd553d18
+        checksum/secret: 4a7e9c2de910ef858abacc9c09b7bbcd18d1216bc1f17702fddef5faf69036a1
     spec:      
       serviceAccountName: loki-stack-grafana
       automountServiceAccountToken: true
@@ -594,6 +615,18 @@ spec:
         fsGroup: 472
         runAsGroup: 472
         runAsUser: 472
+      initContainers:
+        - name: init-chown-data
+          image: "busybox:1.31.1"
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            runAsNonRoot: false
+            runAsUser: 0
+          command: ["chown", "-R", "472:472", "/var/lib/grafana"]
+          volumeMounts:
+            - name: storage
+              mountPath: "/var/lib/grafana"
+              subPath: grafana
       enableServiceLinks: true
       containers:
         - name: grafana-sc-datasources
@@ -678,7 +711,8 @@ spec:
           configMap:
             name: loki-stack-grafana
         - name: storage
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: loki-stack-grafana
         - name: sc-datasources-volume
           emptyDir: {}
 ---

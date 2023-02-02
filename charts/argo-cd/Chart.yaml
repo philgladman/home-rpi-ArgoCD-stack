@@ -7,4 +7,5 @@ description: Argo-CD
 dependencies:
   - name: "argo-cd"
     version: "5.19.12"
+    # https://github.com/argoproj/argo-helm/tree/main/charts/argo-cd
     repository: "https://argoproj.github.io/argo-helm"

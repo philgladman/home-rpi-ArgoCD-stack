@@ -8,7 +8,7 @@ spec:
 
   source:
     repoURL: https://github.com/philgladman/home-rpi-ArgoCD-stack.git
-    targetRevision: enable-sops
+    targetRevision: nfs-server
     path: kustomize/nginx-ingress
   destination: 
     server: https://kubernetes.default.svc

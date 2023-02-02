@@ -67,6 +67,7 @@ then run the following command to turn this off to free up port 53 for pihole `s
 - clone your newly forked git repo locally `git clone https://github.com/<your-github-username>/home-rpi-ArgoCD-stack.git`
 - cd into repo `cd home-rpi-ArgoCD-stack`
 - deploy argocd with `kubectl apply -k kustomize/argocd/.`
+- FYI - argocd release.yaml was created with this helm templating command `helm template argocd charts/argo-cd -f kustomize/argocd/values.yaml --include-crds --debug > kustomize/argocd/release.yaml`
 
 ## Step 7.) - Install NFS Driver & NFS Server
 - Install the NFS Driver with `curl -skSL https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/v4.1.0/deploy/install-driver.sh | bash -s v4.1.0 --`

@@ -5,7 +5,6 @@ namespace: argocd
 
 resources:
   - samba-app.yaml
-  - nginx-app.yaml
   - nfs-app.yaml
   - ingress-app.yaml
   - pihole-app.yaml

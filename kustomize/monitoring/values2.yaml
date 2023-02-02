@@ -62,7 +62,7 @@ grafana:
     ## Extra labels to apply to a PVC.
     extraPvcLabels: {}
   adminUser: admin
-  adminPassword: strongpassword
+  # adminPassword: strongpassword
   sidecar:
     datasources:
       label: ""

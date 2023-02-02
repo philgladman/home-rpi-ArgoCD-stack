@@ -55,7 +55,7 @@ metadata:
 type: Opaque
 data:
   admin-user: "YWRtaW4="
-  admin-password: "WkdFZkJQNWVsYUpPS2dTOXhVVkh4ZDE2eFhoMWZFdGF4QmZLR1BzZQ=="
+  admin-password: "c3Ryb25ncGFzc3dvcmQ="
   ldap-toml: ""
 ---
 # Source: loki-stack/charts/loki/templates/secret.yaml
@@ -607,7 +607,7 @@ spec:
         checksum/config: 39058c38f82f311a94f9ee4ab0da3349b5e01dc237f923dbc35c30fe38cfeeff
         checksum/dashboards-json-config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
         checksum/sc-dashboard-provider-config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
-        checksum/secret: 4a7e9c2de910ef858abacc9c09b7bbcd18d1216bc1f17702fddef5faf69036a1
+        checksum/secret: ab9b0b76830088a9ccc9e58f36246c44a47b7cc5d0fe2cd48d543945636532d5
     spec:      
       serviceAccountName: loki-stack-grafana
       automountServiceAccountToken: true
@@ -626,7 +626,6 @@ spec:
           volumeMounts:
             - name: storage
               mountPath: "/var/lib/grafana"
-              subPath: grafana
       enableServiceLinks: true
       containers:
         - name: grafana-sc-datasources

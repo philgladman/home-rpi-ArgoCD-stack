@@ -3,5 +3,3 @@ kind: Kustomization
 
 resources:
   - parent-app/
-  # - child-apps/
-  ### Change this to only create parent app

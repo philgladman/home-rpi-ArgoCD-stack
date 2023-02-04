@@ -6,4 +6,4 @@ namespace: nfs
 resources:
   - namespace.yaml
   - kube-nfs-server.yaml
-  # - nfs-storageclass.yaml
+  - nfs-storageclass.yaml

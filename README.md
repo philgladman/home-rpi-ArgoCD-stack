@@ -185,6 +185,7 @@ sed -i "" "s|https://github.com/philgladman/home-rpi-ArgoCD-stack.git|$NEW_REPO_
 - confirm that our 3 secrets have been encrypted with our sops key.
   - `kustomize/samba/smb-credentials.enc.yaml`
   - `kustomize/pihole/pihole-credentials.enc.yaml`
+  - `kustomize/monitoring/grafana-credentials.enc.yaml`
   - `kustomize/wireguard/host-url.enc.yaml`
 - Now that we have made changes to the repo, we need commit and push them back up to github. `git add --all && git commit -m "replacing values in files" && git push`.
 

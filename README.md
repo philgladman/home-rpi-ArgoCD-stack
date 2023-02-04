@@ -136,7 +136,13 @@ kubectl create secret generic sops-gpg \
 - change timezone in pihole to your local timezone `sed -i "" "s|America/New_York|<your-local-timezone>|g" kustomize/pihole/pihole-cm.yaml`
 - copy the `custom.list` file with your pihole custom dns entry over to the `/nfs-vol/pihole/` dir with this `sudo mkdir -p /nfs-vol/pihole/ && sudo cp kustomize/pihole/custom.list /nfs-vol/pihole/`
 
-## Step 12.) - Configure wireguard
+## Step 12.) - Configure Grafana
+- add a password for the admin user for grafana
+- replace `testpassword` below with a custom password of your choice
+- create password for smbuser `sed -i "" 's|PASSWORD_REPLACE_ME|testpassword|g' kustomize/monitoring/grafana-credentials.enc.yaml`
+- Now use your sops key to encrypt these credentials `sops -e -i kustomize/samba/smb-credentials.enc.yaml`
+
+## Step 13.) - Configure wireguard
 ### Configure DYNU DNS (wireguard)
 - You will need a url to point to your public ip address. Here we are going to use DYNU to get a free domain.
 - Go to https://www.dynu.com/ and create an account
@@ -171,7 +177,7 @@ EOF
 - On your router, you will need to port foward port 51820 UDP to the ip of the wireguard svc, which we will determine after all our apps are deployed.
 
 
-## Step 13.) - Commit changes back to repo
+## Step 14.) - Commit changes back to repo
 - first we need to update our argocd files to point to your new repo `export NEW_REPO_URL=<your-new-git-repo-url>` (example = https://github.com/philgladman/home-rpi-ArgoCD-stack.git)
 ```bash
 sed -i "" "s|https://github.com/philgladman/home-rpi-ArgoCD-stack.git|$NEW_REPO_URL|g" kustomize/apps/parent-app/master-app.yaml && sed -i "" "s|https://github.com/philgladman/home-rpi-ArgoCD-stack.git|$NEW_REPO_URL|g" kustomize/apps/child-apps/ingress-app.yaml && sed -i "" "s|https://github.com/philgladman/home-rpi-ArgoCD-stack.git|$NEW_REPO_URL|g" kustomize/apps/child-apps/monitoring-app.yaml && sed -i "" "s|https://github.com/philgladman/home-rpi-ArgoCD-stack.git|$NEW_REPO_URL|g" kustomize/apps/child-apps/nfs-app.yaml && sed -i "" "s|https://github.com/philgladman/home-rpi-ArgoCD-stack.git|$NEW_REPO_URL|g" kustomize/apps/child-apps/pihole-app.yaml && sed -i "" "s|https://github.com/philgladman/home-rpi-ArgoCD-stack.git|$NEW_REPO_URL|g" kustomize/apps/child-apps/samba-app.yaml && sed -i "" "s|https://github.com/philgladman/home-rpi-ArgoCD-stack.git|$NEW_REPO_URL|g" kustomize/apps/child-apps/wireguard-app.yaml
@@ -182,7 +188,7 @@ sed -i "" "s|https://github.com/philgladman/home-rpi-ArgoCD-stack.git|$NEW_REPO_
   - `kustomize/wireguard/host-url.enc.yaml`
 - Now that we have made changes to the repo, we need commit and push them back up to github. `git add --all && git commit -m "replacing values in files" && git push`.
 
-## Step 14.) - Deploy Apps
+## Step 15.) - Deploy Apps
 - `kubectl apply -k kustomize/.` 
 - Wait for all pods to be up and running. This may take up to 5 minutes
 - Once all pods are up, now you just need to configure your router or your host to use the ip address of the udp/tcp pihole service as its DNS Server. You can get this ip address by running this command `kubectl get svc -n pihole pihole-dns-udp -o yaml -o jsonpath='{.status.loadBalancer.ingress[].ip}'`
@@ -190,7 +196,7 @@ sed -i "" "s|https://github.com/philgladman/home-rpi-ArgoCD-stack.git|$NEW_REPO_
 - In your browser, connect to your pihole custome DNS name (ex = `pihole.phils-home.com/admin`) and login.
 - Pihole is up and running! Dont forget to configure your router or host to use pihole as its DNS Server.
 
-## Step 15.) - Finish wireguard confi
+## Step 16.) - Finish wireguard confi
 - Now that wireguard has been deployed we need to port forward to our cluster, as well as get the wireguard QR codes
 - On your router, you will need to port foward port 51820 UDP to the ip of the wireguard svc(wireguard svc ip = `kubectl get svc -n wireguard wireguard -o jsonpath='{.status.loadBalancer.ingress[].ip}'`)
 - Run the following command to output the logs of the wireguard container, which will have a QR code for each peer. `kubectl logs -n wireguard $(kubectl get pods -n wireguard -o jsonpath='{.items[].metadata.name}')`

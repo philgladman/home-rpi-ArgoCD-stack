@@ -10,17 +10,17 @@ spec:
       storage: 5Gi
   volumeName: wireguard-configs-pv
   storageClassName: ""
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: wireguard-lib-modules-claim
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5Gi
-  volumeName: wireguard-lib-modules-pv
-  storageClassName: wireguard-local-storage
+# ---
+# kind: PersistentVolumeClaim
+# apiVersion: v1
+# metadata:
+#   name: wireguard-lib-modules-claim
+# spec:
+#   accessModes:
+#   - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 5Gi
+#   volumeName: wireguard-lib-modules-pv
+#   storageClassName: wireguard-local-storage
 

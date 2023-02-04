@@ -47,5 +47,9 @@ spec:
           persistentVolumeClaim:
             claimName: wireguard-lib-modules-claim
         - name: wireguard-configs
-          persistentVolumeClaim:
-            claimName: wireguard-configs-claim
+          hostPath:
+            path: /lib/modules
+            type: DirectoryOrCreate
+        # - name: wireguard-configs
+        #   persistentVolumeClaim:
+        #     claimName: wireguard-configs-claim

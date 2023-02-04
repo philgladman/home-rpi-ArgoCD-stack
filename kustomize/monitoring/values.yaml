@@ -46,7 +46,7 @@ grafana:
   persistence:
     type: pvc
     enabled: true
-    # storageClassName: nfs-storage
+    storageClassName: nfs-storage
     accessModes:
       - ReadWriteOnce
     size: 50Gi
@@ -54,7 +54,7 @@ grafana:
     finalizers:
       - kubernetes.io/pvc-protection
     ## Sub-directory of the PV to mount. Can be templated.
-    subPath: grafana
+    # subPath: grafana
     ## Name of an existing PVC. Can be templated.
     # existingClaim:
   ######## CHANGE BELOW AFTER TEST

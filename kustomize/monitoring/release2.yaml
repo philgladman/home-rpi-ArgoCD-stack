@@ -55,7 +55,7 @@ metadata:
 type: Opaque
 data:
   admin-user: "YWRtaW4="
-  admin-password: "TW5hTWthT3FhcXFBY3A0c1dOVnR2S0RYS3hsTUQ5Smt2eGtZT05oVw=="
+  admin-password: "ZUtmRUoxc3F3cHlFU3VrdHB4T3VmMzV5clRYMkljUnJwSjZYa3VDcw=="
   ldap-toml: ""
 ---
 # Source: loki-stack/charts/loki/templates/secret.yaml
@@ -232,6 +232,7 @@ spec:
   resources:
     requests:
       storage: "50Gi"
+  storageClassName: nfs-storage
 ---
 # Source: loki-stack/charts/grafana/templates/clusterrole.yaml
 kind: ClusterRole
@@ -607,7 +608,7 @@ spec:
         checksum/config: 39058c38f82f311a94f9ee4ab0da3349b5e01dc237f923dbc35c30fe38cfeeff
         checksum/dashboards-json-config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
         checksum/sc-dashboard-provider-config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
-        checksum/secret: 77f0a267c83bd60128056c7ea330f3ecb8d14f7731774ab9f19a842338a55b15
+        checksum/secret: aecbdc31e2295f46e2c60540a857b83802cf5ff58bf9f701b2894e8c7311a7cb
     spec:      
       serviceAccountName: loki-stack-grafana
       automountServiceAccountToken: true
@@ -626,7 +627,6 @@ spec:
           volumeMounts:
             - name: storage
               mountPath: "/var/lib/grafana"
-              subPath: grafana
       enableServiceLinks: true
       containers:
         - name: grafana-sc-datasources
@@ -667,7 +667,6 @@ spec:
               subPath: grafana.ini
             - name: storage
               mountPath: "/var/lib/grafana"
-              subPath: grafana
             - name: config
               mountPath: "/etc/grafana/provisioning/datasources/datasources.yaml"
               subPath: "datasources.yaml"

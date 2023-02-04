@@ -9,4 +9,4 @@ resources:
   - ingress-app.yaml
   - pihole-app.yaml
   # - monitoring-app.yaml
-  - wireguard-app.yaml
+  # - wireguard-app.yaml

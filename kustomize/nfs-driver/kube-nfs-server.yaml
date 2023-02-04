@@ -35,7 +35,7 @@ spec:
     spec:
       nodeSelector:
         "kubernetes.io/os": linux
-        disk: disk1
+        disk: disk2
       containers:
         - name: nfs-server
           image: itsthenetwork/nfs-server-alpine:11-arm

@@ -63,23 +63,12 @@ then run the following command to turn this off to free up port 53 for pihole `s
 - Copy(fork) this repo by clicking [here](https://github.com/philgladman/home-rpi-ArgoCD-stack/fork)
 - Once you have successfully forked this repo, move on to step 6.)
 
-## Step 6.) - Deploy ArgoCD
-- clone your newly forked git repo locally `git clone https://github.com/<your-github-username>/home-rpi-ArgoCD-stack.git`
-- cd into repo `cd home-rpi-ArgoCD-stack`
-- deploy argocd with `kubectl apply -k kustomize/argocd/.`
-- FYI - argocd release.yaml was created with this helm templating command `helm template argocd charts/argo-cd -f kustomize/argocd/values.yaml --include-crds --debug > kustomize/argocd/release.yaml`
-
-## Step 7.) - Install NFS Driver & NFS Server
-- Install the NFS Driver with `curl -skSL https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/v4.1.0/deploy/install-driver.sh | bash -s v4.1.0 --`
-- if you created a different name for your NFS Volume, us this command to change the name from `/nfs-vol` to your custom name, `sed -i "s|/nfs-vol|<your-custom-name>|g" nfs-driver/kube-nfs-server.yaml`
-- Create the nfs namespace and the nfs-server `kubectl apply -k nfs-driver/.`
-
-## Step 8.) - Install tools
+## Step 6.) - Install tools
 - Install sops `brew install sops`
 - Install gpg `brew install gpg`
 - Install gpg `brew install ksops`
 
-## Step 9.) - Configure SOPS
+## Step 7.) - Configure SOPS
 - Generate your GPG key by running the following script,
 ```
 export KEY_NAME="k3s.argocd.cluster"
@@ -105,15 +94,26 @@ uid           [ultimate] k3s.argocd.cluster (sops key for argocd)
 ssb   rsa4096 2023-02-01 [SEA]
 ```
 - Copy the key ID, and save as a variable `export KEY_ID=LEP97F720CDHEKDU38744F7995AE746DHJR4GL8D`
+- Create the argocd namesapce `kubectl apply -f kustomize/argocd/argocd-ns.yaml`
 - Import the key as a secret into our cluster 
 ```
-gpg --export-secret-keys --armor "${KEY_ID} |
+gpg --export-secret-keys --armor "${KEY_ID}" |
 kubectl create secret generic sops-gpg \
 --namespace=argocd \
 --from-file=sops.asc=/dev/stdin
 ```
 - update the `.sops.yaml` file to have the new key id, `sed -i "" "s|REPLACE_ME|$KEY_ID|g" .sops.yaml`
 - Now our sops key has been imported into our cluster, ArgoCD can use this key to encrypt/decrpyt our secrets.
+
+## Step 8.) - Deploy ArgoCD
+- clone your newly forked git repo locally `git clone https://github.com/<your-github-username>/home-rpi-ArgoCD-stack.git`
+- cd into repo `cd home-rpi-ArgoCD-stack`
+- deploy argocd with `kubectl apply -k kustomize/argocd/.`
+- FYI - argocd release.yaml was created with this helm templating command `helm template argocd charts/argo-cd -f kustomize/argocd/values.yaml --include-crds --debug > kustomize/argocd/release.yaml`
+
+## Step 9.) - Install NFS Driver & NFS Server
+- Install the NFS Driver with `curl -skSL https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/v4.1.0/deploy/install-driver.sh | bash -s v4.1.0 --`
+- if you created a different name for your NFS Volume, us this command to change the name from `/nfs-vol` to your custom name, `sed -i "s|/nfs-vol|<your-custom-name>|g" nfs-driver/kube-nfs-server.yaml`
 
 ## Step 10.) - Configure samba
 - add a username and password for the smbuser, this will be the user/pass you will use to access the NAS.
@@ -140,7 +140,7 @@ kubectl create secret generic sops-gpg \
 - add a password for the admin user for grafana
 - replace `testpassword` below with a custom password of your choice
 - create password for smbuser `sed -i "" 's|PASSWORD_REPLACE_ME|testpassword|g' kustomize/monitoring/grafana-credentials.enc.yaml`
-- Now use your sops key to encrypt these credentials `sops -e -i kustomize/samba/smb-credentials.enc.yaml`
+- Now use your sops key to encrypt these credentials `sops -e -i kustomize/monitoring/grafana-credentials.enc.yaml`
 
 ## Step 13.) - Configure wireguard
 ### Configure DYNU DNS (wireguard)

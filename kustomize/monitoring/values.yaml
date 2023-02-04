@@ -57,12 +57,11 @@ grafana:
     # subPath: grafana
     ## Name of an existing PVC. Can be templated.
     # existingClaim:
-  ######## CHANGE BELOW AFTER TEST
-  # admin:
-  #   ## Name of the secret. Can be templated.
-  #   existingSecret: loki-stack-grafana
-  #   userKey: admin-user
-  #   passwordKey: admin-password
+  admin:
+    ## Name of the secret. Can be templated.
+    existingSecret: loki-stack-grafana-credentials
+    userKey: admin-user
+    passwordKey: admin-password
   sidecar:
     datasources:
       label: ""

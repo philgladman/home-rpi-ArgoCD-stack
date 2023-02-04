@@ -60,12 +60,7 @@ grafana:
     # existingClaim:
     ## Extra labels to apply to a PVC.
     extraPvcLabels: {}
-  admin:
-    ## Name of the secret. Can be templated.
-    existingSecret: loki-stack-grafana
-    userKey: admin-user
-    passwordKey: admin-password
-    sidecar:
+  sidecar:
     datasources:
       label: ""
       labelValue: ""

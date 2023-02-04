@@ -40,6 +40,24 @@ metadata:
     app.kubernetes.io/version: "2.7.0"
     app.kubernetes.io/managed-by: Helm
 ---
+# Source: loki-stack/charts/grafana/templates/secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: loki-stack-grafana
+  namespace: default
+  labels:
+    helm.sh/chart: grafana-6.43.5
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/instance: loki-stack
+    app.kubernetes.io/version: "8.3.5"
+    app.kubernetes.io/managed-by: Helm
+type: Opaque
+data:
+  admin-user: "YWRtaW4="
+  admin-password: "MHhqcUh0VXhBazkxNWRtSHozNThOMFhGUWxaR1lCdVJHY25qaFVrag=="
+  ldap-toml: ""
+---
 # Source: loki-stack/charts/loki/templates/secret.yaml
 apiVersion: v1
 kind: Secret
@@ -213,7 +231,7 @@ spec:
     - "ReadWriteOnce"
   resources:
     requests:
-      storage: "10Gi"
+      storage: "50Gi"
 ---
 # Source: loki-stack/charts/grafana/templates/clusterrole.yaml
 kind: ClusterRole
@@ -589,6 +607,7 @@ spec:
         checksum/config: 39058c38f82f311a94f9ee4ab0da3349b5e01dc237f923dbc35c30fe38cfeeff
         checksum/dashboards-json-config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
         checksum/sc-dashboard-provider-config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+        checksum/secret: f8fd4d4a5bd048dc0d48921711afca866f34dcdf73c8393aaea74ba3f8b38075
     spec:      
       serviceAccountName: loki-stack-grafana
       automountServiceAccountToken: true

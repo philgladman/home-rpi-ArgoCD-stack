@@ -55,7 +55,7 @@ grafana:
       - kubernetes.io/pvc-protection
     # selectorLabels: {}
     ## Sub-directory of the PV to mount. Can be templated.
-    subPath: grafana
+    # subPath: grafana
     ## Name of an existing PVC. Can be templated.
     # existingClaim:
     ## Extra labels to apply to a PVC.

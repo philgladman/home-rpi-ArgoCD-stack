@@ -46,7 +46,7 @@ grafana:
   persistence:
     type: pvc
     enabled: true
-    # storageClassName: default
+    # storageClassName: nfs-storage
     accessModes:
       - ReadWriteOnce
     size: 10Gi
@@ -60,7 +60,12 @@ grafana:
     # existingClaim:
     ## Extra labels to apply to a PVC.
     extraPvcLabels: {}
-  sidecar:
+  admin:
+    ## Name of the secret. Can be templated.
+    existingSecret: loki-stack-grafana
+    userKey: admin-user
+    passwordKey: admin-password
+    sidecar:
     datasources:
       label: ""
       labelValue: ""

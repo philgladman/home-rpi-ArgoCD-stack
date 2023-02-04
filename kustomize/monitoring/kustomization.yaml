@@ -15,5 +15,5 @@ resources:
 patches:
   - path: grafana-pvc-patch.yaml
 
-# generators:
-#   - secret-generator.yaml
+generators:
+  - secret-generator.yaml

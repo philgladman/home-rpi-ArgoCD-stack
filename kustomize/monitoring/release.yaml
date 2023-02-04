@@ -40,24 +40,6 @@ metadata:
     app.kubernetes.io/version: "2.7.0"
     app.kubernetes.io/managed-by: Helm
 ---
-# Source: loki-stack/charts/grafana/templates/secret.yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: loki-stack-grafana
-  namespace: default
-  labels:
-    helm.sh/chart: grafana-6.43.5
-    app.kubernetes.io/name: grafana
-    app.kubernetes.io/instance: loki-stack
-    app.kubernetes.io/version: "8.3.5"
-    app.kubernetes.io/managed-by: Helm
-type: Opaque
-data:
-  admin-user: "YWRtaW4="
-  admin-password: "Z3pZc0ZGMFZnY25lM2xGUXE3ODBRQXBoNllKWUplUzRrREJLRERFaA=="
-  ldap-toml: ""
----
 # Source: loki-stack/charts/loki/templates/secret.yaml
 apiVersion: v1
 kind: Secret
@@ -244,10 +226,7 @@ metadata:
     app.kubernetes.io/version: "8.3.5"
     app.kubernetes.io/managed-by: Helm
   name: loki-stack-grafana-clusterrole
-rules:
-- apiGroups: [""] # "" indicates the core API group
-  resources: ["configmaps", "secrets"]
-  verbs: ["get", "watch", "list"]
+rules: []
 ---
 # Source: loki-stack/charts/promtail/templates/clusterrole.yaml
 kind: ClusterRole
@@ -607,7 +586,6 @@ spec:
         checksum/config: 39058c38f82f311a94f9ee4ab0da3349b5e01dc237f923dbc35c30fe38cfeeff
         checksum/dashboards-json-config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
         checksum/sc-dashboard-provider-config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
-        checksum/secret: e2b89d3c7bc82bca3dfae9a4e8042f16c74fc58537164b48c856fe9970265a95
     spec:      
       serviceAccountName: loki-stack-grafana
       automountServiceAccountToken: true
@@ -629,35 +607,6 @@ spec:
               subPath: grafana
       enableServiceLinks: true
       containers:
-        - name: grafana-sc-datasources
-          image: "quay.io/kiwigrid/k8s-sidecar:1.19.2"
-          imagePullPolicy: IfNotPresent
-          env:
-            - name: METHOD
-              value: WATCH
-            - name: LABEL
-              value: ""
-            - name: FOLDER
-              value: "/etc/grafana/provisioning/datasources"
-            - name: RESOURCE
-              value: "both"
-            - name: REQ_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: loki-stack-grafana
-                  key: admin-user
-            - name: REQ_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: loki-stack-grafana
-                  key: admin-password
-            - name: REQ_URL
-              value: http://localhost:3000/api/admin/provisioning/datasources/reload
-            - name: REQ_METHOD
-              value: POST
-          volumeMounts:
-            - name: sc-datasources-volume
-              mountPath: "/etc/grafana/provisioning/datasources"
         - name: grafana
           image: "grafana/grafana:8.3.5"
           imagePullPolicy: IfNotPresent
@@ -671,8 +620,6 @@ spec:
             - name: config
               mountPath: "/etc/grafana/provisioning/datasources/datasources.yaml"
               subPath: "datasources.yaml"
-            - name: sc-datasources-volume
-              mountPath: "/etc/grafana/provisioning/datasources"
           ports:
             - name: grafana
               containerPort: 3000
@@ -714,8 +661,6 @@ spec:
         - name: storage
           persistentVolumeClaim:
             claimName: loki-stack-grafana
-        - name: sc-datasources-volume
-          emptyDir: {}
 ---
 # Source: loki-stack/charts/loki/templates/statefulset.yaml
 apiVersion: apps/v1

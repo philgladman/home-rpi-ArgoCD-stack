@@ -55,7 +55,7 @@ metadata:
 type: Opaque
 data:
   admin-user: "YWRtaW4="
-  admin-password: "UzZWbHJ1bTdZeVV5TlNISFNvcGJFN2hNOUJvU2xmazNBcm0zTGNuaQ=="
+  admin-password: "Z3pZc0ZGMFZnY25lM2xGUXE3ODBRQXBoNllKWUplUzRrREJLRERFaA=="
   ldap-toml: ""
 ---
 # Source: loki-stack/charts/loki/templates/secret.yaml
@@ -607,7 +607,7 @@ spec:
         checksum/config: 39058c38f82f311a94f9ee4ab0da3349b5e01dc237f923dbc35c30fe38cfeeff
         checksum/dashboards-json-config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
         checksum/sc-dashboard-provider-config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
-        checksum/secret: 8dd5bbd29afba0d4feb522b2118f9783a691a37c2920e0b95a23ea89a396f916
+        checksum/secret: e2b89d3c7bc82bca3dfae9a4e8042f16c74fc58537164b48c856fe9970265a95
     spec:      
       serviceAccountName: loki-stack-grafana
       automountServiceAccountToken: true
@@ -626,6 +626,7 @@ spec:
           volumeMounts:
             - name: storage
               mountPath: "/var/lib/grafana"
+              subPath: grafana
       enableServiceLinks: true
       containers:
         - name: grafana-sc-datasources
@@ -666,6 +667,7 @@ spec:
               subPath: grafana.ini
             - name: storage
               mountPath: "/var/lib/grafana"
+              subPath: grafana
             - name: config
               mountPath: "/etc/grafana/provisioning/datasources/datasources.yaml"
               subPath: "datasources.yaml"

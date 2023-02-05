@@ -607,6 +607,7 @@ spec:
           volumeMounts:
             - name: storage
               mountPath: "/var/lib/grafana"
+              subPath: grafana
       enableServiceLinks: true
       containers:
         - name: grafana-sc-datasources
@@ -647,6 +648,7 @@ spec:
               subPath: grafana.ini
             - name: storage
               mountPath: "/var/lib/grafana"
+              subPath: grafana
             - name: config
               mountPath: "/etc/grafana/provisioning/datasources/datasources.yaml"
               subPath: "datasources.yaml"

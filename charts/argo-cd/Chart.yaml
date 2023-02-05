@@ -6,5 +6,6 @@ kubeVersion: '>=1.16.0-0'
 description: Argo-CD
 dependencies:
   - name: "argo-cd"
-    version: "4.3.3"
-    repository: "https://charts.bitnami.com/bitnami"
+    version: "5.19.12"
+    # https://github.com/argoproj/argo-helm/tree/main/charts/argo-cd
+    repository: "https://argoproj.github.io/argo-helm"

@@ -24,8 +24,8 @@ spec:
           - name: WEBPASSWORD
             valueFrom:
               secretKeyRef:
-                name: pihole-pass
-                key: pihole-pass
+                name: pihole-credentials
+                key: password
         securityContext:
           privileged: true
         ports: 

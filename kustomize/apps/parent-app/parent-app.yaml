@@ -8,7 +8,7 @@ spec:
 
   source:
     repoURL: https://github.com/philgladman/home-rpi-ArgoCD-stack.git
-    targetRevision: nfs-server
+    targetRevision: enable-sops
     path: kustomize/apps/child-apps
     ### Change this to point to child apps kustomize/apps/child-apps
   destination: 

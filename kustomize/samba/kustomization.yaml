@@ -3,9 +3,16 @@ kind: Kustomization
 
 namespace: samba
 
+generatorOptions:
+  disableNameSuffixHash: true
+
 resources:
+  - namespace.yaml
   - storageClass.yaml
   - persistentVolume.yaml
   - persistentVolumeClaim.yaml
   - deployment.yaml
   - service.yaml
+
+generators:
+  - secret-generator.yaml

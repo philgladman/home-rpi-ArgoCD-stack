@@ -49,14 +49,14 @@ COMMAND   PID            USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
 systemd-r 674 systemd-resolve   12u  IPv4  21062      0t0  UDP localhost:domain 
 systemd-r 674 systemd-resolve   13u  IPv4  21063      0t0  TCP localhost:domain (LISTEN)
 ```
-then run the following command to turn this off to free up port 53 for pihole `sudo sed -i "s/#DNS=/DNS=192.168.1.x/g; s/#DNSStubListener=yes/DNSStubListener=no/g" /etc/systemd/resolved.conf`. Change the IP Address with the IP of your Router.
+then run the following command to turn this off to free up port 53 for pihole `sudo sed -i "" "s/#DNS=/DNS=192.168.1.x/g; s/#DNSStubListener=yes/DNSStubListener=no/g" /etc/systemd/resolved.conf`. Change the IP Address with the IP of your Router.
 - create sysmbolic link `sudo ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf`
 - reboot to apply changes `sudo systemctl reboot`
 - confirm systemd-resolver is no longer using port 53 `sudo lsof -i :53`
 - may have to update your /etc/hosts with `127.0.0.1 <your-hostname>`
 
 ## Step 4.) - Label Master node
-- label master node so samba container for the NAS will only run on master node since it has the NAS external drive connected `kubectl label nodes master disk=disk1`
+- label master node so samba container for the NAS will only run on master node since it has the NAS external drive connected, as well as to tell the NFS Server which node the NFS Vol external drive is on `kubectl label nodes master disk=disk1`
 
 ## Step 5.) - Fork this git repo
 - Since we will be using ArgoCD to deploy everything, you will need your own repository for Argo to pull its config from.
@@ -111,9 +111,9 @@ kubectl create secret generic sops-gpg \
 - deploy argocd with `kubectl apply -k kustomize/argocd/.`
 - FYI - argocd release.yaml was created with this helm templating command `helm template argocd charts/argo-cd -f kustomize/argocd/values.yaml --include-crds --debug > kustomize/argocd/release.yaml`
 
-## Step 9.) - Install NFS Driver & NFS Server
+## Step 9.) - Install NFS Driver
 - Install the NFS Driver with `curl -skSL https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/v4.1.0/deploy/install-driver.sh | bash -s v4.1.0 --`
-- if you created a different name for your NFS Volume, us this command to change the name from `/nfs-vol` to your custom name, `sed -i "s|/nfs-vol|<your-custom-name>|g" nfs-driver/kube-nfs-server.yaml`
+- if you created a different name for your NFS Volume, use this command to change the name from `/nfs-vol` to your custom name, `sed -i "" "s|nfs-vol|<your-custom-name>|g" nfs-driver/kube-nfs-server.yaml`
 
 ## Step 10.) - Configure samba
 - add a username and password for the smbuser, this will be the user/pass you will use to access the NAS.
@@ -163,26 +163,25 @@ EOF
 ```
 - update ownership and perms of our script `sudo chown root:root ~/DYNU/updateIP.sh && sudo chmod 700 ~/DYNU/updateIP.sh`
 - Now that we have our script configured, lets create a cronjob that runs the script every 5 minutes `echo "*/5 * * * * /home/pi/DYNU/updateIP.sh" >> /var/spool/cron/crontabs/root`. You will need to run this as root, `sudo su`.
-- Now that our Public Ip is getting updated every 5 minutes, we can move forward with installing Wireguard VPN.
+- Now that our DYNU URL is getting updated every 5 minutes with our Public IP, we can move forward with installing Wireguard VPN.
 
-### Configure and install Wireguard VPN (wireguard)
+### Configure Wireguard VPN (wireguard)
 - edit the `kustomize/wireguard-cm.yaml` to have your values
 - set the `TZ` variable to have your Timezone.
 - for this demo we will create 2 peers `philiphone` and `philmackbook`. Feel free to change the names, or add more/less. The peer name must only contain letters and numbers.
 - `PEERDNS` is set to `auto`. If you have a pihole running, you can set this `PEERDNS` to the clusterIP of your pihole svc.
 - `INTERNAL_SUBNET` is the subnet on the vpn.
-- Upddate wireguard config to have your newly craeted DYNU url
-- replace `www.test.com` below with your url `sed -i "" 's|URL_REPLACE_ME|www.test.com|g' kustomize/wireguard/host-url.enc.yaml`
+- Update wireguard config to have your newly craeted DYNU url
+- replace `www.test.com` with your new url `sed -i "" 's|URL_REPLACE_ME|www.test.com|g' kustomize/wireguard/host-url.enc.yaml`
 - encrypt this url with `sops -e -i kustomize/wireguard/host-url.enc.yaml`
-- On your router, you will need to port foward port 51820 UDP to the ip of the wireguard svc, which we will determine after all our apps are deployed.
-
+- On your router, you will need to port foward port 51820 UDP to the ip of the wireguard svc, which we will determine that ip address after all our apps are deployed.
 
 ## Step 14.) - Commit changes back to repo
 - first we need to update our argocd files to point to your new repo `export NEW_REPO_URL=<your-new-git-repo-url>` (example = https://github.com/philgladman/home-rpi-ArgoCD-stack.git)
 ```bash
 sed -i "" "s|https://github.com/philgladman/home-rpi-ArgoCD-stack.git|$NEW_REPO_URL|g" kustomize/apps/parent-app/master-app.yaml && sed -i "" "s|https://github.com/philgladman/home-rpi-ArgoCD-stack.git|$NEW_REPO_URL|g" kustomize/apps/child-apps/ingress-app.yaml && sed -i "" "s|https://github.com/philgladman/home-rpi-ArgoCD-stack.git|$NEW_REPO_URL|g" kustomize/apps/child-apps/monitoring-app.yaml && sed -i "" "s|https://github.com/philgladman/home-rpi-ArgoCD-stack.git|$NEW_REPO_URL|g" kustomize/apps/child-apps/nfs-app.yaml && sed -i "" "s|https://github.com/philgladman/home-rpi-ArgoCD-stack.git|$NEW_REPO_URL|g" kustomize/apps/child-apps/pihole-app.yaml && sed -i "" "s|https://github.com/philgladman/home-rpi-ArgoCD-stack.git|$NEW_REPO_URL|g" kustomize/apps/child-apps/samba-app.yaml && sed -i "" "s|https://github.com/philgladman/home-rpi-ArgoCD-stack.git|$NEW_REPO_URL|g" kustomize/apps/child-apps/wireguard-app.yaml
 ```
-- confirm that our 3 secrets have been encrypted with our sops key.
+- confirm that our 4 secrets have been encrypted with our sops key.
   - `kustomize/samba/smb-credentials.enc.yaml`
   - `kustomize/pihole/pihole-credentials.enc.yaml`
   - `kustomize/monitoring/grafana-credentials.enc.yaml`
@@ -194,20 +193,20 @@ sed -i "" "s|https://github.com/philgladman/home-rpi-ArgoCD-stack.git|$NEW_REPO_
 - Wait for all pods to be up and running. This may take up to 5 minutes
 - Once all pods are up, now you just need to configure your router or your host to use the ip address of the udp/tcp pihole service as its DNS Server. You can get this ip address by running this command `kubectl get svc -n pihole pihole-dns-udp -o yaml -o jsonpath='{.status.loadBalancer.ingress[].ip}'`
 - Once you have updated your DNS on your host to point to pihole, you should be able to access your pihole by this custom DNS name, without having to port forward
-- In your browser, connect to your pihole custome DNS name (ex = `pihole.phils-home.com/admin`) and login.
+- In your browser, connect to your pihole custom DNS name (ex = `pihole.phils-home.com/admin`) and login.
 - Pihole is up and running! Dont forget to configure your router or host to use pihole as its DNS Server.
 
-## Step 16.) - Finish wireguard confi
-- Now that wireguard has been deployed we need to port forward to our cluster, as well as get the wireguard QR codes
+## Step 16.) - Finish Wireguard setup
+- Now that wireguard has been deployed we need to port forward from the router to our cluster, as well as get the wireguard QR codes.
 - On your router, you will need to port foward port 51820 UDP to the ip of the wireguard svc(wireguard svc ip = `kubectl get svc -n wireguard wireguard -o jsonpath='{.status.loadBalancer.ingress[].ip}'`)
 - Run the following command to output the logs of the wireguard container, which will have a QR code for each peer. `kubectl logs -n wireguard $(kubectl get pods -n wireguard -o jsonpath='{.items[].metadata.name}')`
 - This will output the logs of the wireguard container, which will have a qr code for each peer. 
 - Download the wireguard app on your phone/computer. 
-- Once downloaded, click the plus sign to add a new wireguard tunnel
+- Once downloaded, open the app and click the plus sign to add a new wireguard tunnel
 - click `Create from QR code`
-- scan the QR code from earlier.
-- Now you can turn your new VPN on and test.
+- scan the QR code from container logs.
+- Done! If you are using your phone, get off of the wifi, turn on your new vpn, and now you should be able to access your home network.
 
 ## MISC
-- Grafana username=`admin` & password=`kubectl get secret --namespace monitoring loki-stack-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo`
+- Grafana username=`admin` & password=`kubectl get secret --namespace monitoring loki-stack-grafana-credentials -o jsonpath="{.data.admin-password}" | base64 --decode ; echo`
 - ArgoCD username=`admin` & password=`kubectl get secret --namespace argocd argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 --decode ; echo`

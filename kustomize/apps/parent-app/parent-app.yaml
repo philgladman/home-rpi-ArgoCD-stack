@@ -10,7 +10,6 @@ spec:
     repoURL: https://github.com/philgladman/home-rpi-ArgoCD-stack.git
     targetRevision: nfs-server
     path: kustomize/apps/child-apps
-    ### Change this to point to child apps kustomize/apps/child-apps
   destination: 
     server: https://kubernetes.default.svc
     namespace: myapp

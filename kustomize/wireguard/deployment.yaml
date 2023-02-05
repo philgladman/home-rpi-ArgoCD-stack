@@ -43,9 +43,6 @@ spec:
           - name: wireguard-lib-modules
             mountPath: /lib/modules
       volumes:
-        # - name: wireguard-lib-modules
-        #   persistentVolumeClaim:
-        #     claimName: wireguard-lib-modules-claim
         - name: wireguard-lib-modules
           hostPath:
             path: /lib/modules

@@ -9,7 +9,6 @@ generatorOptions:
 resources:
   - wireguard-ns.yaml
   - wireguard-cm.yaml
-  - storageclass.yaml
   - wireguard-pv.yaml
   - wireguard-pvc.yaml
   - deployment.yaml

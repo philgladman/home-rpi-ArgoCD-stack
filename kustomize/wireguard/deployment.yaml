@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: wireguard
+  name: wireguard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wireguard
+  template:
+    metadata:
+      labels:
+        app: wireguard
+    spec:
+      containers:
+      - image: lscr.io/linuxserver/wireguard:latest
+        name: wireguard
+        envFrom:
+        - configMapRef:
+            name: wireguard-configmap 
+        env:
+          - name: SERVERURL
+            valueFrom:
+              secretKeyRef:
+                name: host-url
+                key: url    
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+              - NET_ADMIN
+              - SYS_MODULE
+        ports: 
+          - containerPort: 51820
+            protocol: UDP
+            name: wireguard-udp
+        volumeMounts:
+          - name: wireguard-configs
+            mountPath: /config
+            subPath: config
+          - name: wireguard-lib-modules
+            mountPath: /lib/modules
+      volumes:
+        - name: wireguard-lib-modules
+          hostPath:
+            path: /lib/modules
+            type: DirectoryOrCreate
+        - name: wireguard-configs
+          persistentVolumeClaim:
+            claimName: wireguard-configs-claim

@@ -1,11 +1,12 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: pihole-pihole-claim
+  name: pihole-claim
 spec:
   accessModes:
   - ReadWriteOnce
-  storageClassName: pihole-storage
   resources:
     requests:
       storage: 5Gi
+  volumeName: pihole-pihole-pv
+  storageClassName: ""

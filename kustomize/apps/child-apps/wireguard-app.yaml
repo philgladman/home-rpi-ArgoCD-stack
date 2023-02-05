@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: master-app
+  name: wireguard-app
   namespace: argocd
 spec:
   project: default
@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/philgladman/home-rpi-ArgoCD-stack.git
     targetRevision: nfs-server
-    path: kustomize/apps/child-apps
+    path: kustomize/wireguard
   destination: 
     server: https://kubernetes.default.svc
     namespace: myapp

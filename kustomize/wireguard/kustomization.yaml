@@ -1,19 +1,18 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: pihole
+namespace: wireguard
 
 generatorOptions:
   disableNameSuffixHash: true
 
 resources:
-  - pihole-ns.yaml
+  - wireguard-ns.yaml
+  - wireguard-cm.yaml
+  - wireguard-pv.yaml
+  - wireguard-pvc.yaml
   - deployment.yaml
-  - pihole-cm.yaml
-  - pihole-ingress.yaml
-  - pihole-pv.yaml
-  - pihole-pvc.yaml
-  - pihole-svc.yaml
+  - wireguard-svc.yaml
 
 generators:
   - secret-generator.yaml

@@ -21,13 +21,13 @@ spec:
           - name: USER
             valueFrom:
               secretKeyRef:
-                name: smbcredentials
-                key: smbuser
+                name: smb-credentials
+                key: username
           - name: PASSWORD
             valueFrom:
               secretKeyRef:
-                name: smbcredentials
-                key: smbpass
+                name: smb-credentials
+                key: password
         ports: 
           - containerPort: 139
             name: smb-139
@@ -35,10 +35,10 @@ spec:
             name: smb-445
         volumeMounts:
           - name: samba-persistent-storage
-            mountPath: /NAS-volume
+            mountPath: /nas-vol
       volumes:
         - name: samba-persistent-storage
           persistentVolumeClaim:
-            claimName: my-claim
+            claimName: samba-claim
       nodeSelector:
         disk: disk1

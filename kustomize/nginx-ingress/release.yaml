@@ -361,9 +361,9 @@ spec:
     app.kubernetes.io/instance: nginx-ingress
     app.kubernetes.io/component: controller
 ---
-# Source: nginx-ingress-chart/charts/ingress-nginx/templates/controller-deployment.yaml
+# Source: nginx-ingress-chart/charts/ingress-nginx/templates/controller-daemonset.yaml
 apiVersion: apps/v1
-kind: Deployment
+kind: DaemonSet
 metadata:
   labels:
     helm.sh/chart: ingress-nginx-4.4.0
@@ -381,7 +381,6 @@ spec:
       app.kubernetes.io/name: ingress-nginx
       app.kubernetes.io/instance: nginx-ingress
       app.kubernetes.io/component: controller
-  replicas: 1
   revisionHistoryLimit: 10
   minReadySeconds: 0
   template:

@@ -3,7 +3,17 @@ kind: Kustomization
 
 namespace: monitoring
 
+generatorOptions:
+  disableNameSuffixHash: true
+
 resources:
   - namespace.yaml
+  - grafana-pv.yaml
   - release.yaml
   - grafana-ingress.yaml
+
+patches:
+  - path: grafana-pvc-patch.yaml
+
+generators:
+  - secret-generator.yaml

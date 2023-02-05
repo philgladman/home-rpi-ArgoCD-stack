@@ -1,11 +1,12 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: pihole-dnsmasq-claim
+  name: wireguard-configs-claim
 spec:
   accessModes:
   - ReadWriteOnce
-  storageClassName: pihole-storage
   resources:
     requests:
-      storage: 1Gi
+      storage: 5Gi
+  volumeName: wireguard-configs-pv
+  storageClassName: ""

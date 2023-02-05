@@ -111,7 +111,7 @@ kubectl create secret generic sops-gpg \
 - deploy argocd with `kubectl apply -k kustomize/argocd/.`
 - FYI - argocd release.yaml was created with this helm templating command `helm template argocd charts/argo-cd -f kustomize/argocd/values.yaml --include-crds --debug > kustomize/argocd/release.yaml`
 
-## Step 9.) - Install NFS Driver & NFS Server
+## Step 9.) - Install NFS Driver
 - Install the NFS Driver with `curl -skSL https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/v4.1.0/deploy/install-driver.sh | bash -s v4.1.0 --`
 - if you created a different name for your NFS Volume, us this command to change the name from `/nfs-vol` to your custom name, `sed -i "s|/nfs-vol|<your-custom-name>|g" nfs-driver/kube-nfs-server.yaml`
 
@@ -165,7 +165,7 @@ EOF
 - Now that we have our script configured, lets create a cronjob that runs the script every 5 minutes `echo "*/5 * * * * /home/pi/DYNU/updateIP.sh" >> /var/spool/cron/crontabs/root`. You will need to run this as root, `sudo su`.
 - Now that our Public Ip is getting updated every 5 minutes, we can move forward with installing Wireguard VPN.
 
-### Configure and install Wireguard VPN (wireguard)
+### Configure Wireguard VPN (wireguard)
 - edit the `kustomize/wireguard-cm.yaml` to have your values
 - set the `TZ` variable to have your Timezone.
 - for this demo we will create 2 peers `philiphone` and `philmackbook`. Feel free to change the names, or add more/less. The peer name must only contain letters and numbers.
@@ -175,7 +175,6 @@ EOF
 - replace `www.test.com` below with your url `sed -i "" 's|URL_REPLACE_ME|www.test.com|g' kustomize/wireguard/host-url.enc.yaml`
 - encrypt this url with `sops -e -i kustomize/wireguard/host-url.enc.yaml`
 - On your router, you will need to port foward port 51820 UDP to the ip of the wireguard svc, which we will determine after all our apps are deployed.
-
 
 ## Step 14.) - Commit changes back to repo
 - first we need to update our argocd files to point to your new repo `export NEW_REPO_URL=<your-new-git-repo-url>` (example = https://github.com/philgladman/home-rpi-ArgoCD-stack.git)
@@ -209,5 +208,5 @@ sed -i "" "s|https://github.com/philgladman/home-rpi-ArgoCD-stack.git|$NEW_REPO_
 - Now you can turn your new VPN on and test.
 
 ## MISC
-- Grafana username=`admin` & password=`kubectl get secret --namespace monitoring loki-stack-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo`
+- Grafana username=`admin` & password=`kubectl get secret --namespace monitoring loki-stack-grafana-credentials -o jsonpath="{.data.admin-password}" | base64 --decode ; echo`
 - ArgoCD username=`admin` & password=`kubectl get secret --namespace argocd argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 --decode ; echo`

@@ -4,36 +4,4 @@ metadata:
     name: host-url
 type: Opaque
 stringData:
-    url: ENC[AES256_GCM,data:w0y5HhMY5oJPvnTqkHsM3ZHwUTY=,iv:YrGAqDp+NdkRmjmWARZ5C39kS6hEk1+8CIybGSt4SUY=,tag:1STojl8r+fdtzPHqOKpZEg==,type:str]
-sops:
-    kms: []
-    gcp_kms: []
-    azure_kv: []
-    hc_vault: []
-    age: []
-    lastmodified: "2023-02-04T03:49:33Z"
-    mac: ENC[AES256_GCM,data:CCR4rtnSCHE7Y3YvcqPGqcSTUj5NFFAn/W9+ua6nr+hy1GX/Ip58e/8t6lFipxEyK1PmRACe1Zc52Bv2WQySeFueNfWnKAp7cT2Tcw1cW9FQNiDswyvoGfZxRRbczNX+UsTY9GpP6R7l1kx3QZdRCUAgY7JZ2eMjpNzqDr8XSSc=,iv:lQVD0afaA94x1fJcNhJncoy2u1SNGSh48YRIK3/Xqo0=,tag:X2eJv99xkzNXfozXGi0y+A==,type:str]
-    pgp:
-        - created_at: "2023-02-04T03:49:31Z"
-          enc: |
-            -----BEGIN PGP MESSAGE-----
-
-            hQIMA5O4Cu+lUBGNARAAgzEN2v4vJfGAjD5u0S8C520MGn4FqNPgqNPGWwIXdpbf
-            JlU+pzBUZVhN8eXXlJtKXlq3yybgQQl7zdSyw14JL+WtKl+091My0mA8FjaKrnOw
-            Gl2gEfvPWMxVkVXg2Rb9qEFeqGHWLByjPrO0oMKj/eMHXQAeQPfMdyg3VmtBxp0g
-            KZ0lbAdnFfymOPuoMG1ZHuEIeM+yNXsF09GkmyCZtq4osfqL6UcGETervnXzFtnq
-            06dD371yRJgkmc7MlF8FYRYDf5Q4rUTtYtBaaodz4A68kgkGQ2tKMd19kPE8it7f
-            LhkKyxM4LDlVsXEfLMvLTng1bqFr3lzS2pawem+4VT/zF4mjas64n/h8ffWkaJvl
-            yf21uTEU8+KFnZ9oHFW6CnqC1In5O/btv4MWQPK/WAuPX4URBJNq8+ynNchshb1T
-            XFaX4omiOHCYU4DkxoR/bKaB9VustExeBZQ6iGfn1BW0Ga52iPFkxFrPF0QnOA7x
-            WYSKkDfRt8z50UZXmsNm5CW58WYLPoZFKOPNm8QxNHxH40kZUXPLqRicotdnh7FF
-            e2RFrcT7DZF9M6Y4zMYkBHn0KTc/4Nhj3sQ/T7kmV+hIRT0rUwm5uRGI1OLh4BpT
-            AJc6moonwhgVcJ5IDFm1rV8+GOE5vKvd/RUXBf5ro/oaDwkiaK0s4uDKTFaRWEbU
-            aAEJAhA6pYGzpGvF5WX+7XsmlBUuVbunL9Rh3/mvf3PZ+fTaYaCuSTcnwhChpGr6
-            Nmeeqa/EZRkrMFCHsMxd/4IAVXMUZzTJV2VWNvcS/czQ555y2WtJICN0w0szxXGw
-            Sh+utfuuScE0
-            =tFdG
-            -----END PGP MESSAGE-----
-          fp: F94F68B20C51D9B9C7EE4F7995AE41EF529CB276
-    encrypted_regex: ^(data|stringData)$
-    version: 3.7.3
+    url: URL_REPLACE_ME

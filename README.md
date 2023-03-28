@@ -162,7 +162,7 @@ echo url="https://api.dynu.com/nic/update?username=<your-DYNU-username>&password
 EOF
 ```
 - update ownership and perms of our script `sudo chown root:root ~/DYNU/updateIP.sh && sudo chmod 700 ~/DYNU/updateIP.sh`
-- Now that we have our script configured, lets create a cronjob that runs the script every 5 minutes `echo "*/5 * * * * /home/pi/DYNU/updateIP.sh" >> /var/spool/cron/crontabs/root`. You will need to run this as root, `sudo su`.
+- Now that we have our script configured, lets create a cronjob that runs the script every 5 minutes `echo "*/5 * * * * /home/ubuntu/DYNU/updateIP.sh" >> /var/spool/cron/crontabs/root`. You will need to run this as root, `sudo su`.
 - Now that our DYNU URL is getting updated every 5 minutes with our Public IP, we can move forward with installing Wireguard VPN.
 
 ### Configure Wireguard VPN (wireguard)

@@ -2,9 +2,9 @@ apiVersion: v2
 name: argo-cd-chart
 version: 0.1.0
 appVersion: 0.1.1
-kubeVersion: '>=1.16.0-0'
+kubeVersion: '>=1.23.0-0'
 description: Argo-CD
 dependencies:
   - name: "argo-cd"
-    version: "4.3.3"
+    version: "5.5.2"
     repository: "https://charts.bitnami.com/bitnami"

@@ -6,10 +6,10 @@ metadata:
   labels:
     helm.sh/chart: grafana-6.43.5
     app.kubernetes.io/name: grafana
-    app.kubernetes.io/instance: loki-stack
+    app.kubernetes.io/instance: monitoring
     app.kubernetes.io/version: "8.3.5"
     app.kubernetes.io/managed-by: Helm
-  name: loki-stack-grafana
+  name: monitoring-grafana
   namespace: default
 ---
 # Source: loki-stack/charts/loki/templates/serviceaccount.yaml
@@ -19,11 +19,11 @@ metadata:
   labels:
     app: loki
     chart: loki-2.16.0
-    release: loki-stack
+    release: monitoring
     heritage: Helm
   annotations:
     {}
-  name: loki-stack
+  name: monitoring-loki
   namespace: default
 automountServiceAccountToken: true
 ---
@@ -31,68 +31,69 @@ automountServiceAccountToken: true
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: loki-stack-promtail
+  name: monitoring-promtail
   namespace: default
   labels:
-    helm.sh/chart: promtail-6.7.4
+    helm.sh/chart: promtail-6.15.5
     app.kubernetes.io/name: promtail
-    app.kubernetes.io/instance: loki-stack
-    app.kubernetes.io/version: "2.7.0"
+    app.kubernetes.io/instance: monitoring
+    app.kubernetes.io/version: "2.9.3"
     app.kubernetes.io/managed-by: Helm
 ---
 # Source: loki-stack/charts/grafana/templates/secret.yaml
 apiVersion: v1
 kind: Secret
 metadata:
-  name: loki-stack-grafana
+  name: monitoring-grafana
   namespace: default
   labels:
     helm.sh/chart: grafana-6.43.5
     app.kubernetes.io/name: grafana
-    app.kubernetes.io/instance: loki-stack
+    app.kubernetes.io/instance: monitoring
     app.kubernetes.io/version: "8.3.5"
     app.kubernetes.io/managed-by: Helm
 type: Opaque
 data:
   admin-user: "YWRtaW4="
-  admin-password: "S0dRa3d0cHR1RWxxWWdXQzVzcG9WVDNhNzhWVXM2UzJpNERHQjRYZw=="
+  admin-password: "VmFhNGdqR3hGUVZYSW81Ym50dW5KRDUycjJDaWJqYXpNemYwZGhNSA=="
   ldap-toml: ""
 ---
 # Source: loki-stack/charts/loki/templates/secret.yaml
 apiVersion: v1
 kind: Secret
 metadata:
-  name: loki-stack
+  name: monitoring-loki
   namespace: default
   labels:
     app: loki
     chart: loki-2.16.0
-    release: loki-stack
+    release: monitoring
     heritage: Helm
 data:
-  loki.yaml: YXV0aF9lbmFibGVkOiBmYWxzZQpjaHVua19zdG9yZV9jb25maWc6CiAgbWF4X2xvb2tfYmFja19wZXJpb2Q6IDBzCmNvbXBhY3RvcjoKICBzaGFyZWRfc3RvcmU6IGZpbGVzeXN0ZW0KICB3b3JraW5nX2RpcmVjdG9yeTogL2RhdGEvbG9raS9ib2x0ZGItc2hpcHBlci1jb21wYWN0b3IKaW5nZXN0ZXI6CiAgY2h1bmtfYmxvY2tfc2l6ZTogMjYyMTQ0CiAgY2h1bmtfaWRsZV9wZXJpb2Q6IDNtCiAgY2h1bmtfcmV0YWluX3BlcmlvZDogMW0KICBsaWZlY3ljbGVyOgogICAgcmluZzoKICAgICAgcmVwbGljYXRpb25fZmFjdG9yOiAxCiAgbWF4X3RyYW5zZmVyX3JldHJpZXM6IDAKICB3YWw6CiAgICBkaXI6IC9kYXRhL2xva2kvd2FsCmxpbWl0c19jb25maWc6CiAgZW5mb3JjZV9tZXRyaWNfbmFtZTogZmFsc2UKICBtYXhfZW50cmllc19saW1pdF9wZXJfcXVlcnk6IDUwMDAKICByZWplY3Rfb2xkX3NhbXBsZXM6IHRydWUKICByZWplY3Rfb2xkX3NhbXBsZXNfbWF4X2FnZTogMTY4aAptZW1iZXJsaXN0OgogIGpvaW5fbWVtYmVyczoKICAtICdsb2tpLXN0YWNrLW1lbWJlcmxpc3QnCnNjaGVtYV9jb25maWc6CiAgY29uZmlnczoKICAtIGZyb206ICIyMDIwLTEwLTI0IgogICAgaW5kZXg6CiAgICAgIHBlcmlvZDogMjRoCiAgICAgIHByZWZpeDogaW5kZXhfCiAgICBvYmplY3Rfc3RvcmU6IGZpbGVzeXN0ZW0KICAgIHNjaGVtYTogdjExCiAgICBzdG9yZTogYm9sdGRiLXNoaXBwZXIKc2VydmVyOgogIGdycGNfbGlzdGVuX3BvcnQ6IDkwOTUKICBodHRwX2xpc3Rlbl9wb3J0OiAzMTAwCnN0b3JhZ2VfY29uZmlnOgogIGJvbHRkYl9zaGlwcGVyOgogICAgYWN0aXZlX2luZGV4X2RpcmVjdG9yeTogL2RhdGEvbG9raS9ib2x0ZGItc2hpcHBlci1hY3RpdmUKICAgIGNhY2hlX2xvY2F0aW9uOiAvZGF0YS9sb2tpL2JvbHRkYi1zaGlwcGVyLWNhY2hlCiAgICBjYWNoZV90dGw6IDI0aAogICAgc2hhcmVkX3N0b3JlOiBmaWxlc3lzdGVtCiAgZmlsZXN5c3RlbToKICAgIGRpcmVjdG9yeTogL2RhdGEvbG9raS9jaHVua3MKdGFibGVfbWFuYWdlcjoKICByZXRlbnRpb25fZGVsZXRlc19lbmFibGVkOiBmYWxzZQogIHJldGVudGlvbl9wZXJpb2Q6IDBz
+  loki.yaml: YXV0aF9lbmFibGVkOiBmYWxzZQpjaHVua19zdG9yZV9jb25maWc6CiAgbWF4X2xvb2tfYmFja19wZXJpb2Q6IDBzCmNvbXBhY3RvcjoKICBzaGFyZWRfc3RvcmU6IGZpbGVzeXN0ZW0KICB3b3JraW5nX2RpcmVjdG9yeTogL2RhdGEvbG9raS9ib2x0ZGItc2hpcHBlci1jb21wYWN0b3IKaW5nZXN0ZXI6CiAgY2h1bmtfYmxvY2tfc2l6ZTogMjYyMTQ0CiAgY2h1bmtfaWRsZV9wZXJpb2Q6IDNtCiAgY2h1bmtfcmV0YWluX3BlcmlvZDogMW0KICBsaWZlY3ljbGVyOgogICAgcmluZzoKICAgICAgcmVwbGljYXRpb25fZmFjdG9yOiAxCiAgbWF4X3RyYW5zZmVyX3JldHJpZXM6IDAKICB3YWw6CiAgICBkaXI6IC9kYXRhL2xva2kvd2FsCmxpbWl0c19jb25maWc6CiAgZW5mb3JjZV9tZXRyaWNfbmFtZTogZmFsc2UKICBtYXhfZW50cmllc19saW1pdF9wZXJfcXVlcnk6IDUwMDAKICByZWplY3Rfb2xkX3NhbXBsZXM6IHRydWUKICByZWplY3Rfb2xkX3NhbXBsZXNfbWF4X2FnZTogMTY4aAptZW1iZXJsaXN0OgogIGpvaW5fbWVtYmVyczoKICAtICdtb25pdG9yaW5nLWxva2ktbWVtYmVybGlzdCcKc2NoZW1hX2NvbmZpZzoKICBjb25maWdzOgogIC0gZnJvbTogIjIwMjAtMTAtMjQiCiAgICBpbmRleDoKICAgICAgcGVyaW9kOiAyNGgKICAgICAgcHJlZml4OiBpbmRleF8KICAgIG9iamVjdF9zdG9yZTogZmlsZXN5c3RlbQogICAgc2NoZW1hOiB2MTEKICAgIHN0b3JlOiBib2x0ZGItc2hpcHBlcgpzZXJ2ZXI6CiAgZ3JwY19saXN0ZW5fcG9ydDogOTA5NQogIGh0dHBfbGlzdGVuX3BvcnQ6IDMxMDAKc3RvcmFnZV9jb25maWc6CiAgYm9sdGRiX3NoaXBwZXI6CiAgICBhY3RpdmVfaW5kZXhfZGlyZWN0b3J5OiAvZGF0YS9sb2tpL2JvbHRkYi1zaGlwcGVyLWFjdGl2ZQogICAgY2FjaGVfbG9jYXRpb246IC9kYXRhL2xva2kvYm9sdGRiLXNoaXBwZXItY2FjaGUKICAgIGNhY2hlX3R0bDogMjRoCiAgICBzaGFyZWRfc3RvcmU6IGZpbGVzeXN0ZW0KICBmaWxlc3lzdGVtOgogICAgZGlyZWN0b3J5OiAvZGF0YS9sb2tpL2NodW5rcwp0YWJsZV9tYW5hZ2VyOgogIHJldGVudGlvbl9kZWxldGVzX2VuYWJsZWQ6IGZhbHNlCiAgcmV0ZW50aW9uX3BlcmlvZDogMHM=
 ---
 # Source: loki-stack/charts/promtail/templates/secret.yaml
 apiVersion: v1
 kind: Secret
 metadata:
-  name: loki-stack-promtail
+  name: monitoring-promtail
   namespace: default
   labels:
-    helm.sh/chart: promtail-6.7.4
+    helm.sh/chart: promtail-6.15.5
     app.kubernetes.io/name: promtail
-    app.kubernetes.io/instance: loki-stack
-    app.kubernetes.io/version: "2.7.0"
+    app.kubernetes.io/instance: monitoring
+    app.kubernetes.io/version: "2.9.3"
     app.kubernetes.io/managed-by: Helm
 stringData:
   promtail.yaml: |
     server:
       log_level: info
+      log_format: logfmt
       http_listen_port: 3101
       
     
     clients:
-      - url: http://loki-stack:3100/loki/api/v1/push
+      - url: http://monitoring:3100/loki/api/v1/push
     
     positions:
       filename: /run/promtail/positions.yaml
@@ -120,7 +121,7 @@ stringData:
             target_label: app
           - source_labels:
               - __meta_kubernetes_pod_label_app_kubernetes_io_instance
-              - __meta_kubernetes_pod_label_release
+              - __meta_kubernetes_pod_label_instance
             regex: ^;*([^;]+)(;.*)?$
             action: replace
             target_label: instance
@@ -173,17 +174,21 @@ stringData:
       
     
     limits_config:
+      
+    
+    tracing:
+      enabled: false
 ---
 # Source: loki-stack/charts/grafana/templates/configmap.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: loki-stack-grafana
+  name: monitoring-grafana
   namespace: default
   labels:
     helm.sh/chart: grafana-6.43.5
     app.kubernetes.io/name: grafana
-    app.kubernetes.io/instance: loki-stack
+    app.kubernetes.io/instance: monitoring
     app.kubernetes.io/version: "8.3.5"
     app.kubernetes.io/managed-by: Helm
 data:
@@ -210,7 +215,28 @@ data:
         maxLines: 1000
       name: loki
       type: loki
-      url: http://loki-stack:3100
+      url: http://monitoring:3100
+---
+# Source: loki-stack/charts/grafana/templates/pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: monitoring-grafana
+  namespace: default
+  labels:
+    helm.sh/chart: grafana-6.43.5
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/instance: monitoring
+    app.kubernetes.io/version: "8.3.5"
+    app.kubernetes.io/managed-by: Helm
+  finalizers:
+    - kubernetes.io/pvc-protection
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "10Gi"
 ---
 # Source: loki-stack/charts/grafana/templates/clusterrole.yaml
 kind: ClusterRole
@@ -219,10 +245,10 @@ metadata:
   labels:
     helm.sh/chart: grafana-6.43.5
     app.kubernetes.io/name: grafana
-    app.kubernetes.io/instance: loki-stack
+    app.kubernetes.io/instance: monitoring
     app.kubernetes.io/version: "8.3.5"
     app.kubernetes.io/managed-by: Helm
-  name: loki-stack-grafana-clusterrole
+  name: monitoring-grafana-clusterrole
 rules:
 - apiGroups: [""] # "" indicates the core API group
   resources: ["configmaps", "secrets"]
@@ -232,12 +258,12 @@ rules:
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: loki-stack-promtail
+  name: monitoring-promtail
   labels:
-    helm.sh/chart: promtail-6.7.4
+    helm.sh/chart: promtail-6.15.5
     app.kubernetes.io/name: promtail
-    app.kubernetes.io/instance: loki-stack
-    app.kubernetes.io/version: "2.7.0"
+    app.kubernetes.io/instance: monitoring
+    app.kubernetes.io/version: "2.9.3"
     app.kubernetes.io/managed-by: Helm
 rules:
   - apiGroups:
@@ -257,127 +283,127 @@ rules:
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: loki-stack-grafana-clusterrolebinding
+  name: monitoring-grafana-clusterrolebinding
   labels:
     helm.sh/chart: grafana-6.43.5
     app.kubernetes.io/name: grafana
-    app.kubernetes.io/instance: loki-stack
+    app.kubernetes.io/instance: monitoring
     app.kubernetes.io/version: "8.3.5"
     app.kubernetes.io/managed-by: Helm
 subjects:
   - kind: ServiceAccount
-    name: loki-stack-grafana
+    name: monitoring-grafana
     namespace: default
 roleRef:
   kind: ClusterRole
-  name: loki-stack-grafana-clusterrole
+  name: monitoring-grafana-clusterrole
   apiGroup: rbac.authorization.k8s.io
 ---
 # Source: loki-stack/charts/promtail/templates/clusterrolebinding.yaml
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: loki-stack-promtail
+  name: monitoring-promtail
   labels:
-    helm.sh/chart: promtail-6.7.4
+    helm.sh/chart: promtail-6.15.5
     app.kubernetes.io/name: promtail
-    app.kubernetes.io/instance: loki-stack
-    app.kubernetes.io/version: "2.7.0"
+    app.kubernetes.io/instance: monitoring
+    app.kubernetes.io/version: "2.9.3"
     app.kubernetes.io/managed-by: Helm
 subjects:
   - kind: ServiceAccount
-    name: loki-stack-promtail
+    name: monitoring-promtail
     namespace: default
 roleRef:
   kind: ClusterRole
-  name: loki-stack-promtail
+  name: monitoring-promtail
   apiGroup: rbac.authorization.k8s.io
 ---
 # Source: loki-stack/charts/grafana/templates/role.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: loki-stack-grafana
+  name: monitoring-grafana
   namespace: default
   labels:
     helm.sh/chart: grafana-6.43.5
     app.kubernetes.io/name: grafana
-    app.kubernetes.io/instance: loki-stack
+    app.kubernetes.io/instance: monitoring
     app.kubernetes.io/version: "8.3.5"
     app.kubernetes.io/managed-by: Helm
 rules:
 - apiGroups:      ['extensions']
   resources:      ['podsecuritypolicies']
   verbs:          ['use']
-  resourceNames:  [loki-stack-grafana]
+  resourceNames:  [monitoring-grafana]
 ---
 # Source: loki-stack/charts/loki/templates/role.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: loki-stack
+  name: monitoring-loki
   namespace: default
   labels:
     app: loki
     chart: loki-2.16.0
-    release: loki-stack
+    release: monitoring
     heritage: Helm
 rules:
 - apiGroups:      ['extensions']
   resources:      ['podsecuritypolicies']
   verbs:          ['use']
-  resourceNames:  [loki-stack]
+  resourceNames:  [monitoring-loki]
 ---
 # Source: loki-stack/charts/grafana/templates/rolebinding.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: loki-stack-grafana
+  name: monitoring-grafana
   namespace: default
   labels:
     helm.sh/chart: grafana-6.43.5
     app.kubernetes.io/name: grafana
-    app.kubernetes.io/instance: loki-stack
+    app.kubernetes.io/instance: monitoring
     app.kubernetes.io/version: "8.3.5"
     app.kubernetes.io/managed-by: Helm
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: loki-stack-grafana
+  name: monitoring-grafana
 subjects:
 - kind: ServiceAccount
-  name: loki-stack-grafana
+  name: monitoring-grafana
   namespace: default
 ---
 # Source: loki-stack/charts/loki/templates/rolebinding.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: loki-stack
+  name: monitoring-loki
   namespace: default
   labels:
     app: loki
     chart: loki-2.16.0
-    release: loki-stack
+    release: monitoring
     heritage: Helm
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: loki-stack
+  name: monitoring-loki
 subjects:
 - kind: ServiceAccount
-  name: loki-stack
+  name: monitoring-loki
 ---
 # Source: loki-stack/charts/grafana/templates/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: loki-stack-grafana
+  name: monitoring-grafana
   namespace: default
   labels:
     helm.sh/chart: grafana-6.43.5
     app.kubernetes.io/name: grafana
-    app.kubernetes.io/instance: loki-stack
+    app.kubernetes.io/instance: monitoring
     app.kubernetes.io/version: "8.3.5"
     app.kubernetes.io/managed-by: Helm
 spec:
@@ -389,18 +415,18 @@ spec:
       targetPort: 3000
   selector:
     app.kubernetes.io/name: grafana
-    app.kubernetes.io/instance: loki-stack
+    app.kubernetes.io/instance: monitoring
 ---
 # Source: loki-stack/charts/loki/templates/service-headless.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: loki-stack-headless
+  name: monitoring-loki-headless
   namespace: default
   labels:
     app: loki
     chart: loki-2.16.0
-    release: loki-stack
+    release: monitoring
     heritage: Helm
     variant: headless
 spec:
@@ -412,18 +438,18 @@ spec:
       targetPort: http-metrics
   selector:
     app: loki
-    release: loki-stack
+    release: monitoring
 ---
 # Source: loki-stack/charts/loki/templates/service-memberlist.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: loki-stack-memberlist
+  name: monitoring-loki-memberlist
   namespace: default
   labels:
     app: loki
     chart: loki-2.16.0
-    release: loki-stack
+    release: monitoring
     heritage: Helm
 spec:
   type: ClusterIP
@@ -436,18 +462,18 @@ spec:
       protocol: TCP
   selector:
     app: loki
-    release: loki-stack
+    release: monitoring
 ---
 # Source: loki-stack/charts/loki/templates/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: loki-stack
+  name: monitoring-loki
   namespace: default
   labels:
     app: loki
     chart: loki-2.16.0
-    release: loki-stack
+    release: monitoring
     heritage: Helm
   annotations:
     {}
@@ -460,43 +486,43 @@ spec:
       targetPort: http-metrics
   selector:
     app: loki
-    release: loki-stack
+    release: monitoring
 ---
 # Source: loki-stack/charts/promtail/templates/daemonset.yaml
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: loki-stack-promtail
+  name: monitoring-promtail
   namespace: default
   labels:
-    helm.sh/chart: promtail-6.7.4
+    helm.sh/chart: promtail-6.15.5
     app.kubernetes.io/name: promtail
-    app.kubernetes.io/instance: loki-stack
-    app.kubernetes.io/version: "2.7.0"
+    app.kubernetes.io/instance: monitoring
+    app.kubernetes.io/version: "2.9.3"
     app.kubernetes.io/managed-by: Helm
 spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: promtail
-      app.kubernetes.io/instance: loki-stack
+      app.kubernetes.io/instance: monitoring
   updateStrategy:
     {}
   template:
     metadata:
       labels:
         app.kubernetes.io/name: promtail
-        app.kubernetes.io/instance: loki-stack
+        app.kubernetes.io/instance: monitoring
       annotations:
-        checksum/config: 56df07d4588af48806773a053465d0a47d8c35a21d196e3c1b4c4aa035cd985a
+        checksum/config: 94b81ba71edc4f292c4b55aed85d18473f74b0a51c5e5cc5ea108759507f713f
     spec:
-      serviceAccountName: loki-stack-promtail
+      serviceAccountName: monitoring-promtail
       enableServiceLinks: true
       securityContext:
         runAsGroup: 0
         runAsUser: 0
       containers:
         - name: promtail
-          image: "docker.io/grafana/promtail:2.7.0"
+          image: "docker.io/grafana/promtail:2.9.3"
           imagePullPolicy: IfNotPresent
           args:
             - "-config.file=/etc/promtail/promtail.yaml"
@@ -545,7 +571,7 @@ spec:
       volumes:
         - name: config
           secret:
-            secretName: loki-stack-promtail
+            secretName: monitoring-promtail
         - hostPath:
             path: /run/promtail
           name: run
@@ -560,12 +586,12 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: loki-stack-grafana
+  name: monitoring-grafana
   namespace: default
   labels:
     helm.sh/chart: grafana-6.43.5
     app.kubernetes.io/name: grafana
-    app.kubernetes.io/instance: loki-stack
+    app.kubernetes.io/instance: monitoring
     app.kubernetes.io/version: "8.3.5"
     app.kubernetes.io/managed-by: Helm
 spec:
@@ -574,26 +600,37 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: grafana
-      app.kubernetes.io/instance: loki-stack
+      app.kubernetes.io/instance: monitoring
   strategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
         app.kubernetes.io/name: grafana
-        app.kubernetes.io/instance: loki-stack
+        app.kubernetes.io/instance: monitoring
       annotations:
-        checksum/config: 39058c38f82f311a94f9ee4ab0da3349b5e01dc237f923dbc35c30fe38cfeeff
+        checksum/config: a976b7f1b55c65fc584662567283800d54bc81f93248714972bd9b15de71872c
         checksum/dashboards-json-config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
         checksum/sc-dashboard-provider-config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
-        checksum/secret: 12afab033c740a36786966600be027dc3f6e44250da41627888cfd5bbd553d18
+        checksum/secret: c3a268c6042ffa407f46408698e191b23465f8a54d40cde01ea3580487e02a60
     spec:      
-      serviceAccountName: loki-stack-grafana
+      serviceAccountName: monitoring-grafana
       automountServiceAccountToken: true
       securityContext:
         fsGroup: 472
         runAsGroup: 472
         runAsUser: 472
+      initContainers:
+        - name: init-chown-data
+          image: "busybox:1.31.1"
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            runAsNonRoot: false
+            runAsUser: 0
+          command: ["chown", "-R", "472:472", "/var/lib/grafana"]
+          volumeMounts:
+            - name: storage
+              mountPath: "/var/lib/grafana"
       enableServiceLinks: true
       containers:
         - name: grafana-sc-datasources
@@ -611,12 +648,12 @@ spec:
             - name: REQ_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: loki-stack-grafana
+                  name: monitoring-grafana
                   key: admin-user
             - name: REQ_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: loki-stack-grafana
+                  name: monitoring-grafana
                   key: admin-password
             - name: REQ_URL
               value: http://localhost:3000/api/admin/provisioning/datasources/reload
@@ -647,12 +684,12 @@ spec:
             - name: GF_SECURITY_ADMIN_USER
               valueFrom:
                 secretKeyRef:
-                  name: loki-stack-grafana
+                  name: monitoring-grafana
                   key: admin-user
             - name: GF_SECURITY_ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: loki-stack-grafana
+                  name: monitoring-grafana
                   key: admin-password
             - name: GF_PATHS_DATA
               value: /var/lib/grafana/
@@ -676,9 +713,10 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: loki-stack-grafana
+            name: monitoring-grafana
         - name: storage
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: monitoring-grafana
         - name: sc-datasources-volume
           emptyDir: {}
 ---
@@ -686,12 +724,12 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: loki-stack
+  name: monitoring-loki
   namespace: default
   labels:
     app: loki
     chart: loki-2.16.0
-    release: loki-stack
+    release: monitoring
     heritage: Helm
   annotations:
     {}
@@ -701,22 +739,22 @@ spec:
   selector:
     matchLabels:
       app: loki
-      release: loki-stack
-  serviceName: loki-stack-headless
+      release: monitoring
+  serviceName: monitoring-loki-headless
   updateStrategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
         app: loki
-        name: loki-stack
-        release: loki-stack
+        name: monitoring-loki
+        release: monitoring
       annotations:
-        checksum/config: 4f967088c8b1634add82c93f2fd15868de21fd6a77fc841c48b989e7e403247c
+        checksum/config: c52cd27dc94f1045479197adb0b03c7d6ff63ff93574d4c685360d20e5fc1aac
         prometheus.io/port: http-metrics
         prometheus.io/scrape: "true"
     spec:
-      serviceAccountName: loki-stack
+      serviceAccountName: monitoring-loki
       securityContext:
         fsGroup: 10001
         runAsGroup: 10001
@@ -775,7 +813,7 @@ spec:
           emptyDir: {}
         - name: config
           secret:
-            secretName: loki-stack
+            secretName: monitoring-loki
         - name: storage
           emptyDir: {}
 ---
@@ -786,10 +824,10 @@ metadata:
   labels:
     helm.sh/chart: grafana-6.43.5
     app.kubernetes.io/name: grafana
-    app.kubernetes.io/instance: loki-stack
+    app.kubernetes.io/instance: monitoring
     app.kubernetes.io/version: "8.3.5"
     app.kubernetes.io/managed-by: Helm
-  name: loki-stack-grafana-test
+  name: monitoring-grafana-test
   namespace: default
   annotations:
     "helm.sh/hook": test-success
@@ -799,7 +837,7 @@ metadata:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: loki-stack-grafana-test
+  name: monitoring-grafana-test
   namespace: default
   annotations:
     "helm.sh/hook": test-success
@@ -807,13 +845,13 @@ metadata:
   labels:
     helm.sh/chart: grafana-6.43.5
     app.kubernetes.io/name: grafana
-    app.kubernetes.io/instance: loki-stack
+    app.kubernetes.io/instance: monitoring
     app.kubernetes.io/version: "8.3.5"
     app.kubernetes.io/managed-by: Helm
 data:
   run.sh: |-
     @test "Test Health" {
-      url="http://loki-stack-grafana/api/health"
+      url="http://monitoring-grafana/api/health"
 
       code=$(wget --server-response --spider --timeout 90 --tries 10 ${url} 2>&1 | awk '/^  HTTP/{print $2}')
       [ "$code" == "200" ]
@@ -823,7 +861,7 @@ data:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: loki-stack-grafana-test
+  name: monitoring-grafana-test
   namespace: default
   annotations:
     "helm.sh/hook": test-success
@@ -831,20 +869,20 @@ metadata:
   labels:
     helm.sh/chart: grafana-6.43.5
     app.kubernetes.io/name: grafana
-    app.kubernetes.io/instance: loki-stack
+    app.kubernetes.io/instance: monitoring
     app.kubernetes.io/version: "8.3.5"
     app.kubernetes.io/managed-by: Helm
 rules:
 - apiGroups:      ['policy']
   resources:      ['podsecuritypolicies']
   verbs:          ['use']
-  resourceNames:  [loki-stack-grafana-test]
+  resourceNames:  [monitoring-grafana-test]
 ---
 # Source: loki-stack/charts/grafana/templates/tests/test-rolebinding.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: loki-stack-grafana-test
+  name: monitoring-grafana-test
   namespace: default
   annotations:
     "helm.sh/hook": test-success
@@ -852,27 +890,27 @@ metadata:
   labels:
     helm.sh/chart: grafana-6.43.5
     app.kubernetes.io/name: grafana
-    app.kubernetes.io/instance: loki-stack
+    app.kubernetes.io/instance: monitoring
     app.kubernetes.io/version: "8.3.5"
     app.kubernetes.io/managed-by: Helm
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: loki-stack-grafana-test
+  name: monitoring-grafana-test
 subjects:
 - kind: ServiceAccount
-  name: loki-stack-grafana-test
+  name: monitoring-grafana-test
   namespace: default
 ---
 # Source: loki-stack/charts/grafana/templates/tests/test.yaml
 apiVersion: v1
 kind: Pod
 metadata:
-  name: loki-stack-grafana-test
+  name: monitoring-grafana-test
   labels:
     helm.sh/chart: grafana-6.43.5
     app.kubernetes.io/name: grafana
-    app.kubernetes.io/instance: loki-stack
+    app.kubernetes.io/instance: monitoring
     app.kubernetes.io/version: "8.3.5"
     app.kubernetes.io/managed-by: Helm
   annotations:
@@ -880,9 +918,9 @@ metadata:
     "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded"
   namespace: default
 spec:
-  serviceAccountName: loki-stack-grafana-test
+  serviceAccountName: monitoring-grafana-test
   containers:
-    - name: loki-stack-test
+    - name: monitoring-test
       image: "bats/bats:v1.4.1"
       imagePullPolicy: "IfNotPresent"
       command: ["/opt/bats/bin/bats", "-t", "/tests/run.sh"]
@@ -893,5 +931,5 @@ spec:
   volumes:
   - name: tests
     configMap:
-      name: loki-stack-grafana-test
+      name: monitoring-grafana-test
   restartPolicy: Never

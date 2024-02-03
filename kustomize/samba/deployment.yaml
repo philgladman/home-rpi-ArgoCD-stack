@@ -15,7 +15,7 @@ spec:
         app: samba
     spec:
       containers:
-      - image: philgman1121/samba
+      - image: philgman1121/samba-amd:1.0
         name: samba
         env:
           - name: USER

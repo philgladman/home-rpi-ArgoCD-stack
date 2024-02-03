@@ -5,7 +5,8 @@ metadata:
 spec:
   accessModes:
   - ReadWriteOnce
-  # storageClassName: my-local-storage
   resources:
     requests:
       storage: 50Gi
+  volumeName: samba-samba-pv
+  storageClassName: ""

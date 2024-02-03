@@ -40,6 +40,7 @@ metadata:
     app.kubernetes.io/version: "2.9.3"
     app.kubernetes.io/managed-by: Helm
 ---
+<<<<<<< HEAD
 # Source: loki-stack/charts/grafana/templates/secret.yaml
 apiVersion: v1
 kind: Secret
@@ -58,6 +59,8 @@ data:
   admin-password: "VmFhNGdqR3hGUVZYSW81Ym50dW5KRDUycjJDaWJqYXpNemYwZGhNSA=="
   ldap-toml: ""
 ---
+=======
+>>>>>>> main
 # Source: loki-stack/charts/loki/templates/secret.yaml
 apiVersion: v1
 kind: Secret
@@ -237,6 +240,27 @@ spec:
   resources:
     requests:
       storage: "10Gi"
+---
+# Source: loki-stack/charts/grafana/templates/pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: loki-stack-grafana
+  namespace: default
+  labels:
+    helm.sh/chart: grafana-6.43.5
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/instance: loki-stack
+    app.kubernetes.io/version: "8.3.5"
+    app.kubernetes.io/managed-by: Helm
+  finalizers:
+    - kubernetes.io/pvc-protection
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "50Gi"
 ---
 # Source: loki-stack/charts/grafana/templates/clusterrole.yaml
 kind: ClusterRole
@@ -612,7 +636,10 @@ spec:
         checksum/config: a976b7f1b55c65fc584662567283800d54bc81f93248714972bd9b15de71872c
         checksum/dashboards-json-config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
         checksum/sc-dashboard-provider-config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+<<<<<<< HEAD
         checksum/secret: c3a268c6042ffa407f46408698e191b23465f8a54d40cde01ea3580487e02a60
+=======
+>>>>>>> main
     spec:      
       serviceAccountName: monitoring-grafana
       automountServiceAccountToken: true
@@ -631,6 +658,10 @@ spec:
           volumeMounts:
             - name: storage
               mountPath: "/var/lib/grafana"
+<<<<<<< HEAD
+=======
+              subPath: grafana
+>>>>>>> main
       enableServiceLinks: true
       containers:
         - name: grafana-sc-datasources
@@ -648,12 +679,20 @@ spec:
             - name: REQ_USERNAME
               valueFrom:
                 secretKeyRef:
+<<<<<<< HEAD
                   name: monitoring-grafana
+=======
+                  name: loki-stack-grafana-credentials
+>>>>>>> main
                   key: admin-user
             - name: REQ_PASSWORD
               valueFrom:
                 secretKeyRef:
+<<<<<<< HEAD
                   name: monitoring-grafana
+=======
+                  name: loki-stack-grafana-credentials
+>>>>>>> main
                   key: admin-password
             - name: REQ_URL
               value: http://localhost:3000/api/admin/provisioning/datasources/reload
@@ -671,6 +710,7 @@ spec:
               subPath: grafana.ini
             - name: storage
               mountPath: "/var/lib/grafana"
+              subPath: grafana
             - name: config
               mountPath: "/etc/grafana/provisioning/datasources/datasources.yaml"
               subPath: "datasources.yaml"
@@ -684,12 +724,20 @@ spec:
             - name: GF_SECURITY_ADMIN_USER
               valueFrom:
                 secretKeyRef:
+<<<<<<< HEAD
                   name: monitoring-grafana
+=======
+                  name: loki-stack-grafana-credentials
+>>>>>>> main
                   key: admin-user
             - name: GF_SECURITY_ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
+<<<<<<< HEAD
                   name: monitoring-grafana
+=======
+                  name: loki-stack-grafana-credentials
+>>>>>>> main
                   key: admin-password
             - name: GF_PATHS_DATA
               value: /var/lib/grafana/
@@ -716,7 +764,11 @@ spec:
             name: monitoring-grafana
         - name: storage
           persistentVolumeClaim:
+<<<<<<< HEAD
             claimName: monitoring-grafana
+=======
+            claimName: loki-stack-grafana
+>>>>>>> main
         - name: sc-datasources-volume
           emptyDir: {}
 ---

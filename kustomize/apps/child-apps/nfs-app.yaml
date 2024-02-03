@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: monitoring-app
+  name: nfs-app
   namespace: argocd
 spec:
   project: default
@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/philgladman/home-rpi-ArgoCD-stack.git
     targetRevision: main
-    path: kustomize/monitoring
+    path: kustomize/nfs-driver
   destination: 
     server: https://kubernetes.default.svc
     namespace: myapp

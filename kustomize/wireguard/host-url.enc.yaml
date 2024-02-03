@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: host-url
+type: Opaque
+stringData:
+    url: URL_REPLACE_ME

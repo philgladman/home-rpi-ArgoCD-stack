@@ -1,10 +1,269 @@
 ---
+<<<<<<< HEAD
 # Source: crds/application.yaml
 # Source: https://raw.githubusercontent.com/argoproj/argo-cd/v{version}/manifests/crds/application-crd.yaml
 # Version: 2.9.5
+=======
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-application-controller/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+automountServiceAccountToken: true
+metadata:
+  name: argocd-application-controller
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-application-controller
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: application-controller
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+---
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-applicationset/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+automountServiceAccountToken: true
+metadata:
+  name: argocd-applicationset-controller
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-applicationset-controller
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: applicationset-controller
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+---
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-notifications/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+automountServiceAccountToken: true
+metadata:
+  name: argocd-notifications-controller
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-notifications-controller
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: notifications-controller
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+---
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-repo-server/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+automountServiceAccountToken: true
+metadata:
+  name: argocd-repo-server
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-repo-server
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: repo-server
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+---
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-server/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+automountServiceAccountToken: true
+metadata:
+  name: argocd-server
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-server
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: server
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+---
+# Source: argo-cd-chart/charts/argo-cd/templates/dex/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+automountServiceAccountToken: true
+metadata:
+  name: argocd-dex-server
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-dex-server
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: dex-server
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+---
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-configs/argocd-notifications-secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: argocd-notifications-secret
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-notifications-controller
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: notifications-controller
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+type: Opaque
+stringData:
+---
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-configs/argocd-secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: argocd-secret
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-secret
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: server
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+type: Opaque
+---
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-configs/argocd-cm.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-cm
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: server
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+data:
+  admin.enabled: "true"
+  application.instanceLabelKey: argocd.argoproj.io/instance
+  exec.enabled: "false"
+  kustomize.buildOptions: --enable-alpha-plugins --enable-exec
+  server.rbac.log.enforce.enable: "false"
+  timeout.hard.reconciliation: 0s
+  timeout.reconciliation: 180s
+  url: ""
+---
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-configs/argocd-cmd-params-cm.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cmd-params-cm
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-cmd-params-cm
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: server
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+data:
+  controller.log.format: text
+  controller.log.level: info
+  controller.operation.processors: "10"
+  controller.repo.server.timeout.seconds: "60"
+  controller.self.heal.timeout.seconds: "5"
+  controller.status.processors: "20"
+  otlp.address: ""
+  redis.server: argocd-redis:6379
+  repo.server: argocd-repo-server:8081
+  reposerver.log.format: text
+  reposerver.log.level: info
+  reposerver.parallelism.limit: "0"
+  server.basehref: /
+  server.dex.server: https://argocd-dex-server:5556
+  server.dex.server.strict.tls: "false"
+  server.disable.auth: "false"
+  server.enable.gzip: "false"
+  server.insecure: "false"
+  server.log.format: text
+  server.log.level: info
+  server.repo.server.strict.tls: "false"
+  server.rootpath: ""
+  server.staticassets: /shared/app
+  server.x.frame.options: sameorigin
+---
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-configs/argocd-gpg-keys-cm.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-gpg-keys-cm
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-gpg-keys-cm
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+---
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-configs/argocd-notifications-cm.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-notifications-cm
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-notifications-controller
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: notifications-controller
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+data:
+  context: |
+    argocdUrl:
+---
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-configs/argocd-rbac-cm.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-rbac-cm
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-rbac-cm
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: server
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+data:
+  policy.csv: ""
+  policy.default: ""
+  scopes: '[groups]'
+---
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-configs/argocd-ssh-known-hosts-cm.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-ssh-known-hosts-cm
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-ssh-known-hosts-cm
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+data:
+  ssh_known_hosts: |
+    bitbucket.org ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAubiN81eDcafrgMeLzaFPsw2kNvEcqTKl/VqLat/MaB33pZy0y3rJZtnqwR2qOOvbwKZYKiEO1O6VqNEBxKvJJelCq0dTXWT5pbO2gDXC6h6QDXCaHo6pOHGPUy+YBaGQRGuSusMEASYiWunYN0vCAI8QaXnWMXNMdFP3jHAJH0eDsoiGnLPBlBp4TNm6rYI74nMzgz3B9IikW4WVK+dc8KZJZWYjAuORU3jc1c/NPskD2ASinf8v3xnfXeukU0sJ5N6m5E8VLjObPEO+mN2t/FZTMZLiFqPWc/ALSqnMnnhwrNi2rbfg/rd/IpL8Le3pSBne8+seeFVBoGqzHM9yXw==
+    github.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg=
+    github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl
+    github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==
+    gitlab.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFSMqzJeV9rUzU4kWitGjeR4PWSa29SPqJ1fVkhtj3Hw9xjLVXVYrU9QlYWrOLXBpQ6KWjbjTDTdDkoohFzgbEY=
+    gitlab.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAfuCHKVTjquxvt6CM6tdG4SLp1Btn/nOeHHE5UOzRdf
+    gitlab.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCsj2bNKTBSpIYDEGk9KxsGh3mySTRgMtXL583qmBpzeQ+jqCMRgBqB98u3z++J1sKlXHWfM9dyhSevkMwSbhoR8XIq/U0tCNyokEi/ueaBMCvbcTHhO7FcwzY92WK4Yt0aGROY5qX2UKSeOvuP4D6TPqKF1onrSzH9bx9XUf2lEdWT/ia1NEKjunUqu1xOB/StKDHMoX4/OKyIzuS0q/T1zOATthvasJFoPrAjkohTyaDUz2LN5JoH839hViyEG82yB+MjcFV5MU3N1l1QL3cVUCh93xSaua1N85qivl+siMkPGbO5xR/En4iEY6K2XPASUEMaieWVNTRCtJ4S8H+9
+    ssh.dev.azure.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7Hr1oTWqNqOlzGJOfGJ4NakVyIzf1rXYd4d7wo6jBlkLvCA4odBlL0mDUyZ0/QUfTTqeu+tm22gOsv+VrVTMk6vwRU75gY/y9ut5Mb3bR5BV58dKXyq9A9UeB5Cakehn5Zgm6x1mKoVyf+FFn26iYqXJRgzIZZcZ5V6hrE0Qg39kZm4az48o0AUbf6Sp4SLdvnuMa2sVNwHBboS7EJkm57XQPVU3/QpyNLHbWDdzwtrlS+ez30S3AdYhLKEOxAG8weOnyrtLJAUen9mTkol8oII1edf7mWWbWVf0nBmly21+nZcmCTISQBtdcyPaEno7fFQMDD26/s0lfKob4Kw8H
+    vs-ssh.visualstudio.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7Hr1oTWqNqOlzGJOfGJ4NakVyIzf1rXYd4d7wo6jBlkLvCA4odBlL0mDUyZ0/QUfTTqeu+tm22gOsv+VrVTMk6vwRU75gY/y9ut5Mb3bR5BV58dKXyq9A9UeB5Cakehn5Zgm6x1mKoVyf+FFn26iYqXJRgzIZZcZ5V6hrE0Qg39kZm4az48o0AUbf6Sp4SLdvnuMa2sVNwHBboS7EJkm57XQPVU3/QpyNLHbWDdzwtrlS+ez30S3AdYhLKEOxAG8weOnyrtLJAUen9mTkol8oII1edf7mWWbWVf0nBmly21+nZcmCTISQBtdcyPaEno7fFQMDD26/s0lfKob4Kw8H
+---
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-configs/argocd-tls-certs-cm.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-tls-certs-cm
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-tls-certs-cm
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+---
+# Source: argo-cd-chart/charts/argo-cd/templates/crds/crd-application.yaml
+>>>>>>> main
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
+  annotations:
+    "helm.sh/resource-policy": keep
   labels:
     app.kubernetes.io/name: applications.argoproj.io
     app.kubernetes.io/part-of: argocd
@@ -631,6 +890,7 @@ spec:
                                 templating ("3")
                               type: string
                           type: object
+<<<<<<< HEAD
                         kustomize:
                           description: Kustomize holds kustomize specific options
                           properties:
@@ -743,6 +1003,92 @@ spec:
                         plugin:
                           description: Plugin holds config management plugin specific
                             options
+=======
+                        type: array
+                      passCredentials:
+                        description: PassCredentials pass credentials to all domains
+                          (Helm's --pass-credentials)
+                        type: boolean
+                      releaseName:
+                        description: ReleaseName is the Helm release name to use.
+                          If omitted it will use the application name
+                        type: string
+                      skipCrds:
+                        description: SkipCrds skips custom resource definition installation
+                          step (Helm's --skip-crds)
+                        type: boolean
+                      valueFiles:
+                        description: ValuesFiles is a list of Helm value files to
+                          use when generating a template
+                        items:
+                          type: string
+                        type: array
+                      values:
+                        description: Values specifies Helm values to be passed to
+                          helm template, typically defined as a block
+                        type: string
+                      version:
+                        description: Version is the Helm version to use for templating
+                          ("3")
+                        type: string
+                    type: object
+                  kustomize:
+                    description: Kustomize holds kustomize specific options
+                    properties:
+                      commonAnnotations:
+                        additionalProperties:
+                          type: string
+                        description: CommonAnnotations is a list of additional annotations
+                          to add to rendered manifests
+                        type: object
+                      commonLabels:
+                        additionalProperties:
+                          type: string
+                        description: CommonLabels is a list of additional labels to
+                          add to rendered manifests
+                        type: object
+                      forceCommonAnnotations:
+                        description: ForceCommonAnnotations specifies whether to force
+                          applying common annotations to resources for Kustomize apps
+                        type: boolean
+                      forceCommonLabels:
+                        description: ForceCommonLabels specifies whether to force
+                          applying common labels to resources for Kustomize apps
+                        type: boolean
+                      images:
+                        description: Images is a list of Kustomize image override
+                          specifications
+                        items:
+                          description: KustomizeImage represents a Kustomize image
+                            definition in the format [old_image_name=]<image_name>:<image_tag>
+                          type: string
+                        type: array
+                      namePrefix:
+                        description: NamePrefix is a prefix appended to resources
+                          for Kustomize apps
+                        type: string
+                      nameSuffix:
+                        description: NameSuffix is a suffix appended to resources
+                          for Kustomize apps
+                        type: string
+                      version:
+                        description: Version controls which version of Kustomize to
+                          use for rendering manifests
+                        type: string
+                    type: object
+                  path:
+                    description: Path is a directory path within the Git repository,
+                      and is only valid for applications sourced from Git.
+                    type: string
+                  plugin:
+                    description: Plugin holds config management plugin specific options
+                    properties:
+                      env:
+                        description: Env is a list of environment variable entries
+                        items:
+                          description: EnvEntry represents an entry in the application's
+                            environment
+>>>>>>> main
                           properties:
                             env:
                               description: Env is a list of environment variable entries
@@ -846,9 +1192,39 @@ spec:
               link to repository with application definition and additional parameters
               link definition revision.
             properties:
+<<<<<<< HEAD
               destination:
                 description: Destination is a reference to the target Kubernetes server
                   and namespace
+=======
+              conditions:
+                description: Conditions is a list of currently observed application
+                  conditions
+                items:
+                  description: ApplicationCondition contains details about an application
+                    condition, which is usally an error or warning
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the time the condition was
+                        last observed
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message contains human-readable message indicating
+                        details about condition
+                      type: string
+                    type:
+                      description: Type is an application condition type
+                      type: string
+                  required:
+                  - message
+                  - type
+                  type: object
+                type: array
+              health:
+                description: Health contains information about the application's current
+                  health status
+>>>>>>> main
                 properties:
                   name:
                     description: Name is an alternate way of specifying the target
@@ -1294,6 +1670,7 @@ spec:
                               items:
                                 type: string
                               type: array
+<<<<<<< HEAD
                             tlas:
                               description: TLAS is a list of Jsonnet Top-level Arguments
                               items:
@@ -1311,6 +1688,16 @@ spec:
                                 - value
                                 type: object
                               type: array
+=======
+                            values:
+                              description: Values specifies Helm values to be passed
+                                to helm template, typically defined as a block
+                              type: string
+                            version:
+                              description: Version is the Helm version to use for
+                                templating ("3")
+                              type: string
+>>>>>>> main
                           type: object
                         recurse:
                           description: Recurse specifies whether to scan a directory
@@ -1394,6 +1781,7 @@ spec:
                           description: Version is the Helm version to use for templating
                             ("3")
                           type: string
+<<<<<<< HEAD
                       type: object
                     kustomize:
                       description: Kustomize holds kustomize specific options
@@ -1456,6 +1844,17 @@ spec:
                               path:
                                 type: string
                               target:
+=======
+                        plugin:
+                          description: Plugin holds config management plugin specific
+                            options
+                          properties:
+                            env:
+                              description: Env is a list of environment variable entries
+                              items:
+                                description: EnvEntry represents an entry in the application's
+                                  environment
+>>>>>>> main
                                 properties:
                                   annotationSelector:
                                     type: string
@@ -1826,6 +2225,7 @@ spec:
                                   name:
                                     description: Name is the name of the Helm parameter
                                     type: string
+<<<<<<< HEAD
                                   value:
                                     description: Value is the value for the Helm parameter
                                     type: string
@@ -1944,6 +2344,12 @@ spec:
                                       version:
                                         type: string
                                     type: object
+=======
+                                  version:
+                                    description: Version is the Helm version to use
+                                      for templating ("3")
+                                    type: string
+>>>>>>> main
                                 type: object
                               type: array
                             replicas:
@@ -1995,11 +2401,22 @@ spec:
                                 - name
                                 - value
                                 type: object
+<<<<<<< HEAD
                               type: array
                             name:
                               type: string
                             parameters:
                               items:
+=======
+                              path:
+                                description: Path is a directory path within the Git
+                                  repository, and is only valid for applications sourced
+                                  from Git.
+                                type: string
+                              plugin:
+                                description: Plugin holds config management plugin
+                                  specific options
+>>>>>>> main
                                 properties:
                                   array:
                                     description: Array is the value of an array type
@@ -2376,10 +2793,71 @@ spec:
                         required:
                         - repoURL
                         type: object
+<<<<<<< HEAD
                       type: array
                   required:
                   - deployedAt
                   - id
+=======
+                    required:
+                    - revision
+                    type: object
+                required:
+                - operation
+                - phase
+                - startedAt
+                type: object
+              reconciledAt:
+                description: ReconciledAt indicates when the application state was
+                  reconciled using the latest git version
+                format: date-time
+                type: string
+              resourceHealthSource:
+                description: 'ResourceHealthSource indicates where the resource health
+                  status is stored: inline if not set or appTree'
+                type: string
+              resources:
+                description: Resources is a list of Kubernetes resources managed by
+                  this application
+                items:
+                  description: 'ResourceStatus holds the current sync and health status
+                    of a resource TODO: describe members of this type'
+                  properties:
+                    group:
+                      type: string
+                    health:
+                      description: HealthStatus contains information about the currently
+                        observed health state of an application or resource
+                      properties:
+                        message:
+                          description: Message is a human-readable informational message
+                            describing the health status
+                          type: string
+                        status:
+                          description: Status holds the status code of the application
+                            or resource
+                          type: string
+                      type: object
+                    hook:
+                      type: boolean
+                    kind:
+                      type: string
+                    name:
+                      type: string
+                    namespace:
+                      type: string
+                    requiresPruning:
+                      type: boolean
+                    status:
+                      description: SyncStatusCode is a type which represents possible
+                        comparison results
+                      type: string
+                    syncWave:
+                      format: int64
+                      type: integer
+                    version:
+                      type: string
+>>>>>>> main
                   type: object
                 type: array
               observedAt:
@@ -2486,7 +2964,25 @@ spec:
                               properties:
                                 group:
                                   type: string
+<<<<<<< HEAD
                                 kind:
+=======
+                                type: array
+                              values:
+                                description: Values specifies Helm values to be passed
+                                  to helm template, typically defined as a block
+                                type: string
+                              version:
+                                description: Version is the Helm version to use for
+                                  templating ("3")
+                                type: string
+                            type: object
+                          kustomize:
+                            description: Kustomize holds kustomize specific options
+                            properties:
+                              commonAnnotations:
+                                additionalProperties:
+>>>>>>> main
                                   type: string
                                 name:
                                   type: string
@@ -2502,6 +2998,7 @@ spec:
                               (Helm) which to sync the application to If omitted,
                               will use the revision specified in app spec.
                             type: string
+<<<<<<< HEAD
                           revisions:
                             description: Revisions is the list of revision (Git) or
                               chart version (Helm) which to sync each source in sources
@@ -2514,15 +3011,106 @@ spec:
                             description: Source overrides the source definition set
                               in the application. This is typically set in a Rollback
                               operation and is nil during a Sync operation
+=======
+                          plugin:
+                            description: Plugin holds config management plugin specific
+                              options
+>>>>>>> main
                             properties:
                               chart:
                                 description: Chart is a Helm chart name, and must
                                   be specified for applications sourced from a Helm
                                   repo.
                                 type: string
+<<<<<<< HEAD
                               directory:
                                 description: Directory holds path/directory specific
                                   options
+=======
+                            type: object
+                          repoURL:
+                            description: RepoURL is the URL to the repository (Git
+                              or Helm) that contains the application manifests
+                            type: string
+                          targetRevision:
+                            description: TargetRevision defines the revision of the
+                              source to sync the application to. In case of Git, this
+                              can be commit, tag, or branch. If omitted, will equal
+                              to HEAD. In case of Helm, this is a semver tag for the
+                              Chart's version.
+                            type: string
+                        required:
+                        - repoURL
+                        type: object
+                    required:
+                    - destination
+                    - source
+                    type: object
+                  revision:
+                    description: Revision contains information about the revision
+                      the comparison has been performed to
+                    type: string
+                  status:
+                    description: Status is the sync state of the comparison
+                    type: string
+                required:
+                - status
+                type: object
+            type: object
+        required:
+        - metadata
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources: {}
+---
+# Source: argo-cd-chart/charts/argo-cd/templates/crds/crd-applicationset.yaml
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    "helm.sh/resource-policy": keep
+  labels:
+    app.kubernetes.io/name: applicationsets.argoproj.io
+    app.kubernetes.io/part-of: argocd
+  name: applicationsets.argoproj.io
+spec:
+  group: argoproj.io
+  names:
+    kind: ApplicationSet
+    listKind: ApplicationSetList
+    plural: applicationsets
+    shortNames:
+    - appset
+    - appsets
+    singular: applicationset
+  scope: Namespaced
+  versions:
+  - name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        properties:
+          apiVersion:
+            type: string
+          kind:
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              generators:
+                items:
+                  properties:
+                    clusterDecisionResource:
+                      properties:
+                        configMapRef:
+                          type: string
+                        labelSelector:
+                          properties:
+                            matchExpressions:
+                              items:
+>>>>>>> main
                                 properties:
                                   exclude:
                                     description: Exclude contains a glob pattern to
@@ -8696,6 +9284,7 @@ spec:
                                             required:
                                             - repoURL
                                             type: object
+<<<<<<< HEAD
                                           sources:
                                             items:
                                               properties:
@@ -8991,6 +9580,32 @@ spec:
                                               type: string
                                             type: object
                                           name:
+=======
+                                          type: array
+                                        passCredentials:
+                                          type: boolean
+                                        releaseName:
+                                          type: string
+                                        skipCrds:
+                                          type: boolean
+                                        valueFiles:
+                                          items:
+                                            type: string
+                                          type: array
+                                        values:
+                                          type: string
+                                        version:
+                                          type: string
+                                      type: object
+                                    kustomize:
+                                      properties:
+                                        commonAnnotations:
+                                          additionalProperties:
+                                            type: string
+                                          type: object
+                                        commonLabels:
+                                          additionalProperties:
+>>>>>>> main
                                             type: string
                                           namespace:
                                             type: string
@@ -9216,6 +9831,7 @@ spec:
                                                 type: object
                                               path:
                                                 type: string
+<<<<<<< HEAD
                                               plugin:
                                                 properties:
                                                   env:
@@ -9251,6 +9867,71 @@ spec:
                                                     type: array
                                                 type: object
                                               ref:
+=======
+                                            type: object
+                                          type: array
+                                        ignoreMissingValueFiles:
+                                          type: boolean
+                                        parameters:
+                                          items:
+                                            properties:
+                                              forceString:
+                                                type: boolean
+                                              name:
+                                                type: string
+                                              value:
+                                                type: string
+                                            type: object
+                                          type: array
+                                        passCredentials:
+                                          type: boolean
+                                        releaseName:
+                                          type: string
+                                        skipCrds:
+                                          type: boolean
+                                        valueFiles:
+                                          items:
+                                            type: string
+                                          type: array
+                                        values:
+                                          type: string
+                                        version:
+                                          type: string
+                                      type: object
+                                    kustomize:
+                                      properties:
+                                        commonAnnotations:
+                                          additionalProperties:
+                                            type: string
+                                          type: object
+                                        commonLabels:
+                                          additionalProperties:
+                                            type: string
+                                          type: object
+                                        forceCommonAnnotations:
+                                          type: boolean
+                                        forceCommonLabels:
+                                          type: boolean
+                                        images:
+                                          items:
+                                            type: string
+                                          type: array
+                                        namePrefix:
+                                          type: string
+                                        nameSuffix:
+                                          type: string
+                                        version:
+                                          type: string
+                                      type: object
+                                    path:
+                                      type: string
+                                    plugin:
+                                      properties:
+                                        env:
+                                          items:
+                                            properties:
+                                              name:
+>>>>>>> main
                                                 type: string
                                               repoURL:
                                                 type: string
@@ -9789,6 +10470,7 @@ spec:
                                                 type: object
                                               path:
                                                 type: string
+<<<<<<< HEAD
                                               plugin:
                                                 properties:
                                                   env:
@@ -10044,6 +10726,69 @@ spec:
                                               type: object
                                             type: array
                                           syncPolicy:
+=======
+                                            type: object
+                                          type: array
+                                        ignoreMissingValueFiles:
+                                          type: boolean
+                                        parameters:
+                                          items:
+                                            properties:
+                                              forceString:
+                                                type: boolean
+                                              name:
+                                                type: string
+                                              value:
+                                                type: string
+                                            type: object
+                                          type: array
+                                        passCredentials:
+                                          type: boolean
+                                        releaseName:
+                                          type: string
+                                        skipCrds:
+                                          type: boolean
+                                        valueFiles:
+                                          items:
+                                            type: string
+                                          type: array
+                                        values:
+                                          type: string
+                                        version:
+                                          type: string
+                                      type: object
+                                    kustomize:
+                                      properties:
+                                        commonAnnotations:
+                                          additionalProperties:
+                                            type: string
+                                          type: object
+                                        commonLabels:
+                                          additionalProperties:
+                                            type: string
+                                          type: object
+                                        forceCommonAnnotations:
+                                          type: boolean
+                                        forceCommonLabels:
+                                          type: boolean
+                                        images:
+                                          items:
+                                            type: string
+                                          type: array
+                                        namePrefix:
+                                          type: string
+                                        nameSuffix:
+                                          type: string
+                                        version:
+                                          type: string
+                                      type: object
+                                    path:
+                                      type: string
+                                    plugin:
+                                      properties:
+                                        env:
+                                          items:
+>>>>>>> main
                                             properties:
                                               automated:
                                                 properties:
@@ -10136,6 +10881,7 @@ spec:
                                     properties:
                                       api:
                                         type: string
+<<<<<<< HEAD
                                       basicAuth:
                                         properties:
                                           passwordRef:
@@ -10149,6 +10895,121 @@ spec:
                                             - secretName
                                             type: object
                                           username:
+=======
+                                    required:
+                                    - name
+                                    - value
+                                    type: object
+                                  type: array
+                                project:
+                                  type: string
+                                revisionHistoryLimit:
+                                  format: int64
+                                  type: integer
+                                source:
+                                  properties:
+                                    chart:
+                                      type: string
+                                    directory:
+                                      properties:
+                                        exclude:
+                                          type: string
+                                        include:
+                                          type: string
+                                        jsonnet:
+                                          properties:
+                                            extVars:
+                                              items:
+                                                properties:
+                                                  code:
+                                                    type: boolean
+                                                  name:
+                                                    type: string
+                                                  value:
+                                                    type: string
+                                                required:
+                                                - name
+                                                - value
+                                                type: object
+                                              type: array
+                                            libs:
+                                              items:
+                                                type: string
+                                              type: array
+                                            tlas:
+                                              items:
+                                                properties:
+                                                  code:
+                                                    type: boolean
+                                                  name:
+                                                    type: string
+                                                  value:
+                                                    type: string
+                                                required:
+                                                - name
+                                                - value
+                                                type: object
+                                              type: array
+                                          type: object
+                                        recurse:
+                                          type: boolean
+                                      type: object
+                                    helm:
+                                      properties:
+                                        fileParameters:
+                                          items:
+                                            properties:
+                                              name:
+                                                type: string
+                                              path:
+                                                type: string
+                                            type: object
+                                          type: array
+                                        ignoreMissingValueFiles:
+                                          type: boolean
+                                        parameters:
+                                          items:
+                                            properties:
+                                              forceString:
+                                                type: boolean
+                                              name:
+                                                type: string
+                                              value:
+                                                type: string
+                                            type: object
+                                          type: array
+                                        passCredentials:
+                                          type: boolean
+                                        releaseName:
+                                          type: string
+                                        skipCrds:
+                                          type: boolean
+                                        valueFiles:
+                                          items:
+                                            type: string
+                                          type: array
+                                        values:
+                                          type: string
+                                        version:
+                                          type: string
+                                      type: object
+                                    kustomize:
+                                      properties:
+                                        commonAnnotations:
+                                          additionalProperties:
+                                            type: string
+                                          type: object
+                                        commonLabels:
+                                          additionalProperties:
+                                            type: string
+                                          type: object
+                                        forceCommonAnnotations:
+                                          type: boolean
+                                        forceCommonLabels:
+                                          type: boolean
+                                        images:
+                                          items:
+>>>>>>> main
                                             type: string
                                         required:
                                         - passwordRef
@@ -11720,6 +12581,7 @@ spec:
                                                     type: boolean
                                                   name:
                                                     type: string
+<<<<<<< HEAD
                                                   value:
                                                     type: string
                                                 required:
@@ -11733,6 +12595,10 @@ spec:
                                               type: array
                                             tlas:
                                               items:
+=======
+                                                type: object
+                                              kustomize:
+>>>>>>> main
                                                 properties:
                                                   code:
                                                     type: boolean
@@ -12768,9 +13634,82 @@ spec:
                                 type: object
                               clusters:
                                 properties:
+<<<<<<< HEAD
                                   selector:
                                     properties:
                                       matchExpressions:
+=======
+                                  bitbucketServer:
+                                    properties:
+                                      api:
+                                        type: string
+                                      basicAuth:
+                                        properties:
+                                          passwordRef:
+                                            properties:
+                                              key:
+                                                type: string
+                                              secretName:
+                                                type: string
+                                            required:
+                                            - key
+                                            - secretName
+                                            type: object
+                                          username:
+                                            type: string
+                                        required:
+                                        - passwordRef
+                                        - username
+                                        type: object
+                                      project:
+                                        type: string
+                                      repo:
+                                        type: string
+                                    required:
+                                    - api
+                                    - project
+                                    - repo
+                                    type: object
+                                  filters:
+                                    items:
+                                      properties:
+                                        branchMatch:
+                                          type: string
+                                      type: object
+                                    type: array
+                                  gitea:
+                                    properties:
+                                      api:
+                                        type: string
+                                      insecure:
+                                        type: boolean
+                                      owner:
+                                        type: string
+                                      repo:
+                                        type: string
+                                      tokenRef:
+                                        properties:
+                                          key:
+                                            type: string
+                                          secretName:
+                                            type: string
+                                        required:
+                                        - key
+                                        - secretName
+                                        type: object
+                                    required:
+                                    - api
+                                    - owner
+                                    - repo
+                                    type: object
+                                  github:
+                                    properties:
+                                      api:
+                                        type: string
+                                      appSecretName:
+                                        type: string
+                                      labels:
+>>>>>>> main
                                         items:
                                           properties:
                                             key:
@@ -12791,6 +13730,37 @@ spec:
                                           type: string
                                         type: object
                                     type: object
+<<<<<<< HEAD
+=======
+                                  gitlab:
+                                    properties:
+                                      api:
+                                        type: string
+                                      labels:
+                                        items:
+                                          type: string
+                                        type: array
+                                      project:
+                                        type: string
+                                      pullRequestState:
+                                        type: string
+                                      tokenRef:
+                                        properties:
+                                          key:
+                                            type: string
+                                          secretName:
+                                            type: string
+                                        required:
+                                        - key
+                                        - secretName
+                                        type: object
+                                    required:
+                                    - project
+                                    type: object
+                                  requeueAfterSeconds:
+                                    format: int64
+                                    type: integer
+>>>>>>> main
                                   template:
                                     properties:
                                       metadata:
@@ -13338,6 +14308,7 @@ spec:
                                     - metadata
                                     - spec
                                     type: object
+<<<<<<< HEAD
                                   values:
                                     additionalProperties:
                                       type: string
@@ -13374,6 +14345,184 @@ spec:
                                     type: integer
                                   revision:
                                     type: string
+                                  template:
+=======
+                                type: object
+                              scmProvider:
+                                properties:
+                                  azureDevOps:
+                                    properties:
+                                      accessTokenRef:
+                                        properties:
+                                          key:
+                                            type: string
+                                          secretName:
+                                            type: string
+                                        required:
+                                        - key
+                                        - secretName
+                                        type: object
+                                      allBranches:
+                                        type: boolean
+                                      api:
+                                        type: string
+                                      organization:
+                                        type: string
+                                      teamProject:
+                                        type: string
+                                    required:
+                                    - accessTokenRef
+                                    - organization
+                                    - teamProject
+                                    type: object
+                                  bitbucket:
+                                    properties:
+                                      allBranches:
+                                        type: boolean
+                                      appPasswordRef:
+                                        properties:
+                                          key:
+                                            type: string
+                                          secretName:
+                                            type: string
+                                        required:
+                                        - key
+                                        - secretName
+                                        type: object
+                                      owner:
+                                        type: string
+                                      user:
+                                        type: string
+                                    required:
+                                    - appPasswordRef
+                                    - owner
+                                    - user
+                                    type: object
+                                  bitbucketServer:
+>>>>>>> main
+                                    properties:
+                                      allBranches:
+                                        type: boolean
+                                      api:
+                                        type: string
+                                      basicAuth:
+                                        properties:
+                                          passwordRef:
+                                            properties:
+                                              key:
+                                                type: string
+                                              secretName:
+                                                type: string
+                                            required:
+                                            - key
+                                            - secretName
+                                            type: object
+                                          username:
+                                            type: string
+                                        required:
+                                        - passwordRef
+                                        - username
+                                        type: object
+                                      project:
+                                        type: string
+                                    required:
+                                    - api
+                                    - project
+                                    type: object
+                                  cloneProtocol:
+                                    type: string
+                                  filters:
+                                    items:
+                                      properties:
+                                        branchMatch:
+                                          type: string
+                                        labelMatch:
+                                          type: string
+                                        pathsDoNotExist:
+                                          items:
+                                            type: string
+                                          type: array
+                                        pathsExist:
+                                          items:
+                                            type: string
+                                          type: array
+                                        repositoryMatch:
+                                          type: string
+                                      type: object
+                                    type: array
+                                  gitea:
+                                    properties:
+                                      allBranches:
+                                        type: boolean
+                                      api:
+                                        type: string
+                                      insecure:
+                                        type: boolean
+                                      owner:
+                                        type: string
+                                      tokenRef:
+                                        properties:
+                                          key:
+                                            type: string
+                                          secretName:
+                                            type: string
+                                        required:
+                                        - key
+                                        - secretName
+                                        type: object
+                                    required:
+                                    - api
+                                    - owner
+                                    type: object
+                                  github:
+                                    properties:
+                                      allBranches:
+                                        type: boolean
+                                      api:
+                                        type: string
+                                      appSecretName:
+                                        type: string
+                                      organization:
+                                        type: string
+                                      tokenRef:
+                                        properties:
+                                          key:
+                                            type: string
+                                          secretName:
+                                            type: string
+                                        required:
+                                        - key
+                                        - secretName
+                                        type: object
+                                    required:
+                                    - organization
+                                    type: object
+                                  gitlab:
+                                    properties:
+                                      allBranches:
+                                        type: boolean
+                                      api:
+                                        type: string
+                                      group:
+                                        type: string
+                                      includeSubgroups:
+                                        type: boolean
+                                      tokenRef:
+                                        properties:
+                                          key:
+                                            type: string
+                                          secretName:
+                                            type: string
+                                        required:
+                                        - key
+                                        - secretName
+                                        type: object
+                                    required:
+                                    - group
+                                    type: object
+                                  requeueAfterSeconds:
+                                    format: int64
+                                    type: integer
                                   template:
                                     properties:
                                       metadata:
@@ -13523,6 +14672,233 @@ spec:
                                                       type: object
                                                     type: array
                                                   passCredentials:
+<<<<<<< HEAD
+=======
+                                                    type: boolean
+                                                  releaseName:
+                                                    type: string
+                                                  skipCrds:
+                                                    type: boolean
+                                                  valueFiles:
+                                                    items:
+                                                      type: string
+                                                    type: array
+                                                  values:
+                                                    type: string
+                                                  version:
+                                                    type: string
+                                                type: object
+                                              kustomize:
+                                                properties:
+                                                  commonAnnotations:
+                                                    additionalProperties:
+                                                      type: string
+                                                    type: object
+                                                  commonLabels:
+                                                    additionalProperties:
+                                                      type: string
+                                                    type: object
+                                                  forceCommonAnnotations:
+                                                    type: boolean
+                                                  forceCommonLabels:
+                                                    type: boolean
+                                                  images:
+                                                    items:
+                                                      type: string
+                                                    type: array
+                                                  namePrefix:
+                                                    type: string
+                                                  nameSuffix:
+                                                    type: string
+                                                  version:
+                                                    type: string
+                                                type: object
+                                              path:
+                                                type: string
+                                              plugin:
+                                                properties:
+                                                  env:
+                                                    items:
+                                                      properties:
+                                                        name:
+                                                          type: string
+                                                        value:
+                                                          type: string
+                                                      required:
+                                                      - name
+                                                      - value
+                                                      type: object
+                                                    type: array
+                                                  name:
+                                                    type: string
+                                                type: object
+                                              repoURL:
+                                                type: string
+                                              targetRevision:
+                                                type: string
+                                            required:
+                                            - repoURL
+                                            type: object
+                                          syncPolicy:
+                                            properties:
+                                              automated:
+                                                properties:
+                                                  allowEmpty:
+                                                    type: boolean
+                                                  prune:
+                                                    type: boolean
+                                                  selfHeal:
+                                                    type: boolean
+                                                type: object
+                                              retry:
+                                                properties:
+                                                  backoff:
+                                                    properties:
+                                                      duration:
+                                                        type: string
+                                                      factor:
+                                                        format: int64
+                                                        type: integer
+                                                      maxDuration:
+                                                        type: string
+                                                    type: object
+                                                  limit:
+                                                    format: int64
+                                                    type: integer
+                                                type: object
+                                              syncOptions:
+                                                items:
+                                                  type: string
+                                                type: array
+                                            type: object
+                                        required:
+                                        - destination
+                                        - project
+                                        - source
+                                        type: object
+                                    required:
+                                    - metadata
+                                    - spec
+                                    type: object
+                                type: object
+                              selector:
+                                properties:
+                                  matchExpressions:
+                                    items:
+                                      properties:
+                                        key:
+                                          type: string
+                                        operator:
+                                          type: string
+                                        values:
+                                          items:
+                                            type: string
+                                          type: array
+                                      required:
+                                      - key
+                                      - operator
+                                      type: object
+                                    type: array
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    type: object
+                                type: object
+                            type: object
+                          type: array
+                        template:
+                          properties:
+                            metadata:
+                              properties:
+                                annotations:
+                                  additionalProperties:
+                                    type: string
+                                  type: object
+                                finalizers:
+                                  items:
+                                    type: string
+                                  type: array
+                                labels:
+                                  additionalProperties:
+                                    type: string
+                                  type: object
+                                name:
+                                  type: string
+                                namespace:
+                                  type: string
+                              type: object
+                            spec:
+                              properties:
+                                destination:
+                                  properties:
+                                    name:
+                                      type: string
+                                    namespace:
+                                      type: string
+                                    server:
+                                      type: string
+                                  type: object
+                                ignoreDifferences:
+                                  items:
+                                    properties:
+                                      group:
+                                        type: string
+                                      jqPathExpressions:
+                                        items:
+                                          type: string
+                                        type: array
+                                      jsonPointers:
+                                        items:
+                                          type: string
+                                        type: array
+                                      kind:
+                                        type: string
+                                      managedFieldsManagers:
+                                        items:
+                                          type: string
+                                        type: array
+                                      name:
+                                        type: string
+                                      namespace:
+                                        type: string
+                                    required:
+                                    - kind
+                                    type: object
+                                  type: array
+                                info:
+                                  items:
+                                    properties:
+                                      name:
+                                        type: string
+                                      value:
+                                        type: string
+                                    required:
+                                    - name
+                                    - value
+                                    type: object
+                                  type: array
+                                project:
+                                  type: string
+                                revisionHistoryLimit:
+                                  format: int64
+                                  type: integer
+                                source:
+                                  properties:
+                                    chart:
+                                      type: string
+                                    directory:
+                                      properties:
+                                        exclude:
+                                          type: string
+                                        include:
+                                          type: string
+                                        jsonnet:
+                                          properties:
+                                            extVars:
+                                              items:
+                                                properties:
+                                                  code:
+>>>>>>> main
                                                     type: boolean
                                                   releaseName:
                                                     type: string
@@ -13564,6 +14940,7 @@ spec:
                                                     type: string
                                                   nameSuffix:
                                                     type: string
+<<<<<<< HEAD
                                                   namespace:
                                                     type: string
                                                   patches:
@@ -13615,6 +14992,171 @@ spec:
                                                     type: string
                                                 type: object
                                               path:
+=======
+                                                required:
+                                                - name
+                                                - value
+                                                type: object
+                                              type: array
+                                          type: object
+                                        recurse:
+                                          type: boolean
+                                      type: object
+                                    helm:
+                                      properties:
+                                        fileParameters:
+                                          items:
+                                            properties:
+                                              name:
+                                                type: string
+                                              path:
+                                                type: string
+                                            type: object
+                                          type: array
+                                        ignoreMissingValueFiles:
+                                          type: boolean
+                                        parameters:
+                                          items:
+                                            properties:
+                                              forceString:
+                                                type: boolean
+                                              name:
+                                                type: string
+                                              value:
+                                                type: string
+                                            type: object
+                                          type: array
+                                        passCredentials:
+                                          type: boolean
+                                        releaseName:
+                                          type: string
+                                        skipCrds:
+                                          type: boolean
+                                        valueFiles:
+                                          items:
+                                            type: string
+                                          type: array
+                                        values:
+                                          type: string
+                                        version:
+                                          type: string
+                                      type: object
+                                    kustomize:
+                                      properties:
+                                        commonAnnotations:
+                                          additionalProperties:
+                                            type: string
+                                          type: object
+                                        commonLabels:
+                                          additionalProperties:
+                                            type: string
+                                          type: object
+                                        forceCommonAnnotations:
+                                          type: boolean
+                                        forceCommonLabels:
+                                          type: boolean
+                                        images:
+                                          items:
+                                            type: string
+                                          type: array
+                                        namePrefix:
+                                          type: string
+                                        nameSuffix:
+                                          type: string
+                                        version:
+                                          type: string
+                                      type: object
+                                    path:
+                                      type: string
+                                    plugin:
+                                      properties:
+                                        env:
+                                          items:
+                                            properties:
+                                              name:
+                                                type: string
+                                              value:
+                                                type: string
+                                            required:
+                                            - name
+                                            - value
+                                            type: object
+                                          type: array
+                                        name:
+                                          type: string
+                                      type: object
+                                    repoURL:
+                                      type: string
+                                    targetRevision:
+                                      type: string
+                                  required:
+                                  - repoURL
+                                  type: object
+                                syncPolicy:
+                                  properties:
+                                    automated:
+                                      properties:
+                                        allowEmpty:
+                                          type: boolean
+                                        prune:
+                                          type: boolean
+                                        selfHeal:
+                                          type: boolean
+                                      type: object
+                                    retry:
+                                      properties:
+                                        backoff:
+                                          properties:
+                                            duration:
+                                              type: string
+                                            factor:
+                                              format: int64
+                                              type: integer
+                                            maxDuration:
+                                              type: string
+                                          type: object
+                                        limit:
+                                          format: int64
+                                          type: integer
+                                      type: object
+                                    syncOptions:
+                                      items:
+                                        type: string
+                                      type: array
+                                  type: object
+                              required:
+                              - destination
+                              - project
+                              - source
+                              type: object
+                          required:
+                          - metadata
+                          - spec
+                          type: object
+                      required:
+                      - generators
+                      type: object
+                    merge:
+                      properties:
+                        generators:
+                          items:
+                            properties:
+                              clusterDecisionResource:
+                                properties:
+                                  configMapRef:
+                                    type: string
+                                  labelSelector:
+                                    properties:
+                                      matchExpressions:
+                                        items:
+                                          properties:
+                                            key:
+                                              type: string
+                                            operator:
+                                              type: string
+                                            values:
+                                              items:
+>>>>>>> main
                                                 type: string
                                               plugin:
                                                 properties:
@@ -16565,6 +18107,7 @@ spec:
                                 type: object
                               selector:
                                 properties:
+<<<<<<< HEAD
                                   matchExpressions:
                                     items:
                                       properties:
@@ -16626,9 +18169,13 @@ spec:
                                   type: object
                                 ignoreDifferences:
                                   items:
+=======
+                                  bitbucketServer:
+>>>>>>> main
                                     properties:
                                       group:
                                         type: string
+<<<<<<< HEAD
                                       jqPathExpressions:
                                         items:
                                           type: string
@@ -16644,10 +18191,54 @@ spec:
                                           type: string
                                         type: array
                                       name:
+=======
+                                      basicAuth:
+                                        properties:
+                                          passwordRef:
+                                            properties:
+                                              key:
+                                                type: string
+                                              secretName:
+                                                type: string
+                                            required:
+                                            - key
+                                            - secretName
+                                            type: object
+                                          username:
+                                            type: string
+                                        required:
+                                        - passwordRef
+                                        - username
+                                        type: object
+                                      project:
+                                        type: string
+                                      repo:
+                                        type: string
+                                    required:
+                                    - api
+                                    - project
+                                    - repo
+                                    type: object
+                                  filters:
+                                    items:
+                                      properties:
+                                        branchMatch:
+                                          type: string
+                                      type: object
+                                    type: array
+                                  gitea:
+                                    properties:
+                                      api:
+                                        type: string
+                                      insecure:
+                                        type: boolean
+                                      owner:
+>>>>>>> main
                                         type: string
                                       namespace:
                                         type: string
                                     required:
+<<<<<<< HEAD
                                     - kind
                                     type: object
                                   type: array
@@ -16720,6 +18311,92 @@ spec:
                                       properties:
                                         fileParameters:
                                           items:
+=======
+                                    - api
+                                    - owner
+                                    - repo
+                                    type: object
+                                  github:
+                                    properties:
+                                      api:
+                                        type: string
+                                      appSecretName:
+                                        type: string
+                                      labels:
+                                        items:
+                                          type: string
+                                        type: array
+                                      owner:
+                                        type: string
+                                      repo:
+                                        type: string
+                                      tokenRef:
+                                        properties:
+                                          key:
+                                            type: string
+                                          secretName:
+                                            type: string
+                                        required:
+                                        - key
+                                        - secretName
+                                        type: object
+                                    required:
+                                    - owner
+                                    - repo
+                                    type: object
+                                  gitlab:
+                                    properties:
+                                      api:
+                                        type: string
+                                      labels:
+                                        items:
+                                          type: string
+                                        type: array
+                                      project:
+                                        type: string
+                                      pullRequestState:
+                                        type: string
+                                      tokenRef:
+                                        properties:
+                                          key:
+                                            type: string
+                                          secretName:
+                                            type: string
+                                        required:
+                                        - key
+                                        - secretName
+                                        type: object
+                                    required:
+                                    - project
+                                    type: object
+                                  requeueAfterSeconds:
+                                    format: int64
+                                    type: integer
+                                  template:
+                                    properties:
+                                      metadata:
+                                        properties:
+                                          annotations:
+                                            additionalProperties:
+                                              type: string
+                                            type: object
+                                          finalizers:
+                                            items:
+                                              type: string
+                                            type: array
+                                          labels:
+                                            additionalProperties:
+                                              type: string
+                                            type: object
+                                          name:
+                                            type: string
+                                          namespace:
+                                            type: string
+                                        type: object
+                                      spec:
+                                        properties:
+                                          destination:
+>>>>>>> main
                                             properties:
                                               name:
                                                 type: string
@@ -16803,9 +18480,32 @@ spec:
                                                     type: string
                                                   kind:
                                                     type: string
+<<<<<<< HEAD
                                                   labelSelector:
                                                     type: string
                                                   name:
+=======
+                                                type: object
+                                              kustomize:
+                                                properties:
+                                                  commonAnnotations:
+                                                    additionalProperties:
+                                                      type: string
+                                                    type: object
+                                                  commonLabels:
+                                                    additionalProperties:
+                                                      type: string
+                                                    type: object
+                                                  forceCommonAnnotations:
+                                                    type: boolean
+                                                  forceCommonLabels:
+                                                    type: boolean
+                                                  images:
+                                                    items:
+                                                      type: string
+                                                    type: array
+                                                  namePrefix:
+>>>>>>> main
                                                     type: string
                                                   namespace:
                                                     type: string
@@ -16866,8 +18566,118 @@ spec:
                                               string:
                                                 type: string
                                             type: object
+<<<<<<< HEAD
+=======
+                                        required:
+                                        - destination
+                                        - project
+                                        - source
+                                        type: object
+                                    required:
+                                    - metadata
+                                    - spec
+                                    type: object
+                                type: object
+                              scmProvider:
+                                properties:
+                                  azureDevOps:
+                                    properties:
+                                      accessTokenRef:
+                                        properties:
+                                          key:
+                                            type: string
+                                          secretName:
+                                            type: string
+                                        required:
+                                        - key
+                                        - secretName
+                                        type: object
+                                      allBranches:
+                                        type: boolean
+                                      api:
+                                        type: string
+                                      organization:
+                                        type: string
+                                      teamProject:
+                                        type: string
+                                    required:
+                                    - accessTokenRef
+                                    - organization
+                                    - teamProject
+                                    type: object
+                                  bitbucket:
+                                    properties:
+                                      allBranches:
+                                        type: boolean
+                                      appPasswordRef:
+                                        properties:
+                                          key:
+                                            type: string
+                                          secretName:
+                                            type: string
+                                        required:
+                                        - key
+                                        - secretName
+                                        type: object
+                                      owner:
+                                        type: string
+                                      user:
+                                        type: string
+                                    required:
+                                    - appPasswordRef
+                                    - owner
+                                    - user
+                                    type: object
+                                  bitbucketServer:
+                                    properties:
+                                      allBranches:
+                                        type: boolean
+                                      api:
+                                        type: string
+                                      basicAuth:
+                                        properties:
+                                          passwordRef:
+                                            properties:
+                                              key:
+                                                type: string
+                                              secretName:
+                                                type: string
+                                            required:
+                                            - key
+                                            - secretName
+                                            type: object
+                                          username:
+                                            type: string
+                                        required:
+                                        - passwordRef
+                                        - username
+                                        type: object
+                                      project:
+                                        type: string
+                                    required:
+                                    - api
+                                    - project
+                                    type: object
+                                  cloneProtocol:
+                                    type: string
+                                  filters:
+                                    items:
+                                      properties:
+                                        branchMatch:
+                                          type: string
+                                        labelMatch:
+                                          type: string
+                                        pathsDoNotExist:
+                                          items:
+                                            type: string
+                                          type: array
+                                        pathsExist:
+                                          items:
+                                            type: string
+>>>>>>> main
                                           type: array
                                       type: object
+<<<<<<< HEAD
                                     ref:
                                       type: string
                                     repoURL:
@@ -16879,6 +18689,57 @@ spec:
                                   type: object
                                 sources:
                                   items:
+=======
+                                    type: array
+                                  gitea:
+                                    properties:
+                                      allBranches:
+                                        type: boolean
+                                      api:
+                                        type: string
+                                      insecure:
+                                        type: boolean
+                                      owner:
+                                        type: string
+                                      tokenRef:
+                                        properties:
+                                          key:
+                                            type: string
+                                          secretName:
+                                            type: string
+                                        required:
+                                        - key
+                                        - secretName
+                                        type: object
+                                    required:
+                                    - api
+                                    - owner
+                                    type: object
+                                  github:
+                                    properties:
+                                      allBranches:
+                                        type: boolean
+                                      api:
+                                        type: string
+                                      appSecretName:
+                                        type: string
+                                      organization:
+                                        type: string
+                                      tokenRef:
+                                        properties:
+                                          key:
+                                            type: string
+                                          secretName:
+                                            type: string
+                                        required:
+                                        - key
+                                        - secretName
+                                        type: object
+                                    required:
+                                    - organization
+                                    type: object
+                                  gitlab:
+>>>>>>> main
                                     properties:
                                       chart:
                                         type: string
@@ -17009,7 +18870,20 @@ spec:
                                                   properties:
                                                     annotationSelector:
                                                       type: string
+<<<<<<< HEAD
                                                     group:
+=======
+                                                    type: array
+                                                  values:
+                                                    type: string
+                                                  version:
+                                                    type: string
+                                                type: object
+                                              kustomize:
+                                                properties:
+                                                  commonAnnotations:
+                                                    additionalProperties:
+>>>>>>> main
                                                       type: string
                                                     kind:
                                                       type: string
@@ -17087,6 +18961,7 @@ spec:
                                     required:
                                     - repoURL
                                     type: object
+<<<<<<< HEAD
                                   type: array
                                 syncPolicy:
                                   properties:
@@ -17162,6 +19037,38 @@ spec:
                         requeueAfterSeconds:
                           format: int64
                           type: integer
+=======
+                                type: object
+                              selector:
+                                properties:
+                                  matchExpressions:
+                                    items:
+                                      properties:
+                                        key:
+                                          type: string
+                                        operator:
+                                          type: string
+                                        values:
+                                          items:
+                                            type: string
+                                          type: array
+                                      required:
+                                      - key
+                                      - operator
+                                      type: object
+                                    type: array
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    type: object
+                                type: object
+                            type: object
+                          type: array
+                        mergeKeys:
+                          items:
+                            type: string
+                          type: array
+>>>>>>> main
                         template:
                           properties:
                             metadata:
@@ -17332,6 +19239,7 @@ spec:
                                       properties:
                                         commonAnnotations:
                                           additionalProperties:
+<<<<<<< HEAD
                                             type: string
                                           type: object
                                         commonAnnotationsEnvsubst:
@@ -17559,6 +19467,8 @@ spec:
                                               type: string
                                             type: array
                                           namePrefix:
+=======
+>>>>>>> main
                                             type: string
                                           nameSuffix:
                                             type: string
@@ -17885,12 +19795,115 @@ spec:
                           - owner
                           - repo
                           type: object
+<<<<<<< HEAD
                         gitlab:
                           properties:
                             api:
                               type: string
                             insecure:
                               type: boolean
+=======
+                      required:
+                      - generators
+                      - mergeKeys
+                      type: object
+                    pullRequest:
+                      properties:
+                        bitbucketServer:
+                          properties:
+                            api:
+                              type: string
+                            basicAuth:
+                              properties:
+                                passwordRef:
+                                  properties:
+                                    key:
+                                      type: string
+                                    secretName:
+                                      type: string
+                                  required:
+                                  - key
+                                  - secretName
+                                  type: object
+                                username:
+                                  type: string
+                              required:
+                              - passwordRef
+                              - username
+                              type: object
+                            project:
+                              type: string
+                            repo:
+                              type: string
+                          required:
+                          - api
+                          - project
+                          - repo
+                          type: object
+                        filters:
+                          items:
+                            properties:
+                              branchMatch:
+                                type: string
+                            type: object
+                          type: array
+                        gitea:
+                          properties:
+                            api:
+                              type: string
+                            insecure:
+                              type: boolean
+                            owner:
+                              type: string
+                            repo:
+                              type: string
+                            tokenRef:
+                              properties:
+                                key:
+                                  type: string
+                                secretName:
+                                  type: string
+                              required:
+                              - key
+                              - secretName
+                              type: object
+                          required:
+                          - api
+                          - owner
+                          - repo
+                          type: object
+                        github:
+                          properties:
+                            api:
+                              type: string
+                            appSecretName:
+                              type: string
+>>>>>>> main
+                            labels:
+                              items:
+                                type: string
+                              type: array
+                            project:
+                              type: string
+                            pullRequestState:
+                              type: string
+                            tokenRef:
+                              properties:
+                                key:
+                                  type: string
+                                secretName:
+                                  type: string
+                              required:
+                              - key
+                              - secretName
+                              type: object
+                          required:
+                          - project
+                          type: object
+                        gitlab:
+                          properties:
+                            api:
+                              type: string
                             labels:
                               items:
                                 type: string
@@ -18563,6 +20576,90 @@ spec:
                           - api
                           - project
                           type: object
+<<<<<<< HEAD
+=======
+                      type: object
+                    scmProvider:
+                      properties:
+                        azureDevOps:
+                          properties:
+                            accessTokenRef:
+                              properties:
+                                key:
+                                  type: string
+                                secretName:
+                                  type: string
+                              required:
+                              - key
+                              - secretName
+                              type: object
+                            allBranches:
+                              type: boolean
+                            api:
+                              type: string
+                            organization:
+                              type: string
+                            teamProject:
+                              type: string
+                          required:
+                          - accessTokenRef
+                          - organization
+                          - teamProject
+                          type: object
+                        bitbucket:
+                          properties:
+                            allBranches:
+                              type: boolean
+                            appPasswordRef:
+                              properties:
+                                key:
+                                  type: string
+                                secretName:
+                                  type: string
+                              required:
+                              - key
+                              - secretName
+                              type: object
+                            owner:
+                              type: string
+                            user:
+                              type: string
+                          required:
+                          - appPasswordRef
+                          - owner
+                          - user
+                          type: object
+                        bitbucketServer:
+                          properties:
+                            allBranches:
+                              type: boolean
+                            api:
+                              type: string
+                            basicAuth:
+                              properties:
+                                passwordRef:
+                                  properties:
+                                    key:
+                                      type: string
+                                    secretName:
+                                      type: string
+                                  required:
+                                  - key
+                                  - secretName
+                                  type: object
+                                username:
+                                  type: string
+                              required:
+                              - passwordRef
+                              - username
+                              type: object
+                            project:
+                              type: string
+                          required:
+                          - api
+                          - project
+                          type: object
+>>>>>>> main
                         cloneProtocol:
                           type: string
                         filters:
@@ -19238,10 +21335,34 @@ spec:
                             type: string
                           type: object
                       type: object
+                    selector:
+                      properties:
+                        matchExpressions:
+                          items:
+                            properties:
+                              key:
+                                type: string
+                              operator:
+                                type: string
+                              values:
+                                items:
+                                  type: string
+                                type: array
+                            required:
+                            - key
+                            - operator
+                            type: object
+                          type: array
+                        matchLabels:
+                          additionalProperties:
+                            type: string
+                          type: object
+                      type: object
                   type: object
                 type: array
               goTemplate:
                 type: boolean
+<<<<<<< HEAD
               goTemplateOptions:
                 items:
                   type: string
@@ -19303,6 +21424,8 @@ spec:
                   type:
                     type: string
                 type: object
+=======
+>>>>>>> main
               syncPolicy:
                 properties:
                   applicationsSync:
@@ -19485,6 +21608,7 @@ spec:
                             properties:
                               commonAnnotations:
                                 additionalProperties:
+<<<<<<< HEAD
                                   type: string
                                 type: object
                               commonAnnotationsEnvsubst:
@@ -19608,6 +21732,8 @@ spec:
                             directory:
                               properties:
                                 exclude:
+=======
+>>>>>>> main
                                   type: string
                                 include:
                                   type: string
@@ -19919,14 +22045,21 @@ spec:
     storage: true
     subresources:
       status: {}
+<<<<<<< HEAD
 
 ---
 # Source: crds/project.yaml
 # Source: https://raw.githubusercontent.com/argoproj/argo-cd/v{version}/manifests/crds/appproject-crd.yaml
 # Version: 2.9.5
+=======
+---
+# Source: argo-cd-chart/charts/argo-cd/templates/crds/crd-project.yaml
+>>>>>>> main
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
+  annotations:
+    "helm.sh/resource-policy": keep
   labels:
     app.kubernetes.io/name: appprojects.argoproj.io
     app.kubernetes.io/part-of: argocd
@@ -20248,8 +22381,8 @@ spec:
         type: object
     served: true
     storage: true
-
 ---
+<<<<<<< HEAD
 # Source: argo-cd-chart/charts/argo-cd/charts/redis/templates/networkpolicy.yaml
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
@@ -20287,11 +22420,37 @@ metadata:
     app.kubernetes.io/name: redis
     app.kubernetes.io/version: 7.2.4
     helm.sh/chart: redis-18.11.0
----
-# Source: argo-cd-chart/charts/argo-cd/templates/application-controller/service-account.yaml
-apiVersion: v1
-kind: ServiceAccount
+=======
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-application-controller/clusterrole.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
 metadata:
+  name: argocd-application-controller
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-application-controller
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: application-controller
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+rules:
+  - apiGroups:
+    - '*'
+    resources:
+    - '*'
+    verbs:
+    - '*'
+  - nonResourceURLs:
+    - '*'
+    verbs:
+    - '*'
+>>>>>>> main
+---
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-repo-server/clusterrole.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+<<<<<<< HEAD
   name: argocd-argo-cd-argocd-app-controller
   namespace: "default"
   labels:
@@ -20302,11 +22461,33 @@ metadata:
     helm.sh/chart: argo-cd-5.5.2
     app.kubernetes.io/component: controller
 automountServiceAccountToken: true
+=======
+  name: argocd-repo-server
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-repo-server
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: repo-server
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+rules:
+  - apiGroups:
+    - '*'
+    resources:
+    - '*'
+    verbs:
+    - '*'
+  - nonResourceURLs:
+    - '*'
+    verbs:
+    - '*'
+>>>>>>> main
 ---
-# Source: argo-cd-chart/charts/argo-cd/templates/repo-server/service-account.yaml
-apiVersion: v1
-kind: ServiceAccount
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-server/clusterrole.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
 metadata:
+<<<<<<< HEAD
   name: argocd-argo-cd-argocd-repo-server
   namespace: "default"
   labels:
@@ -20317,11 +22498,53 @@ metadata:
     helm.sh/chart: argo-cd-5.5.2
     app.kubernetes.io/component: repo-server
 automountServiceAccountToken: true
+=======
+  name: argocd-server
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-server
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: server
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+rules:
+  - apiGroups:
+      - '*'
+    resources:
+      - '*'
+    verbs:
+      - delete
+      - get
+      - patch
+  - apiGroups:
+      - ""
+    resources:
+      - events
+    verbs:
+      - list
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - pods/log
+    verbs:
+      - get
+  - apiGroups:
+      - argoproj.io
+    resources:
+      - applications
+    verbs:
+      - get
+      - list
+      - update
+      - watch
+>>>>>>> main
 ---
-# Source: argo-cd-chart/charts/argo-cd/templates/server/service-account.yaml
-apiVersion: v1
-kind: ServiceAccount
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-application-controller/clusterrolebinding.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
 metadata:
+<<<<<<< HEAD
   name: argocd-argo-cd-argocd-server
   namespace: "default"
   labels:
@@ -20332,11 +22555,30 @@ metadata:
     helm.sh/chart: argo-cd-5.5.2
     app.kubernetes.io/component: server
 automountServiceAccountToken: true
+=======
+  name: argocd-application-controller
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-application-controller
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: application-controller
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: argocd-application-controller
+subjects:
+- kind: ServiceAccount
+  name: argocd-application-controller
+  namespace: default
+>>>>>>> main
 ---
-# Source: argo-cd-chart/charts/argo-cd/charts/redis/templates/secret.yaml
-apiVersion: v1
-kind: Secret
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-repo-server/clusterrolebinding.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
 metadata:
+<<<<<<< HEAD
   name: argocd-redis
   namespace: "default"
   labels:
@@ -20543,16 +22785,32 @@ data:
     ARGS+=("--include" "/opt/bitnami/redis/etc/redis.conf")
     ARGS+=("--include" "/opt/bitnami/redis/etc/master.conf")
     exec redis-server "${ARGS[@]}"
----
-# Source: argo-cd-chart/charts/argo-cd/templates/argocd-cm.yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  # Mandatory hardcoded name.
-  # Ref: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/argocd-cm.yaml
-  name: argocd-cm
-  namespace: "default"
+=======
+  name: argocd-repo-server
   labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-repo-server
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: repo-server
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: argocd-repo-server
+subjects:
+- kind: ServiceAccount
+  name: argocd-repo-server
+  namespace: default
+>>>>>>> main
+---
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-server/clusterrolebinding.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: argocd-server
+  labels:
+<<<<<<< HEAD
     app.kubernetes.io/instance: argocd
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argo-cd
@@ -20560,12 +22818,24 @@ metadata:
     helm.sh/chart: argo-cd-5.5.2
     # Mandatory label
     # Ref: https://argoproj.github.io/argo-cd/operator-manual/declarative-setup/#atomic-configuration
+=======
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-server
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: server
+    app.kubernetes.io/managed-by: Helm
+>>>>>>> main
     app.kubernetes.io/part-of: argocd
-data:
-  application.instanceLabelKey: argocd.argoproj.io/instance
-  dex.config: ""
-  url: ''
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: argocd-server
+subjects:
+- kind: ServiceAccount
+  name: argocd-server
+  namespace: default
 ---
+<<<<<<< HEAD
 # Source: argo-cd-chart/charts/argo-cd/templates/gpg-keys-cm.yaml
 apiVersion: v1
 kind: ConfigMap
@@ -20599,17 +22869,52 @@ metadata:
     helm.sh/chart: argo-cd-5.5.2
     # Mandatory label
     # Ref: https://argoproj.github.io/argo-cd/operator-manual/declarative-setup/#atomic-configuration
+=======
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-application-controller/role.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: argocd-application-controller
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-application-controller
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: application-controller
+    app.kubernetes.io/managed-by: Helm
+>>>>>>> main
     app.kubernetes.io/part-of: argocd
-data:
-  ssh_known_hosts: |
-    bitbucket.org ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAubiN81eDcafrgMeLzaFPsw2kNvEcqTKl/VqLat/MaB33pZy0y3rJZtnqwR2qOOvbwKZYKiEO1O6VqNEBxKvJJelCq0dTXWT5pbO2gDXC6h6QDXCaHo6pOHGPUy+YBaGQRGuSusMEASYiWunYN0vCAI8QaXnWMXNMdFP3jHAJH0eDsoiGnLPBlBp4TNm6rYI74nMzgz3B9IikW4WVK+dc8KZJZWYjAuORU3jc1c/NPskD2ASinf8v3xnfXeukU0sJ5N6m5E8VLjObPEO+mN2t/FZTMZLiFqPWc/ALSqnMnnhwrNi2rbfg/rd/IpL8Le3pSBne8+seeFVBoGqzHM9yXw==
-    github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==
-    gitlab.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFSMqzJeV9rUzU4kWitGjeR4PWSa29SPqJ1fVkhtj3Hw9xjLVXVYrU9QlYWrOLXBpQ6KWjbjTDTdDkoohFzgbEY=
-    gitlab.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAfuCHKVTjquxvt6CM6tdG4SLp1Btn/nOeHHE5UOzRdf
-    gitlab.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCsj2bNKTBSpIYDEGk9KxsGh3mySTRgMtXL583qmBpzeQ+jqCMRgBqB98u3z++J1sKlXHWfM9dyhSevkMwSbhoR8XIq/U0tCNyokEi/ueaBMCvbcTHhO7FcwzY92WK4Yt0aGROY5qX2UKSeOvuP4D6TPqKF1onrSzH9bx9XUf2lEdWT/ia1NEKjunUqu1xOB/StKDHMoX4/OKyIzuS0q/T1zOATthvasJFoPrAjkohTyaDUz2LN5JoH839hViyEG82yB+MjcFV5MU3N1l1QL3cVUCh93xSaua1N85qivl+siMkPGbO5xR/En4iEY6K2XPASUEMaieWVNTRCtJ4S8H+9
-    ssh.dev.azure.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7Hr1oTWqNqOlzGJOfGJ4NakVyIzf1rXYd4d7wo6jBlkLvCA4odBlL0mDUyZ0/QUfTTqeu+tm22gOsv+VrVTMk6vwRU75gY/y9ut5Mb3bR5BV58dKXyq9A9UeB5Cakehn5Zgm6x1mKoVyf+FFn26iYqXJRgzIZZcZ5V6hrE0Qg39kZm4az48o0AUbf6Sp4SLdvnuMa2sVNwHBboS7EJkm57XQPVU3/QpyNLHbWDdzwtrlS+ez30S3AdYhLKEOxAG8weOnyrtLJAUen9mTkol8oII1edf7mWWbWVf0nBmly21+nZcmCTISQBtdcyPaEno7fFQMDD26/s0lfKob4Kw8H
-    vs-ssh.visualstudio.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7Hr1oTWqNqOlzGJOfGJ4NakVyIzf1rXYd4d7wo6jBlkLvCA4odBlL0mDUyZ0/QUfTTqeu+tm22gOsv+VrVTMk6vwRU75gY/y9ut5Mb3bR5BV58dKXyq9A9UeB5Cakehn5Zgm6x1mKoVyf+FFn26iYqXJRgzIZZcZ5V6hrE0Qg39kZm4az48o0AUbf6Sp4SLdvnuMa2sVNwHBboS7EJkm57XQPVU3/QpyNLHbWDdzwtrlS+ez30S3AdYhLKEOxAG8weOnyrtLJAUen9mTkol8oII1edf7mWWbWVf0nBmly21+nZcmCTISQBtdcyPaEno7fFQMDD26/s0lfKob4Kw8H
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  - configmaps
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - argoproj.io
+  resources:
+  - applications
+  - appprojects
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+  - list
 ---
+<<<<<<< HEAD
 # Source: argo-cd-chart/charts/argo-cd/templates/rbac-cm.yaml
 apiVersion: v1
 kind: ConfigMap
@@ -20651,9 +22956,13 @@ data:
   {}
 ---
 # Source: argo-cd-chart/charts/argo-cd/templates/application-controller/clusterrole.yaml
+=======
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-applicationset/role.yaml
+>>>>>>> main
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
+kind: Role
 metadata:
+<<<<<<< HEAD
   name: argocd-argo-cd-default-app-controller
   labels:
     app.kubernetes.io/instance: argocd
@@ -20661,16 +22970,37 @@ metadata:
     app.kubernetes.io/name: argo-cd
     app.kubernetes.io/version: 2.9.5
     helm.sh/chart: argo-cd-5.5.2
+=======
+  name: argocd-applicationset-controller
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-applicationset-controller
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: applicationset-controller
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+>>>>>>> main
 rules:
   - apiGroups:
-      - '*'
+    - argoproj.io
     resources:
-      - '*'
+    - applications
+    - applicationsets
+    - applicationsets/finalizers
     verbs:
-      - '*'
-  - nonResourceURLs:
-      - '*'
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
+  - apiGroups:
+    - argoproj.io
+    resources:
+    - applicationsets/status
     verbs:
+<<<<<<< HEAD
       - '*'
 ---
 # Source: argo-cd-chart/charts/argo-cd/templates/server/clusterrole.yaml
@@ -20685,26 +23015,33 @@ metadata:
     app.kubernetes.io/version: 2.9.5
     helm.sh/chart: argo-cd-5.5.2
 rules:
+=======
+    - get
+    - patch
+    - update
+>>>>>>> main
   - apiGroups:
-      - '*'
+    - argoproj.io
     resources:
-      - '*'
+    - appprojects
     verbs:
-      - delete
-      - get
-      - patch
+    - get
   - apiGroups:
-      - ""
+    - ""
     resources:
-      - events
+    - events
     verbs:
-      - list
+    - create
+    - get
+    - list
+    - patch
+    - watch
   - apiGroups:
-      - ""
+    - ""
     resources:
-      - pods
-      - pods/log
+    - configmaps
     verbs:
+<<<<<<< HEAD
       - get
   - apiGroups:
       - argoproj.io
@@ -20715,11 +23052,50 @@ rules:
       - list
       - update
       - watch
+=======
+    - create
+    - update
+    - delete
+    - get
+    - list
+    - patch
+    - watch
+  - apiGroups:
+    - ""
+    resources:
+    - secrets
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - apps
+    - extensions
+    resources:
+    - deployments
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - coordination.k8s.io
+    resources:
+    - leases
+    verbs:
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
+>>>>>>> main
 ---
-# Source: argo-cd-chart/charts/argo-cd/templates/application-controller/clusterrolebinding.yaml
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-notifications/role.yaml
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
+kind: Role
 metadata:
+<<<<<<< HEAD
   name: argocd-argo-cd-default-app-controller
   labels:
     app.kubernetes.io/instance: argocd
@@ -20735,11 +23111,58 @@ subjects:
   - kind: ServiceAccount
     name: argocd-argo-cd-argocd-app-controller
     namespace: default
+=======
+  name: argocd-notifications-controller
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-notifications-controller
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: notifications-controller
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+rules:
+- apiGroups:
+  - argoproj.io
+  resources:
+  - applications
+  - appprojects
+  verbs:
+  - get
+  - list
+  - watch
+  - update
+  - patch
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  - secrets
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resourceNames:
+  - argocd-notifications-cm
+  resources:
+  - configmaps
+  verbs:
+  - get
+- apiGroups:
+  - ""
+  resourceNames:
+  - argocd-notifications-secret
+  resources:
+  - secrets
+  verbs:
+  - get
+>>>>>>> main
 ---
-# Source: argo-cd-chart/charts/argo-cd/templates/server/clusterrolebinding.yaml
-kind: ClusterRoleBinding
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-repo-server/role.yaml
 apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
 metadata:
+<<<<<<< HEAD
   name: argocd-argo-cd-default-server
   labels:
     app.kubernetes.io/instance: argocd
@@ -20756,11 +23179,23 @@ subjects:
   - kind: ServiceAccount
     name: argocd-argo-cd-argocd-server
     namespace: default
+=======
+  name: argocd-repo-server
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-repo-server
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: repo-server
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+rules:
+>>>>>>> main
 ---
-# Source: argo-cd-chart/charts/argo-cd/templates/application-controller/role.yaml
-kind: Role
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-server/role.yaml
 apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
 metadata:
+<<<<<<< HEAD
   name: argocd-argo-cd-app-controller
   namespace: "default"
   labels:
@@ -20769,41 +23204,57 @@ metadata:
     app.kubernetes.io/name: argo-cd
     app.kubernetes.io/version: 2.9.5
     helm.sh/chart: argo-cd-5.5.2
+=======
+  name: argocd-server
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-server
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: server
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+>>>>>>> main
 rules:
-  - apiGroups:
-      - ""
-    resources:
-      - secrets
-      - configmaps
-    verbs:
-      - get
-      - list
-      - watch
-  - apiGroups:
-      - argoproj.io
-    resources:
-      - applications
-      - appprojects
-    verbs:
-      - create
-      - get
-      - list
-      - watch
-      - update
-      - patch
-      - delete
-  - apiGroups:
-      - ""
-    resources:
-      - events
-    verbs:
-      - create
-      - list
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  - configmaps
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - argoproj.io
+  resources:
+  - applications
+  - applicationsets
+  - appprojects
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+  - update
+  - delete
+  - patch
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+  - list
 ---
-# Source: argo-cd-chart/charts/argo-cd/templates/repo-server/role.yaml
-kind: Role
+# Source: argo-cd-chart/charts/argo-cd/templates/dex/role.yaml
 apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
 metadata:
+<<<<<<< HEAD
   name: argocd-argo-cd-repo-server
   namespace: "default"
   labels:
@@ -20822,11 +23273,32 @@ rules:
       - get
       - list
       - watch
+=======
+  name: argocd-dex-server
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-dex-server
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: dex-server
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  - configmaps
+  verbs:
+  - get
+  - list
+  - watch
+>>>>>>> main
 ---
-# Source: argo-cd-chart/charts/argo-cd/templates/server/role.yaml
-kind: Role
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-application-controller/rolebinding.yaml
 apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
 metadata:
+<<<<<<< HEAD
   name: argocd-argo-cd-server
   namespace: "default"
   labels:
@@ -20870,11 +23342,30 @@ rules:
     verbs:
       - create
       - list
+=======
+  name: argocd-application-controller
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-application-controller
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: application-controller
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: argocd-application-controller
+subjects:
+- kind: ServiceAccount
+  name: argocd-application-controller
+  namespace: default
+>>>>>>> main
 ---
-# Source: argo-cd-chart/charts/argo-cd/templates/application-controller/rolebinding.yaml
-kind: RoleBinding
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-applicationset/rolebinding.yaml
 apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
 metadata:
+<<<<<<< HEAD
   name: argocd-argo-cd-app-controller
   namespace: "default"
   labels:
@@ -20890,11 +23381,30 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
   name: argocd-argo-cd-app-controller
+=======
+  name: argocd-applicationset-controller
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-applicationset-controller
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: applicationset-controller
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: argocd-applicationset-controller
+subjects:
+  - kind: ServiceAccount
+    name: argocd-applicationset-controller
+    namespace: default
+>>>>>>> main
 ---
-# Source: argo-cd-chart/charts/argo-cd/templates/repo-server/rolebinding.yaml
-kind: RoleBinding
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-notifications/rolebinding.yaml
 apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
 metadata:
+<<<<<<< HEAD
   name: argocd-argo-cd-repo-server
   namespace: "default"
   labels:
@@ -20910,11 +23420,51 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
   name: argocd-argo-cd-repo-server
+=======
+  name: argocd-notifications-controller
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-notifications-controller
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: notifications-controller
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: argocd-notifications-controller
+subjects:
+  - kind: ServiceAccount
+    name: argocd-notifications-controller
+    namespace: default
 ---
-# Source: argo-cd-chart/charts/argo-cd/templates/server/rolebinding.yaml
-kind: RoleBinding
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-repo-server/rolebinding.yaml
 apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
 metadata:
+  name: argocd-repo-server
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-repo-server
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: repo-server
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: argocd-repo-server
+subjects:
+- kind: ServiceAccount
+  name: argocd-repo-server
+  namespace: default
+>>>>>>> main
+---
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-server/rolebinding.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+<<<<<<< HEAD
   name: argocd-argo-cd-server
   namespace: "default"
   labels:
@@ -20930,11 +23480,51 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
   name: argocd-argo-cd-server
+=======
+  name: argocd-server
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-server
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: server
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: argocd-server
+subjects:
+- kind: ServiceAccount
+  name: argocd-server
+  namespace: default
 ---
-# Source: argo-cd-chart/charts/argo-cd/charts/redis/templates/headless-svc.yaml
+# Source: argo-cd-chart/charts/argo-cd/templates/dex/rolebinding.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: argocd-dex-server
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-dex-server
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: dex-server
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: argocd-dex-server
+subjects:
+- kind: ServiceAccount
+  name: argocd-dex-server
+  namespace: default
+>>>>>>> main
+---
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-applicationset/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
+<<<<<<< HEAD
   name: argocd-redis-headless
   namespace: "default"
   labels:
@@ -20945,21 +23535,35 @@ metadata:
     helm.sh/chart: redis-18.11.0
   annotations:
     
+=======
+  name: argocd-applicationset-controller
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-applicationset-controller
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: applicationset-controller
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+>>>>>>> main
 spec:
-  type: ClusterIP
-  clusterIP: None
   ports:
-    - name: tcp-redis
-      port: 6379
-      targetPort: redis
+  - name: webhook
+    port: 7000
+    targetPort: webhook
   selector:
+<<<<<<< HEAD
     app.kubernetes.io/instance: argocd
     app.kubernetes.io/name: redis
+=======
+    app.kubernetes.io/name: argocd-applicationset-controller
+    app.kubernetes.io/instance: argocd
+>>>>>>> main
 ---
-# Source: argo-cd-chart/charts/argo-cd/charts/redis/templates/master/service.yaml
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-repo-server/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
+<<<<<<< HEAD
   name: argocd-redis-master
   namespace: "default"
   labels:
@@ -20969,24 +23573,37 @@ metadata:
     app.kubernetes.io/version: 7.2.4
     helm.sh/chart: redis-18.11.0
     app.kubernetes.io/component: master
+=======
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-repo-server
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: repo-server
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+  name: argocd-repo-server
+>>>>>>> main
 spec:
-  type: ClusterIP
-  internalTrafficPolicy: Cluster
-  sessionAffinity: None
   ports:
-    - name: tcp-redis
-      port: 6379
-      targetPort: redis
-      nodePort: null
+  - name: https-repo-server
+    protocol: TCP
+    port: 8081
+    targetPort: repo-server
   selector:
+<<<<<<< HEAD
     app.kubernetes.io/instance: argocd
     app.kubernetes.io/name: redis
     app.kubernetes.io/component: master
+=======
+    app.kubernetes.io/name: argocd-repo-server
+    app.kubernetes.io/instance: argocd
+>>>>>>> main
 ---
-# Source: argo-cd-chart/charts/argo-cd/templates/application-controller/service.yaml
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-server/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
+<<<<<<< HEAD
   name: argocd-argo-cd-app-controller
   namespace: "default"
   labels:
@@ -20996,24 +23613,42 @@ metadata:
     app.kubernetes.io/version: 2.9.5
     helm.sh/chart: argo-cd-5.5.2
     app.kubernetes.io/component: controller
+=======
+  name: argocd-server
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-server
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: server
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+>>>>>>> main
 spec:
-  type: NodePort
-  externalTrafficPolicy: "Cluster"
-  sessionAffinity: None
+  type: ClusterIP
   ports:
-    - name: tcp-controller
-      port: 8082
-      targetPort: controller
-      protocol: TCP
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 8080
+  - name: https
+    protocol: TCP
+    port: 443
+    targetPort: 8080
   selector:
+<<<<<<< HEAD
     app.kubernetes.io/instance: argocd
     app.kubernetes.io/name: argo-cd
     app.kubernetes.io/component: controller
+=======
+    app.kubernetes.io/name: argocd-server
+    app.kubernetes.io/instance: argocd
+>>>>>>> main
 ---
-# Source: argo-cd-chart/charts/argo-cd/templates/repo-server/service.yaml
+# Source: argo-cd-chart/charts/argo-cd/templates/dex/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
+<<<<<<< HEAD
   name: argocd-argo-cd-repo-server
   namespace: "default"
   labels:
@@ -21023,24 +23658,41 @@ metadata:
     app.kubernetes.io/version: 2.9.5
     helm.sh/chart: argo-cd-5.5.2
     app.kubernetes.io/component: repo-server
+=======
+  name: argocd-dex-server
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-dex-server
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: dex-server
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+>>>>>>> main
 spec:
-  type: ClusterIP
-  sessionAffinity: None
   ports:
-    - name: tcp-repo-server
-      port: 8081
-      targetPort: repo-server
-      protocol: TCP
-      nodePort: null
+  - name: http
+    protocol: TCP
+    port: 5556
+    targetPort: http
+  - name: grpc
+    protocol: TCP
+    port: 5557
+    targetPort: grpc
   selector:
+<<<<<<< HEAD
     app.kubernetes.io/instance: argocd
     app.kubernetes.io/name: argo-cd
     app.kubernetes.io/component: repo-server
+=======
+    app.kubernetes.io/name: argocd-dex-server
+    app.kubernetes.io/instance: argocd
+>>>>>>> main
 ---
-# Source: argo-cd-chart/charts/argo-cd/templates/server/service.yaml
+# Source: argo-cd-chart/charts/argo-cd/templates/redis/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
+<<<<<<< HEAD
   name: argocd-argo-cd-server
   namespace: "default"
   labels:
@@ -21050,30 +23702,36 @@ metadata:
     app.kubernetes.io/version: 2.9.5
     helm.sh/chart: argo-cd-5.5.2
     app.kubernetes.io/component: server
+=======
+  name: argocd-redis
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-redis
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: redis
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+>>>>>>> main
 spec:
-  type: ClusterIP
-  sessionAffinity: None
   ports:
-    - name: http
-      port: 80
-      targetPort: http
-      protocol: TCP
-      nodePort: null
-    - name: https
-      port: 443
-      # NOTE: Argo CD uses only one port (8080) configured with https and always redirects http request to it, so the target port is the same than for http
-      targetPort: http
-      protocol: TCP
-      nodePort: null
+  - name: redis
+    port: 6379
+    targetPort: redis
   selector:
+<<<<<<< HEAD
     app.kubernetes.io/instance: argocd
     app.kubernetes.io/name: argo-cd
     app.kubernetes.io/component: server
+=======
+    app.kubernetes.io/name: argocd-redis
+    app.kubernetes.io/instance: argocd
+>>>>>>> main
 ---
-# Source: argo-cd-chart/charts/argo-cd/templates/application-controller/deployment.yaml
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-applicationset/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+<<<<<<< HEAD
   name: argocd-argo-cd-app-controller
   namespace: "default"
   labels:
@@ -21083,12 +23741,22 @@ metadata:
     app.kubernetes.io/version: 2.9.5
     helm.sh/chart: argo-cd-5.5.2
     app.kubernetes.io/component: controller
+=======
+  name: argocd-applicationset-controller
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-applicationset-controller
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: applicationset-controller
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+>>>>>>> main
 spec:
   replicas: 1
-  strategy:
-    type: RollingUpdate
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
+<<<<<<< HEAD
       app.kubernetes.io/instance: argocd
       app.kubernetes.io/name: argo-cd
       app.kubernetes.io/component: controller
@@ -21174,10 +23842,26 @@ spec:
                 secretKeyRef:
                   name: argocd-redis
                   key: redis-password
+=======
+      app.kubernetes.io/name: argocd-applicationset-controller
+      app.kubernetes.io/instance: argocd
+  template:
+    metadata:
+      labels:
+        helm.sh/chart: argo-cd-5.19.12
+        app.kubernetes.io/name: argocd-applicationset-controller
+        app.kubernetes.io/instance: argocd
+        app.kubernetes.io/component: applicationset-controller
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/part-of: argocd
+    spec:
+      serviceAccountName: argocd-applicationset-controller
+>>>>>>> main
       containers:
-        - name: controller
-          image: docker.io/argoproj/argocd:v2.5.2
+        - name: applicationset-controller
+          image: quay.io/argoproj/argocd:v2.5.9
           imagePullPolicy: IfNotPresent
+<<<<<<< HEAD
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
@@ -21201,20 +23885,45 @@ spec:
             - "5"
             - --repo-server
             - argocd-argo-cd-repo-server:8081
+=======
+          command:
+            - entrypoint.sh
+            - argocd-applicationset-controller
+            - --metrics-addr=:8080
+            - --probe-addr=:8081
+            - --webhook-addr=:7000
+            - --argocd-repo-server=argocd-repo-server:8081
+            - --enable-leader-election=false
+            - --policy=sync
+            - --dry-run=false
+>>>>>>> main
             - --logformat
             - "text"
             - --loglevel
+<<<<<<< HEAD
             - "info"
             # TODO(miguelaeh): Test the chart using redis sentinel enabled: https://github.com/argoproj/argo-cd/blob/2a410187565e15633b6f2a8c8d8da22cf02b257d/util/cache/cache.go#L40
             - --redis
             - argocd-redis-master:6379
+=======
+            - info
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+>>>>>>> main
           ports:
-            - name: controller
-              containerPort: 8082
-              protocol: TCP
             - name: metrics
-              containerPort: 8082
+              containerPort: 8080
               protocol: TCP
+            - name: probe
+              containerPort: 8081
+              protocol: TCP
+            - name: webhook
+              containerPort: 7000
+              protocol: TCP
+<<<<<<< HEAD
           env:
             - name: REDIS_PASSWORD
               valueFrom:
@@ -21222,49 +23931,50 @@ spec:
                   name: argocd-redis
                   key: redis-password
           envFrom:
+=======
+>>>>>>> main
           resources:
-            limits: {}
-            requests: {}
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 8082
-            initialDelaySeconds: 10
-            periodSeconds: 10
-            timeoutSeconds: 1
-            successThreshold: 1
-            failureThreshold: 3
-          readinessProbe:
-            tcpSocket:
-              port: 8082
-            initialDelaySeconds: 10
-            periodSeconds: 10
-            timeoutSeconds: 1
-            successThreshold: 1
-            failureThreshold: 3
+            {}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
           volumeMounts:
-            # Mounting into a path that will be read by Argo CD.
-            # This secret will be autogenerated by Argo CD repo server unless it already exists. Users can create its own certificate to override it.
-            # Ref: https://argoproj.github.io/argo-cd/operator-manual/tls/#inbound-tls-certificates-used-by-argocd-repo-sever
-            - mountPath: /app/config/server/tls
-              name: argocd-repo-server-tls
+            - mountPath: /app/config/ssh
+              name: ssh-known-hosts
+            - mountPath: /app/config/tls
+              name: tls-certs
+            - mountPath: /app/config/gpg/source
+              name: gpg-keys
+            - mountPath: /app/config/gpg/keys
+              name: gpg-keyring
+            - mountPath: /tmp
+              name: tmp
       volumes:
-        - name: argocd-repo-server-tls
-          secret:
-            items:
-              - key: tls.crt
-                path: tls.crt
-              - key: tls.key
-                path: tls.key
-              - key: ca.crt
-                path: ca.crt
-            optional: true
-            secretName: argocd-repo-server-tls
+        - name: ssh-known-hosts
+          configMap:
+            name: argocd-ssh-known-hosts-cm
+        - name: tls-certs
+          configMap:
+            name: argocd-tls-certs-cm
+        - name: gpg-keys
+          configMap:
+            name: argocd-gpg-keys-cm
+        - name: gpg-keyring
+          emptyDir: {}
+        - name: tmp
+          emptyDir: {}
 ---
-# Source: argo-cd-chart/charts/argo-cd/templates/repo-server/deployment.yaml
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-notifications/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+<<<<<<< HEAD
   name: argocd-argo-cd-repo-server
   namespace: "default"
   labels:
@@ -21274,12 +23984,24 @@ metadata:
     app.kubernetes.io/version: 2.9.5
     helm.sh/chart: argo-cd-5.5.2
     app.kubernetes.io/component: repo-server
+=======
+  name: argocd-notifications-controller
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-notifications-controller
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: notifications-controller
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+>>>>>>> main
 spec:
   replicas: 1
+  revisionHistoryLimit: 3
   strategy:
-    type: RollingUpdate
+    type: Recreate
   selector:
     matchLabels:
+<<<<<<< HEAD
       app.kubernetes.io/instance: argocd
       app.kubernetes.io/name: argo-cd
       app.kubernetes.io/component: repo-server
@@ -21365,14 +24087,43 @@ spec:
                 secretKeyRef:
                   name: argocd-redis
                   key: redis-password
+=======
+      app.kubernetes.io/name: argocd-notifications-controller
+      app.kubernetes.io/instance: argocd
+  template:
+    metadata:
+      labels:
+        helm.sh/chart: argo-cd-5.19.12
+        app.kubernetes.io/name: argocd-notifications-controller
+        app.kubernetes.io/instance: argocd
+        app.kubernetes.io/component: notifications-controller
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/part-of: argocd
+    spec:
+      serviceAccountName: argocd-notifications-controller
+>>>>>>> main
       containers:
-        - name: argocd-repo-server
-          image: docker.io/argoproj/argocd:v2.5.2
+        - name: notifications-controller
+          image: quay.io/argoproj/argocd:v2.5.9
           imagePullPolicy: IfNotPresent
+          command:
+            - argocd-notifications
+            - --metrics-port=9001
+            - --loglevel=info
+            - --logformat=text
+            - --namespace=default
+            - --argocd-repo-server=argocd-repo-server:8081
+          ports:
+          - name: metrics
+            containerPort: 9001
+            protocol: TCP
+          resources:
+            {}
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
               drop:
+<<<<<<< HEAD
               - all
             privileged: false
             readOnlyRootFilesystem: false
@@ -21418,44 +24169,40 @@ spec:
             timeoutSeconds: 1
             successThreshold: 1
             failureThreshold: 3
+=======
+              - ALL
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
+          workingDir: /app
+>>>>>>> main
           volumeMounts:
-            # Mounting into a path that will be read by Argo CD
-            # Ref: https://argoproj.github.io/argo-cd/operator-manual/declarative-setup/#ssh-known-host-public-keys
-            - name: ssh-known-hosts
-              mountPath: /app/config/ssh
-            # Mounting into a path that will be read by Argo CD.
-            # This secret will be autogenerated by Argo CD repo server unless it already exists. Users can create its own certificate to override it.
-            # Ref: https://argoproj.github.io/argo-cd/operator-manual/tls/#inbound-tls-certificates-used-by-argocd-repo-sever
-            - mountPath: /app/config/server/tls
-              name: argocd-repo-server-tls
-            - mountPath: /app/config/gpg/keys
-              name: gpg-keyring
-            - mountPath: /tmp
-              name: tmp-dir
+            - name: tls-certs
+              mountPath: /app/config/tls
+            - name: argocd-repo-server-tls
+              mountPath: /app/config/reposerver/tls
       volumes:
-        - name: ssh-known-hosts
+        - name: tls-certs
           configMap:
-            name: argocd-ssh-known-hosts-cm
+            name: argocd-tls-certs-cm
         - name: argocd-repo-server-tls
           secret:
-            items:
-              - key: tls.crt
-                path: tls.crt
-              - key: tls.key
-                path: tls.key
-              - key: ca.crt
-                path: ca.crt
-            optional: true
             secretName: argocd-repo-server-tls
-        - emptyDir: {}
-          name: tmp-dir
-        - emptyDir: {}
-          name: gpg-keyring
+            optional: true
+            items:
+            - key: tls.crt
+              path: tls.crt
+            - key: tls.key
+              path: tls.key
+            - key: ca.crt
+              path: ca.crt
 ---
-# Source: argo-cd-chart/charts/argo-cd/templates/server/deployment.yaml
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-repo-server/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+<<<<<<< HEAD
   name: argocd-argo-cd-server
   namespace: "default"
   labels:
@@ -21465,18 +24212,35 @@ metadata:
     app.kubernetes.io/version: 2.9.5
     helm.sh/chart: argo-cd-5.5.2
     app.kubernetes.io/component: server
+=======
+  name: argocd-repo-server
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-repo-server
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: repo-server
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+>>>>>>> main
 spec:
   replicas: 1
-  strategy:
-    type: RollingUpdate
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
+<<<<<<< HEAD
       app.kubernetes.io/instance: argocd
       app.kubernetes.io/name: argo-cd
       app.kubernetes.io/component: server
+=======
+      app.kubernetes.io/name: argocd-repo-server
+      app.kubernetes.io/instance: argocd
+>>>>>>> main
   template:
     metadata:
+      annotations:
+        checksum/cmd-params: 5908b4d548582f1c3d261e98d3109d9de6777eb3680b54458e7163dcbac41bf5
       labels:
+<<<<<<< HEAD
         app.kubernetes.io/instance: argocd
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: argo-cd
@@ -21626,26 +24390,323 @@ spec:
             # Ref: https://argoproj.github.io/argo-cd/operator-manual/tls/#inbound-tls-certificates-used-by-argocd-repo-sever
             - mountPath: /app/config/server/tls
               name: argocd-repo-server-tls
+=======
+        helm.sh/chart: argo-cd-5.19.12
+        app.kubernetes.io/name: argocd-repo-server
+        app.kubernetes.io/instance: argocd
+        app.kubernetes.io/component: repo-server
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/part-of: argocd
+    spec:
+      automountServiceAccountToken: true
+      containers:
+      - name: repo-server
+        image: quay.io/argoproj/argocd:v2.5.9
+        imagePullPolicy: IfNotPresent
+        command:
+        - entrypoint.sh
+        args:
+        - argocd-repo-server
+        - --port=8081
+        - --metrics-port=8084
+        env:
+          - name: XDG_CONFIG_HOME
+            value: /.config
+          - name: ARGOCD_RECONCILIATION_TIMEOUT
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cm
+                key: timeout.reconciliation
+                optional: true
+          - name: ARGOCD_REPO_SERVER_LOGFORMAT
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: reposerver.log.format
+                optional: true
+          - name: ARGOCD_REPO_SERVER_LOGLEVEL
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: reposerver.log.level
+                optional: true
+          - name: ARGOCD_REPO_SERVER_PARALLELISM_LIMIT
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: reposerver.parallelism.limit
+                optional: true
+          - name: ARGOCD_REPO_SERVER_DISABLE_TLS
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: reposerver.disable.tls
+                optional: true
+          - name: ARGOCD_TLS_MIN_VERSION
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: reposerver.tls.minversion
+                optional: true
+          - name: ARGOCD_TLS_MAX_VERSION
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: reposerver.tls.maxversion
+                optional: true
+          - name: ARGOCD_TLS_CIPHERS
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: reposerver.tls.ciphers
+                optional: true
+          - name: ARGOCD_REPO_CACHE_EXPIRATION
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: reposerver.repo.cache.expiration
+                optional: true
+          - name: REDIS_SERVER
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: redis.server
+                optional: true
+          - name: REDIS_COMPRESSION
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: redis.compression
+                optional: true
+          - name: REDISDB
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: redis.db
+                optional: true
+          - name: REDIS_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: argocd-redis
+                key: redis-username
+                optional: true
+          - name: REDIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: argocd-redis
+                key: redis-password
+                optional: true
+          - name: ARGOCD_DEFAULT_CACHE_EXPIRATION
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: reposerver.default.cache.expiration
+                optional: true
+          - name: ARGOCD_REPO_SERVER_OTLP_ADDRESS
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: otlp.address
+                optional: true
+          - name: ARGOCD_REPO_SERVER_MAX_COMBINED_DIRECTORY_MANIFESTS_SIZE
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: reposerver.max.combined.directory.manifests.size
+                optional: true
+          - name: ARGOCD_REPO_SERVER_PLUGIN_TAR_EXCLUSIONS
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: reposerver.plugin.tar.exclusions
+                optional: true
+          - name: ARGOCD_REPO_SERVER_ALLOW_OUT_OF_BOUNDS_SYMLINKS
+            valueFrom:
+              configMapKeyRef:
+                key: reposerver.allow.oob.symlinks
+                name: argocd-cmd-params-cm
+                optional: true
+          - name: ARGOCD_REPO_SERVER_STREAMED_MANIFEST_MAX_TAR_SIZE
+            valueFrom:
+              configMapKeyRef:
+                key: reposerver.streamed.manifest.max.tar.size
+                name: argocd-cmd-params-cm
+                optional: true
+          - name: ARGOCD_REPO_SERVER_STREAMED_MANIFEST_MAX_EXTRACTED_SIZE
+            valueFrom:
+              configMapKeyRef:
+                key: reposerver.streamed.manifest.max.extracted.size
+                name: argocd-cmd-params-cm
+                optional: true
+          - name: ARGOCD_GIT_MODULES_ENABLED
+            valueFrom:
+              configMapKeyRef:
+                key: reposerver.enable.git.submodule
+                name: argocd-cmd-params-cm
+                optional: true
+          - name: HELM_CACHE_HOME
+            value: /helm-working-dir
+          - name: HELM_CONFIG_HOME
+            value: /helm-working-dir
+          - name: HELM_DATA_HOME
+            value: /helm-working-dir
+        volumeMounts:
+        - mountPath: /home/argocd/.gnupg
+          name: gnupg-home
+          subPath: .gnupg
+        - mountPath: /usr/local/bin/kustomize
+          name: custom-tools
+          subPath: kustomize
+        - mountPath: /usr/local/bin/ksops
+          name: custom-tools
+          subPath: ksops
+        - mountPath: /.config/kustomize/plugin/viaduct.ai/v1/ksops/ksops
+          name: custom-tools
+          subPath: ksops
+        - mountPath: /app/config/ssh
+          name: ssh-known-hosts
+        - mountPath: /app/config/tls
+          name: tls-certs
+        - mountPath: /app/config/gpg/source
+          name: gpg-keys
+        - mountPath: /app/config/gpg/keys
+          name: gpg-keyring
+        - mountPath: /app/config/reposerver/tls
+          name: argocd-repo-server-tls
+        - mountPath: /helm-working-dir
+          name: helm-working-dir
+        - mountPath: /home/argocd/cmp-server/plugins
+          name: plugins
+        - mountPath: /tmp
+          name: tmp
+        ports:
+        - name: repo-server
+          containerPort: 8081
+          protocol: TCP
+        - name: metrics
+          containerPort: 8084
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /healthz?full=true
+            port: metrics
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: metrics
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 3
+        resources:
+          {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+      initContainers:
+      - command:
+        - cp
+        - -n
+        - /usr/local/bin/argocd
+        - /var/run/argocd/argocd-cmp-server
+        image: quay.io/argoproj/argocd:v2.5.9
+        imagePullPolicy: IfNotPresent
+        name: copyutil
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+        volumeMounts:
+        - mountPath: /var/run/argocd
+          name: var-files
+      - args:
+        - echo "Installing KSOPS..."; mv ksops /custom-tools/; mv $GOPATH/bin/kustomize
+          /custom-tools/; echo "Done.";
+        command:
+        - /bin/sh
+        - -c
+        image: viaductoss/ksops:v4.0.0-arm64
+        name: install-ksops
+        volumeMounts:
+        - mountPath: /custom-tools
+          name: custom-tools
+      - command:
+        - gpg
+        - --import
+        - /sops-gpg/sops.asc
+        env:
+        - name: GNUPGHOME
+          value: /gnupg-home/.gnupg
+        image: argoproj/argocd:v2.3.15
+        name: import-gpg-key
+        volumeMounts:
+        - mountPath: /sops-gpg
+          name: sops-gpg
+        - mountPath: /gnupg-home
+          name: gnupg-home
+      serviceAccountName: argocd-repo-server
+>>>>>>> main
       volumes:
-        - name: ssh-known-hosts
-          configMap:
-            name: argocd-ssh-known-hosts-cm
-        - name: argocd-repo-server-tls
-          secret:
-            items:
-              - key: tls.crt
-                path: tls.crt
-              - key: tls.key
-                path: tls.key
-              - key: ca.crt
-                path: ca.crt
-            optional: true
-            secretName: argocd-repo-server-tls
+      - emptyDir: {}
+        name: custom-tools
+      - emptyDir: {}
+        name: gnupg-home
+      - name: sops-gpg
+        secret:
+          secretName: sops-gpg
+      - name: helm-working-dir
+        emptyDir: {}
+      - name: plugins
+        emptyDir: {}
+      - name: var-files
+        emptyDir: {}
+      - name: tmp
+        emptyDir: {}
+      - name: ssh-known-hosts
+        configMap:
+          name: argocd-ssh-known-hosts-cm
+      - name: tls-certs
+        configMap:
+          name: argocd-tls-certs-cm
+      - name: gpg-keys
+        configMap:
+          name: argocd-gpg-keys-cm
+      - name: gpg-keyring
+        emptyDir: {}
+      - name: argocd-repo-server-tls
+        secret:
+          secretName: argocd-repo-server-tls
+          optional: true
+          items:
+          - key: tls.crt
+            path: tls.crt
+          - key: tls.key
+            path: tls.key
+          - key: ca.crt
+            path: ca.crt
 ---
-# Source: argo-cd-chart/charts/argo-cd/charts/redis/templates/master/application.yaml
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-server/deployment.yaml
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
+<<<<<<< HEAD
   name: argocd-redis-master
   namespace: "default"
   labels:
@@ -21655,19 +24716,38 @@ metadata:
     app.kubernetes.io/version: 7.2.4
     helm.sh/chart: redis-18.11.0
     app.kubernetes.io/component: master
+=======
+  name: argocd-server
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-server
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: server
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+>>>>>>> main
 spec:
   replicas: 1
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
+<<<<<<< HEAD
       app.kubernetes.io/instance: argocd
       app.kubernetes.io/name: redis
       app.kubernetes.io/component: master
   serviceName: argocd-redis-headless
   updateStrategy:
     type: RollingUpdate
+=======
+      app.kubernetes.io/name: argocd-server
+      app.kubernetes.io/instance: argocd
+>>>>>>> main
   template:
     metadata:
+      annotations:
+        checksum/cmd-params: 5908b4d548582f1c3d261e98d3109d9de6777eb3680b54458e7163dcbac41bf5
       labels:
+<<<<<<< HEAD
         app.kubernetes.io/instance: argocd
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: redis
@@ -21679,9 +24759,457 @@ spec:
         checksum/health: aff24913d801436ea469d8d374b2ddb3ec4c43ee7ab24663d5f8ff1a1b6991a9
         checksum/scripts: 560c33ff34d845009b51830c332aa05fa211444d1877d3526d3599be7543aaa5
         checksum/secret: 2940df0c78768182b5021e89c6ccc7de9f6873a43e053ad999262a3ccf24fb43
+=======
+        helm.sh/chart: argo-cd-5.19.12
+        app.kubernetes.io/name: argocd-server
+        app.kubernetes.io/instance: argocd
+        app.kubernetes.io/component: server
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/part-of: argocd
     spec:
-      
+      containers:
+      - name: server
+        image: quay.io/argoproj/argocd:v2.5.9
+        imagePullPolicy: IfNotPresent
+        command:
+        - argocd-server
+        - --port=8080
+        - --metrics-port=8082
+        env:
+          - name: ARGOCD_SERVER_INSECURE
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: server.insecure
+                optional: true
+          - name: ARGOCD_SERVER_BASEHREF
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: server.basehref
+                optional: true
+          - name: ARGOCD_SERVER_ROOTPATH
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: server.rootpath
+                optional: true
+          - name: ARGOCD_SERVER_LOGFORMAT
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: server.log.format
+                optional: true
+          - name: ARGOCD_SERVER_LOG_LEVEL
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: server.log.level
+                optional: true
+          - name: ARGOCD_SERVER_REPO_SERVER
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: repo.server
+                optional: true
+          - name: ARGOCD_SERVER_DEX_SERVER
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: server.dex.server
+                optional: true
+          - name: ARGOCD_SERVER_DISABLE_AUTH
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: server.disable.auth
+                optional: true
+          - name: ARGOCD_SERVER_ENABLE_GZIP
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: server.enable.gzip
+                optional: true
+          - name: ARGOCD_SERVER_REPO_SERVER_TIMEOUT_SECONDS
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: server.repo.server.timeout.seconds
+                optional: true
+          - name: ARGOCD_SERVER_X_FRAME_OPTIONS
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: server.x.frame.options
+                optional: true
+          - name: ARGOCD_SERVER_CONTENT_SECURITY_POLICY
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: server.content.security.policy
+                optional: true
+          - name: ARGOCD_SERVER_REPO_SERVER_PLAINTEXT
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: server.repo.server.plaintext
+                optional: true
+          - name: ARGOCD_SERVER_REPO_SERVER_STRICT_TLS
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: server.repo.server.strict.tls
+                optional: true
+          - name: ARGOCD_SERVER_DEX_SERVER_PLAINTEXT
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: server.dex.server.plaintext
+                optional: true
+          - name: ARGOCD_SERVER_DEX_SERVER_STRICT_TLS
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: server.dex.server.strict.tls
+                optional: true
+          - name: ARGOCD_TLS_MIN_VERSION
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: server.tls.minversion
+                optional: true
+          - name: ARGOCD_TLS_MAX_VERSION
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: server.tls.maxversion
+                optional: true
+          - name: ARGOCD_TLS_CIPHERS
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: server.tls.ciphers
+                optional: true
+          - name: ARGOCD_SERVER_CONNECTION_STATUS_CACHE_EXPIRATION
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: server.connection.status.cache.expiration
+                optional: true
+          - name: ARGOCD_SERVER_OIDC_CACHE_EXPIRATION
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: server.oidc.cache.expiration
+                optional: true
+          - name: ARGOCD_SERVER_LOGIN_ATTEMPTS_EXPIRATION
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: server.login.attempts.expiration
+                optional: true
+          - name: ARGOCD_SERVER_STATIC_ASSETS
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: server.staticassets
+                optional: true
+          - name: ARGOCD_APP_STATE_CACHE_EXPIRATION
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: server.app.state.cache.expiration
+                optional: true
+          - name: REDIS_SERVER
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: redis.server
+                optional: true
+          - name: REDIS_COMPRESSION
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: redis.compression
+                optional: true
+          - name: REDISDB
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: redis.db
+                optional: true
+          - name: REDIS_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: argocd-redis
+                key: redis-username
+                optional: true
+          - name: REDIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: argocd-redis
+                key: redis-password
+                optional: true
+          - name: ARGOCD_DEFAULT_CACHE_EXPIRATION
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: server.default.cache.expiration
+                optional: true
+          - name: ARGOCD_MAX_COOKIE_NUMBER
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: server.http.cookie.maxnumber
+                optional: true
+          - name: ARGOCD_SERVER_OTLP_ADDRESS
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: otlp.address
+                optional: true
+          - name: ARGOCD_APPLICATION_NAMESPACES
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: application.namespaces
+                optional: true
+        volumeMounts:
+        - mountPath: /app/config/ssh
+          name: ssh-known-hosts
+        - mountPath: /app/config/tls
+          name: tls-certs
+        - mountPath: /app/config/server/tls
+          name: argocd-repo-server-tls
+        - mountPath: /app/config/dex/tls
+          name: argocd-dex-server-tls
+        - mountPath: /home/argocd
+          name: plugins-home
+        - mountPath: /shared/app/custom
+          name: styles
+        - mountPath: /tmp
+          name: tmp
+        ports:
+        - name: server
+          containerPort: 8080
+          protocol: TCP
+        - name: metrics
+          containerPort: 8082
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /healthz?full=true
+            port: server
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: server
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 3
+        resources:
+          {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+      serviceAccountName: argocd-server
+      volumes:
+      - name: plugins-home
+        emptyDir: {}
+      - name: tmp
+        emptyDir: {}
+      - name: ssh-known-hosts
+        configMap:
+          name: argocd-ssh-known-hosts-cm
+      - name: tls-certs
+        configMap:
+          name: argocd-tls-certs-cm
+      - name: styles
+        configMap:
+          name: argocd-styles-cm
+          optional: true
+      - name: argocd-repo-server-tls
+        secret:
+          secretName: argocd-repo-server-tls
+          optional: true
+          items:
+          - key: tls.crt
+            path: tls.crt
+          - key: tls.key
+            path: tls.key
+          - key: ca.crt
+            path: ca.crt
+      - name: argocd-dex-server-tls
+        secret:
+          secretName: argocd-dex-server-tls
+          optional: true
+          items:
+          - key: tls.crt
+            path: tls.crt
+          - key: ca.crt
+            path: ca.crt
+---
+# Source: argo-cd-chart/charts/argo-cd/templates/dex/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-dex-server
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-dex-server
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: dex-server
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: argocd-dex-server
+      app.kubernetes.io/instance: argocd
+  template:
+    metadata:
+      annotations:
+        checksum/cmd-params: 5908b4d548582f1c3d261e98d3109d9de6777eb3680b54458e7163dcbac41bf5
+      labels:
+        helm.sh/chart: argo-cd-5.19.12
+        app.kubernetes.io/name: argocd-dex-server
+        app.kubernetes.io/instance: argocd
+        app.kubernetes.io/component: dex-server
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/part-of: argocd
+    spec:
+      containers:
+      - name: dex-server
+        image: ghcr.io/dexidp/dex:v2.35.3
+        imagePullPolicy: IfNotPresent
+        command:
+        - /shared/argocd-dex
+        args:
+        - rundex
+        env:
+          - name: ARGOCD_DEX_SERVER_DISABLE_TLS
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: dexserver.disable.tls
+                optional: true
+        ports:
+        - name: http
+          containerPort: 5556
+          protocol: TCP
+        - name: grpc
+          containerPort: 5557
+          protocol: TCP
+        - name: metrics
+          containerPort: 5558
+          protocol: TCP
+        resources:
+          {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+        volumeMounts:
+        - name: static-files
+          mountPath: /shared
+        - name: dexconfig
+          mountPath: /tmp
+        - name: argocd-dex-server-tls
+          mountPath: /tls
+      initContainers:
+      - name: copyutil
+        image: quay.io/argoproj/argocd:v2.5.9
+        imagePullPolicy: IfNotPresent
+        command:
+        - cp
+        - -n
+        - /usr/local/bin/argocd
+        - /shared/argocd-dex
+        volumeMounts:
+        - mountPath: /shared
+          name: static-files
+        - mountPath: /tmp
+          name: dexconfig
+        resources:
+          {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+      serviceAccountName: argocd-dex-server
+      volumes:
+      - name: static-files
+        emptyDir: {}
+      - name: dexconfig
+        emptyDir: {}
+      - name: argocd-dex-server-tls
+        secret:
+          secretName: argocd-dex-server-tls
+          optional: true
+          items:
+          - key: tls.crt
+            path: tls.crt
+          - key: tls.key
+            path: tls.key
+          - key: ca.crt
+            path: ca.crt
+---
+# Source: argo-cd-chart/charts/argo-cd/templates/redis/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-redis
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-redis
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: redis
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: argocd-redis
+  template:
+    metadata:
+      labels:
+        helm.sh/chart: argo-cd-5.19.12
+        app.kubernetes.io/name: argocd-redis
+        app.kubernetes.io/instance: argocd
+        app.kubernetes.io/component: redis
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/part-of: argocd
+>>>>>>> main
+    spec:
       securityContext:
+<<<<<<< HEAD
         fsGroup: 1001
         fsGroupChangePolicy: Always
         supplementalGroups: []
@@ -21705,8 +25233,25 @@ spec:
           
       enableServiceLinks: true
       terminationGracePeriodSeconds: 30
+=======
+        runAsNonRoot: true
+        runAsUser: 999
+        seccompProfile:
+          type: RuntimeDefault
+      serviceAccountName: default
+>>>>>>> main
       containers:
+      - name: redis
+        image: public.ecr.aws/docker/library/redis:7.0.7-alpine
+        imagePullPolicy: IfNotPresent
+        args:
+        - --save
+        - ""
+        - --appendonly
+        - "no"
+        ports:
         - name: redis
+<<<<<<< HEAD
           image: docker.io/redis:latest
           imagePullPolicy: "IfNotPresent"
           securityContext:
@@ -21810,6 +25355,235 @@ spec:
       spec:
         accessModes:
           - "ReadWriteOnce"
+=======
+          containerPort: 6379
+          protocol: TCP
         resources:
-          requests:
-            storage: "8Gi"
+          {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+---
+# Source: argo-cd-chart/charts/argo-cd/templates/argocd-application-controller/statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: argocd-application-controller
+  labels:
+    helm.sh/chart: argo-cd-5.19.12
+    app.kubernetes.io/name: argocd-application-controller
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/component: application-controller
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+spec:
+  replicas: 1
+  # TODO: Remove for breaking release as history limit cannot be patched
+  revisionHistoryLimit: 5
+  serviceName: argocd-application-controller
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: argocd-application-controller
+      app.kubernetes.io/instance: argocd
+  template:
+    metadata:
+      annotations:
+        checksum/cmd-params: 5908b4d548582f1c3d261e98d3109d9de6777eb3680b54458e7163dcbac41bf5
+      labels:
+        helm.sh/chart: argo-cd-5.19.12
+        app.kubernetes.io/name: argocd-application-controller
+        app.kubernetes.io/instance: argocd
+        app.kubernetes.io/component: application-controller
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/part-of: argocd
+    spec:
+      containers:
+      - command:
+        - argocd-application-controller
+        - --metrics-port=8082
+        image: quay.io/argoproj/argocd:v2.5.9
+        imagePullPolicy: IfNotPresent
+        name: application-controller
+        env:
+          - name: ARGOCD_CONTROLLER_REPLICAS
+            value: "1"
+          - name: ARGOCD_RECONCILIATION_TIMEOUT
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cm
+                key: timeout.reconciliation
+                optional: true
+          - name: ARGOCD_HARD_RECONCILIATION_TIMEOUT
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cm
+                key: timeout.hard.reconciliation
+                optional: true
+          - name: ARGOCD_APPLICATION_CONTROLLER_REPO_SERVER
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: repo.server
+                optional: true
+          - name: ARGOCD_APPLICATION_CONTROLLER_REPO_SERVER_TIMEOUT_SECONDS
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: controller.repo.server.timeout.seconds
+                optional: true
+          - name: ARGOCD_APPLICATION_CONTROLLER_STATUS_PROCESSORS
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: controller.status.processors
+                optional: true
+          - name: ARGOCD_APPLICATION_CONTROLLER_OPERATION_PROCESSORS
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: controller.operation.processors
+                optional: true
+          - name: ARGOCD_APPLICATION_CONTROLLER_LOGFORMAT
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: controller.log.format
+                optional: true
+          - name: ARGOCD_APPLICATION_CONTROLLER_LOGLEVEL
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: controller.log.level
+                optional: true
+          - name: ARGOCD_APPLICATION_CONTROLLER_METRICS_CACHE_EXPIRATION
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: controller.metrics.cache.expiration
+                optional: true
+          - name: ARGOCD_APPLICATION_CONTROLLER_SELF_HEAL_TIMEOUT_SECONDS
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: controller.self.heal.timeout.seconds
+                optional: true
+          - name: ARGOCD_APPLICATION_CONTROLLER_REPO_SERVER_PLAINTEXT
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: controller.repo.server.plaintext
+                optional: true
+          - name: ARGOCD_APPLICATION_CONTROLLER_REPO_SERVER_STRICT_TLS
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: controller.repo.server.strict.tls
+                optional: true
+          - name: ARGOCD_APPLICATION_CONTROLLER_PERSIST_RESOURCE_HEALTH
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: controller.resource.health.persist
+                optional: true
+          - name: ARGOCD_APP_STATE_CACHE_EXPIRATION
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: controller.app.state.cache.expiration
+                optional: true
+          - name: REDIS_SERVER
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: redis.server
+                optional: true
+          - name: REDIS_COMPRESSION
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: redis.compression
+                optional: true
+          - name: REDISDB
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: redis.db
+                optional: true
+          - name: REDIS_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: argocd-redis
+                key: redis-username
+                optional: true
+          - name: REDIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: argocd-redis
+                key: redis-password
+                optional: true
+          - name: ARGOCD_DEFAULT_CACHE_EXPIRATION
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: controller.default.cache.expiration
+                optional: true
+          - name: ARGOCD_APPLICATION_CONTROLLER_OTLP_ADDRESS
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: otlp.address
+                optional: true
+          - name: ARGOCD_APPLICATION_NAMESPACES
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: application.namespaces
+                optional: true
+        ports:
+        - name: metrics
+          containerPort: 8082
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: metrics
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 3
+>>>>>>> main
+        resources:
+          {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+        workingDir: /home/argocd
+        volumeMounts:
+        - mountPath: /app/config/controller/tls
+          name: argocd-repo-server-tls
+        - mountPath: /home/argocd
+          name: argocd-home
+      serviceAccountName: argocd-application-controller
+      volumes:
+      - name: argocd-home
+        emptyDir: {}
+      - name: argocd-repo-server-tls
+        secret:
+          secretName: argocd-repo-server-tls
+          optional: true
+          items:
+          - key: tls.crt
+            path: tls.crt
+          - key: tls.key
+            path: tls.key
+          - key: ca.crt
+            path: ca.crt

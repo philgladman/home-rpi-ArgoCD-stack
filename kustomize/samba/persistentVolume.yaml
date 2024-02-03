@@ -8,14 +8,14 @@ spec:
   accessModes:
   - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: my-local-storage
+  # storageClassName: my-local-storage
   local:
-    path: /nas-vol
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-        - matchExpressions:
-          - key: disk
-            operator: In
-            values:
-            - disk1  
+    path: /volumes/ssd-1/nas-vol
+  # nodeAffinity:
+  #   required:
+  #     nodeSelectorTerms:
+  #       - matchExpressions:
+  #         - key: disk
+  #           operator: In
+  #           values:
+  #           - disk1  

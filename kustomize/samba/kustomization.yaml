@@ -8,7 +8,7 @@ generatorOptions:
 
 resources:
   - namespace.yaml
-  - storageClass.yaml
+  # - storageClass.yaml
   - persistentVolume.yaml
   - persistentVolumeClaim.yaml
   - deployment.yaml

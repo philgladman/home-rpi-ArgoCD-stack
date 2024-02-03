@@ -1927,18 +1927,18 @@ argo-cd:
 
     # -- Additional volumeMounts to the repo server main container
     volumeMounts:
-    - mountPath: /home/argocd/.gnupg
-      name: gnupg-home
-      subPath: .gnupg
-    - mountPath: /usr/local/bin/kustomize
-      name: custom-tools
-      subPath: kustomize
-    - mountPath: /usr/local/bin/ksops
-      name: custom-tools
-      subPath: ksops
-    - mountPath: /.config/kustomize/plugin/viaduct.ai/v1/ksops/ksops
-      name: custom-tools
-      subPath: ksops
+      - mountPath: /home/argocd/.gnupg
+        name: gnupg-home
+        subPath: .gnupg
+      - mountPath: /usr/local/bin/kustomize
+        name: custom-tools
+        subPath: kustomize
+      - mountPath: /usr/local/bin/ksops
+        name: custom-tools
+        subPath: ksops
+      - mountPath: /.config/kustomize/plugin/viaduct.ai/v1/ksops/ksops
+        name: custom-tools
+        subPath: ksops
 
     # -- Additional volumes to the repo server pod
     volumes:

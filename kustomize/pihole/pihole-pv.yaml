@@ -8,5 +8,6 @@ spec:
   accessModes:
   - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
   local:
-    path: /volumes/ssd-1/nas-vol
+    path: /volumes/ssd-1/pihole-vol

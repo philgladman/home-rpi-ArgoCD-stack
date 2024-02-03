@@ -1903,7 +1903,7 @@ argo-cd:
     # -- Init containers to add to the repo server pods
     initContainers:
       - name: install-ksops
-        image: viaductoss/ksops:v4.0.0-arm64
+        image: viaductoss/ksops:v4.3.1
         command: ["/bin/sh", "-c"]
         args:
           - echo "Installing KSOPS...";

@@ -1930,9 +1930,10 @@ argo-cd:
       - mountPath: /home/argocd/.gnupg
         name: gnupg-home
         subPath: .gnupg
-      - mountPath: /usr/local/bin/kustomize
-        name: custom-tools
-        subPath: kustomize
+      ## Commenting path out as kubelet is errorring out saying cant create subpath
+      # - mountPath: /usr/local/bin/kustomize
+      #   name: custom-tools
+      #   subPath: kustomize
       - mountPath: /usr/local/bin/ksops
         name: custom-tools
         subPath: ksops

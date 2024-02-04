@@ -275,6 +275,12 @@ data:
       name: loki
       type: loki
       url: http://loki-stack:3100
+    - access: proxy
+      jsonData:
+        maxLines: 1000
+      name: prometheus
+      type: prometheus
+      url: http://loki-stack-prometheus-server:80
 ---
 # Source: loki-stack/charts/prometheus/templates/alertmanager/cm.yaml
 apiVersion: v1
@@ -1564,7 +1570,7 @@ spec:
         app.kubernetes.io/name: grafana
         app.kubernetes.io/instance: loki-stack
       annotations:
-        checksum/config: 39058c38f82f311a94f9ee4ab0da3349b5e01dc237f923dbc35c30fe38cfeeff
+        checksum/config: 24350729ba35320741af2a1dedbaa200cc411a10fd04d719094a28e553cc86a3
         checksum/dashboards-json-config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
         checksum/sc-dashboard-provider-config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
     spec:      

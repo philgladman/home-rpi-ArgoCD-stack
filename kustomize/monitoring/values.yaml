@@ -43,6 +43,12 @@ grafana:
         access: proxy
         jsonData:
           maxLines: 1000
+      - name: prometheus
+        type: prometheus
+        url: http://{{ .Release.Name }}-prometheus-server:80
+        access: proxy
+        jsonData:
+          maxLines: 1000
   persistence:
     type: pvc
     enabled: true

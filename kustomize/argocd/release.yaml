@@ -164,7 +164,7 @@ data:
   server.dex.server.strict.tls: "false"
   server.disable.auth: "false"
   server.enable.gzip: "false"
-  server.insecure: "false"
+  server.insecure: "true"
   server.log.format: text
   server.log.level: info
   server.repo.server.strict.tls: "false"
@@ -10372,7 +10372,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cmd-params: 5908b4d548582f1c3d261e98d3109d9de6777eb3680b54458e7163dcbac41bf5
+        checksum/cmd-params: 401361e92cc58ae6a86b196c91cf0e8ee7c8ed790ef320ba9f2fdc330502daec
       labels:
         helm.sh/chart: argo-cd-5.19.12
         app.kubernetes.io/name: argocd-repo-server
@@ -10703,7 +10703,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cmd-params: 5908b4d548582f1c3d261e98d3109d9de6777eb3680b54458e7163dcbac41bf5
+        checksum/cmd-params: 401361e92cc58ae6a86b196c91cf0e8ee7c8ed790ef320ba9f2fdc330502daec
       labels:
         helm.sh/chart: argo-cd-5.19.12
         app.kubernetes.io/name: argocd-server
@@ -11029,7 +11029,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cmd-params: 5908b4d548582f1c3d261e98d3109d9de6777eb3680b54458e7163dcbac41bf5
+        checksum/cmd-params: 401361e92cc58ae6a86b196c91cf0e8ee7c8ed790ef320ba9f2fdc330502daec
       labels:
         helm.sh/chart: argo-cd-5.19.12
         app.kubernetes.io/name: argocd-dex-server
@@ -11203,7 +11203,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cmd-params: 5908b4d548582f1c3d261e98d3109d9de6777eb3680b54458e7163dcbac41bf5
+        checksum/cmd-params: 401361e92cc58ae6a86b196c91cf0e8ee7c8ed790ef320ba9f2fdc330502daec
       labels:
         helm.sh/chart: argo-cd-5.19.12
         app.kubernetes.io/name: argocd-application-controller

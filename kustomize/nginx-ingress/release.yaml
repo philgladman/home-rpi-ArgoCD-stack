@@ -15,6 +15,24 @@ metadata:
   namespace: default
 automountServiceAccountToken: true
 ---
+# Source: nginx-ingress-chart/charts/ingress-nginx/templates/controller-configmap-tcp.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    helm.sh/chart: ingress-nginx-4.9.1
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/instance: nginx-ingress
+    app.kubernetes.io/version: "1.9.6"
+    app.kubernetes.io/part-of: ingress-nginx
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: controller
+  name: nginx-ingress-ingress-nginx-tcp
+  namespace: default
+data: 
+  "139": samba/samba:139
+  "445": samba/samba:445
+---
 # Source: nginx-ingress-chart/charts/ingress-nginx/templates/controller-configmap.yaml
 apiVersion: v1
 kind: ConfigMap
@@ -311,6 +329,14 @@ spec:
       protocol: TCP
       targetPort: https
       appProtocol: https
+    - name: 139-tcp
+      port: 139
+      protocol: TCP
+      targetPort: 139-tcp
+    - name: 445-tcp
+      port: 445
+      protocol: TCP
+      targetPort: 445-tcp
   selector:
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/instance: nginx-ingress
@@ -367,6 +393,7 @@ spec:
             - --controller-class=k8s.io/ingress-nginx
             - --ingress-class=nginx
             - --configmap=$(POD_NAMESPACE)/nginx-ingress-ingress-nginx-controller
+            - --tcp-services-configmap=$(POD_NAMESPACE)/nginx-ingress-ingress-nginx-tcp
             - --validating-webhook=:8443
             - --validating-webhook-certificate=/usr/local/certificates/cert
             - --validating-webhook-key=/usr/local/certificates/key
@@ -422,6 +449,12 @@ spec:
               protocol: TCP
             - name: webhook
               containerPort: 8443
+              protocol: TCP
+            - name: 139-tcp
+              containerPort: 139
+              protocol: TCP
+            - name: 445-tcp
+              containerPort: 445
               protocol: TCP
           volumeMounts:
             - name: webhook-cert

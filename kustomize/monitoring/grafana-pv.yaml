@@ -11,3 +11,11 @@ spec:
   storageClassName: ""
   local:
     path: /volumes/ssd-1/grafana
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/os
+          operator: In
+          values:
+          - linux

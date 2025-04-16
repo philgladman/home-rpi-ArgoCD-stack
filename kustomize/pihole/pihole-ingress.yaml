@@ -4,8 +4,7 @@ metadata:
   name: pihole-ui-ingress
   namespace: pihole
   annotations:
-    # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
 spec:
   ingressClassName: nginx
   rules:

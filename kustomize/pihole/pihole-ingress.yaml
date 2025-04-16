@@ -4,7 +4,7 @@ metadata:
   name: pihole-ui-ingress
   namespace: pihole
   annotations:
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/ssl-passthrough: "true"
 spec:
   ingressClassName: nginx
@@ -12,10 +12,10 @@ spec:
   - host: pihole.phils-home.com
     http:
       paths:
-      - pathType: Prefix
-        path: /
+      - path: /
+        pathType: Prefix
         backend:
           service:
-            name: pihole-ui-svc  
+            name: pihole-ui-svc 
             port:
               name: pihole-ui

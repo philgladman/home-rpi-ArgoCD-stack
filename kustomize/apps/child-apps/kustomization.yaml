@@ -10,3 +10,4 @@ resources:
   - pihole-app.yaml
   - monitoring-app.yaml
   - wireguard-app.yaml
+  - mattermost-app.yaml

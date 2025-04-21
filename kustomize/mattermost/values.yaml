@@ -21,7 +21,7 @@ mattermost-operator:
     enabled: true
     name: mattermost
     spec:
-      version: 9.4.1
+      version: 10.6
       replicas: 1
       ingress:
         enabled: true

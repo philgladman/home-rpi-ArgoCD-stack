@@ -8595,7 +8595,7 @@ apiVersion: installation.mattermost.com/v1beta1
 kind: Mattermost
 metadata:
   creationTimestamp: null
-  name: mattermost-example
+  name: mattermost
   labels:
     helm.sh/chart: mattermost-operator-1.0.2
     app.kubernetes.io/name: mattermost-operator
@@ -8613,4 +8613,4 @@ spec:
     enabled: true
     host: mattermost.phils-home.com
   replicas: 1
-  version: 9.4.1
+  version: 10.6

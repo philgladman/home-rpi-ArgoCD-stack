@@ -5,7 +5,6 @@ namespace: mattermost
 
 resources:
   - postgresql/deployment.yaml
-  - postgresql/credentials.enc.yaml
   - postgresql/service.yaml
   - postgresql/pvc.yaml
   - postgresql/pv.yaml

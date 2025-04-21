@@ -1,5 +1,4 @@
 mattermost-operator:
-  # Mattermost Operator Values
   mattermostOperator:
     enabled: true
     replicas: 1
@@ -18,19 +17,9 @@ mattermost-operator:
     args:
       - --enable-leader-election
       - --metrics-addr=0.0.0.0:8383
-
-    ## Specify image pull secret for private repository
-    ##
-    privateRegistry:
-      enabled: false
-      imagePullSecret: <name of the secret>
-
-  # The values below are for Mattermost Custom Resource
-  # Full spec example can be found here: https://github.com/mattermost/mattermost-operator/blob/master/docs/examples/mattermost_full.yaml
-  # Examples for mattermost spec can be found here: https://github.com/mattermost/mattermost-operator/tree/master/docs/examples
   mattermostCR:
     enabled: true
-    name: mattermost-example
+    name: mattermost
     spec:
       version: 9.4.1
       replicas: 1
@@ -40,9 +29,6 @@ mattermost-operator:
       database:
         external:
           secret:  mattermost-db-credentials
-      # minio:
-      #   replicas: 1
-      #   storageSize: 5Gi
       fileStore:
         local:
           enabled: true

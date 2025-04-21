@@ -8602,6 +8602,9 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/instance: mattermost
 spec:
+  database:
+    external:
+      secret: mattermost-db-credentials
   ingress:
     enabled: true
     host: mattermost.phils-home.com

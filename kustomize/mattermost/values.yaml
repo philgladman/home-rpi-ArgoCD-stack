@@ -37,9 +37,9 @@ mattermost-operator:
       ingress:
         enabled: true
         host: mattermost.phils-home.com
-      # database:
-      #   external:
-      #     secret:  <secret-name>
+      database:
+        external:
+          secret:  mattermost-db-credentials
       # fileStore:
       #   external:
       #     bucket:  <bucket-name>

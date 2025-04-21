@@ -40,8 +40,10 @@ mattermost-operator:
       database:
         external:
           secret:  mattermost-db-credentials
-      # fileStore:
-      #   external:
-      #     bucket:  <bucket-name>
-      #     secret:  <secret-name>
-      #     url:     s3.amazonaws.com
+      # minio:
+      #   replicas: 1
+      #   storageSize: 5Gi
+      fileStore:
+        local:
+          enabled: true
+          storageSize: 5Gi

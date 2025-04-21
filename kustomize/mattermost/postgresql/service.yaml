@@ -8,7 +8,6 @@ spec:
   selector:
     app: mattermost-postgresql
   type: ClusterIP
-  externalTrafficPolicy: Local
   ports:
   - port: 5432
     protocol: TCP

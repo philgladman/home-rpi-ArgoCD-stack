@@ -20,29 +20,23 @@ spec:
         name: postgresql
         # envFrom:
         # - configMapRef:
-        #     name: pihole-configmap 
+        #     name: postgresql-configmap 
         env:
-          - name: POSTGRES_USER
-            value: mattermost
-          - name: POSTGRES_DB
-            value: mattermost_db
           - name: POSTGRES_PASSWORD
-            value: "0x!YMWT8J1X7wd!KjiNnmUAeZU!"
-          # - name: POSTGRES_PASSWORD
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: postgresql-credentials
-          #       key: password
-          # - name: POSTGRES_USER
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: postgresql-credentials
-          #       key: username
-          # - name: POSTGRES_DB
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: postgresql-credentials
-          #       key: db_name
+            valueFrom:
+              secretKeyRef:
+                name: postgresql-credentials
+                key: password
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: postgresql-credentials
+                key: username
+          - name: POSTGRES_DB
+            valueFrom:
+              secretKeyRef:
+                name: postgresql-credentials
+                key: db_name
         # securityContext:
         #   privileged: true
         ports:        
@@ -52,7 +46,6 @@ spec:
         volumeMounts:
           - name: mattermost-postgresql
             mountPath: /var/lib/postgresql/data
-            # subPath: pihole
       volumes:
         - name: mattermost-postgresql
           persistentVolumeClaim:

@@ -15,4 +15,4 @@ generatorOptions:
   disableNameSuffixHash: true
 
 generators:
-  - postgresql/secret-generator.yaml
+  - secret-generator.yaml

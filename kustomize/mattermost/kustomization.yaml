@@ -4,6 +4,16 @@ kind: Kustomization
 namespace: mattermost
 
 resources:
-  - postgresql/
+  - postgresql/deployment.yaml
+  - postgresql/credentials.enc.yaml
+  - postgresql/service.yaml
+  - postgresql/pvc.yaml
+  - postgresql/pv.yaml
   - namespace.yaml
   - release.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+generators:
+  - postgresql/secret-generator.yaml

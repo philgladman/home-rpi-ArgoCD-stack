@@ -7,9 +7,8 @@ metadata:
 spec:
   selector:
     app: mattermost-postgresql
-  # type: ClusterIP
+  type: ClusterIP
   externalTrafficPolicy: Local
-  type: LoadBalancer
   ports:
   - port: 5432
     protocol: TCP

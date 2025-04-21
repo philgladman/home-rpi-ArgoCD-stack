@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mattermost-postgresql
+  name: mattermost-postgresql
+  namespace: mattermost
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mattermost-postgresql
+  template:
+    metadata:
+      labels:
+        app: mattermost-postgresql
+    spec:
+      containers:
+      - image: docker.io/postgres:15
+        name: postgresql
+        # envFrom:
+        # - configMapRef:
+        #     name: pihole-configmap 
+        env:
+          - name: POSTGRES_USER
+            value: mattermost
+          - name: POSTGRES_DB
+            value: mattermost_db
+          - name: POSTGRES_PASSWORD
+            value: "0x!YMWT8J1X7wd!KjiNnmUAeZU!"
+          # - name: POSTGRES_PASSWORD
+          #   valueFrom:
+          #     secretKeyRef:
+          #       name: postgresql-credentials
+          #       key: password
+          # - name: POSTGRES_USER
+          #   valueFrom:
+          #     secretKeyRef:
+          #       name: postgresql-credentials
+          #       key: username
+          # - name: POSTGRES_DB
+          #   valueFrom:
+          #     secretKeyRef:
+          #       name: postgresql-credentials
+          #       key: db_name
+        # securityContext:
+        #   privileged: true
+        ports:        
+          - containerPort: 5432
+            protocol: TCP
+            name: postgresql
+        volumeMounts:
+          - name: mattermost-postgresql
+            mountPath: /var/lib/postgresql/data
+            # subPath: pihole
+      volumes:
+        - name: mattermost-postgresql
+          persistentVolumeClaim:
+            claimName: mattermost-postgresql-claim
+

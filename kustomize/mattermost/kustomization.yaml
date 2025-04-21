@@ -4,5 +4,6 @@ kind: Kustomization
 namespace: mattermost
 
 resources:
+  - postgresql/
   - namespace.yaml
   - release.yaml

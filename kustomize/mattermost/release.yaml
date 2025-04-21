@@ -8613,4 +8613,4 @@ spec:
     enabled: true
     host: mattermost.phils-home.com
   replicas: 1
-  version: 10.6
+  version: 10.6.2

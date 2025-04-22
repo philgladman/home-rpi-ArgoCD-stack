@@ -10,7 +10,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: ""
   local:
-    path: /volumes/ssd-1/mattermost
+    path: /volumes/ssd-1/mattermost-vol
   nodeAffinity:
     required:
       nodeSelectorTerms:

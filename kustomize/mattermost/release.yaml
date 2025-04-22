@@ -8606,9 +8606,8 @@ spec:
     external:
       secret: mattermost-db-credentials
   fileStore:
-    local:
-      enabled: true
-      storageSize: 5Gi
+    externalVolume:
+      volumeClaimName: mattermost-claim
   ingress:
     enabled: true
     host: mattermost.phils-home.com

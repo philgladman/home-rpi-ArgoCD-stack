@@ -30,6 +30,5 @@ mattermost-operator:
         external:
           secret:  mattermost-db-credentials
       fileStore:
-        local:
-          enabled: true
-          storageSize: 5Gi
+        externalVolume:
+          volumeClaimName: mattermost-claim

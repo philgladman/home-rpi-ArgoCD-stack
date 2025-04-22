@@ -10,6 +10,8 @@ resources:
   - postgresql/pv.yaml
   - namespace.yaml
   - release.yaml
+  - pvc.yaml
+  - pv.yaml
 
 generatorOptions:
   disableNameSuffixHash: true

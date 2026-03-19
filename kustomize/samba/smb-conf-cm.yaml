@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: smb-conf
 data:
-  smb.conf: |-
+  smb.conf: |
     # Global parameters
     [global]
     	log file = /var/log/samba/log.%m

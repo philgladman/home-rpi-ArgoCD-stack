@@ -28,7 +28,7 @@ spec:
               secretKeyRef:
                 name: smb-credentials
                 key: password
-        ports: 
+        ports:
           - containerPort: 139
             name: smb-139
           - containerPort: 445
@@ -36,7 +36,13 @@ spec:
         volumeMounts:
           - name: samba-persistent-storage
             mountPath: /nas-vol
+            subPath: smb.conf
+          - name: smb-conf
+            mountPath: /etc/samba/smb.conf
       volumes:
         - name: samba-persistent-storage
           persistentVolumeClaim:
             claimName: samba-claim
+        - name: smb-conf
+          configMap:
+            name: smb-conf

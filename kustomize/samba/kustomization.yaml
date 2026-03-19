@@ -8,6 +8,7 @@ generatorOptions:
 
 resources:
   - namespace.yaml
+  - smb-conf-cm.yaml
   # - storageClass.yaml
   - persistentVolume.yaml
   - persistentVolumeClaim.yaml

@@ -15,7 +15,7 @@ spec:
         app: pihole
     spec:
       containers:
-      - image: pihole/pihole:latest
+      - image: pihole/pihole:2025.04.0
         name: pihole
         envFrom:
         - configMapRef:
@@ -46,7 +46,7 @@ spec:
             mountPath: /etc/dnsmasq.d
             subPath: dnsmasq.d
       - name: cloudflare-proxy-dns
-        image: docker.io/cloudflare/cloudflared:latest
+        image: docker.io/cloudflare/cloudflared:2025.4.0
         args: 
         - "proxy-dns"
         - "--address"

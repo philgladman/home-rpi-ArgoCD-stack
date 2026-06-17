@@ -1,0 +1,10 @@
+apiVersion: v2
+name: mattermost-operator
+description: A Helm chart for Mattermost Operator
+type: application
+version: 1.0.2
+appVersion: 1.22.0
+dependencies:
+  - name: "mattermost-operator"
+    version: "1.0.2"
+    repository: "https://helm.mattermost.com"

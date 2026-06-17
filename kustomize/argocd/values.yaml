@@ -190,7 +190,7 @@ argo-cd:
 
       ## Server properties
       # -- Run server without TLS
-      server.insecure: false
+      server.insecure: true
       # -- Value for base href in index.html. Used if Argo CD is running behind reverse proxy under subpath different from /
       server.basehref: /
       # -- Used if Argo CD is running behind reverse proxy under subpath different from /
@@ -1903,7 +1903,7 @@ argo-cd:
     # -- Init containers to add to the repo server pods
     initContainers:
       - name: install-ksops
-        image: viaductoss/ksops:v4.0.0-arm64
+        image: viaductoss/ksops:v4.3.1
         command: ["/bin/sh", "-c"]
         args:
           - echo "Installing KSOPS...";
@@ -1927,18 +1927,19 @@ argo-cd:
 
     # -- Additional volumeMounts to the repo server main container
     volumeMounts:
-    - mountPath: /home/argocd/.gnupg
-      name: gnupg-home
-      subPath: .gnupg
-    - mountPath: /usr/local/bin/kustomize
-      name: custom-tools
-      subPath: kustomize
-    - mountPath: /usr/local/bin/ksops
-      name: custom-tools
-      subPath: ksops
-    - mountPath: /.config/kustomize/plugin/viaduct.ai/v1/ksops/ksops
-      name: custom-tools
-      subPath: ksops
+      - mountPath: /home/argocd/.gnupg
+        name: gnupg-home
+        subPath: .gnupg
+      ## Commenting path out as kubelet is errorring out saying cant create subpath
+      # - mountPath: /usr/local/bin/kustomize
+      #   name: custom-tools
+      #   subPath: kustomize
+      - mountPath: /usr/local/bin/ksops
+        name: custom-tools
+        subPath: ksops
+      - mountPath: /.config/kustomize/plugin/viaduct.ai/v1/ksops/ksops
+        name: custom-tools
+        subPath: ksops
 
     # -- Additional volumes to the repo server pod
     volumes:

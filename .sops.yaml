@@ -1,3 +1,3 @@
 creation_rules:
     - encrypted_regex: '^(data|stringData)$'
-      pgp: REPLACE_ME
+      pgp: F94F68B20C51D9B9C7EE4F7995AE41EF529CB276

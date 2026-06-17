@@ -1,3 +1,3 @@
-192.168.1.114 argocd.phils-home.com
-192.168.1.114 grafana.phils-home.com
-192.168.1.114 pihole.phils-home.com
+10.88.0.203 argocd.phils-home.com
+10.88.0.203 grafana.phils-home.com
+10.88.0.203 pihole.phils-home.com

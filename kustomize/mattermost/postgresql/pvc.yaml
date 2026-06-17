@@ -1,12 +1,12 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: samba-claim
+  name: mattermost-postgresql-claim
 spec:
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 50Gi
-  volumeName: samba-samba-pv
+      storage: 20Gi
+  volumeName: mattermost-postgresql-pv
   storageClassName: ""

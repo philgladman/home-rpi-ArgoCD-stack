@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: samba-app
+  name: mattermost-app
   namespace: argocd
 spec:
   project: default
@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/philgladman/home-rpi-ArgoCD-stack.git
     targetRevision: single-node-amd
-    path: kustomize/samba
+    path: kustomize/mattermost
   destination: 
     server: https://kubernetes.default.svc
     namespace: myapp

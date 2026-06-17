@@ -15,7 +15,7 @@ spec:
         app: samba
     spec:
       containers:
-      - image: philgman1121/samba
+      - image: philgman1121/samba-amd:1.0
         name: samba
         env:
           - name: USER
@@ -28,7 +28,7 @@ spec:
               secretKeyRef:
                 name: smb-credentials
                 key: password
-        ports: 
+        ports:
           - containerPort: 139
             name: smb-139
           - containerPort: 445
@@ -36,9 +36,13 @@ spec:
         volumeMounts:
           - name: samba-persistent-storage
             mountPath: /nas-vol
+          - name: smb-conf
+            mountPath: /etc/samba/smb.conf
+            subPath: smb.conf
       volumes:
         - name: samba-persistent-storage
           persistentVolumeClaim:
             claimName: samba-claim
-      nodeSelector:
-        disk: disk1
+        - name: smb-conf
+          configMap:
+            name: smb-conf

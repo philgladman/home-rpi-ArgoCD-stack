@@ -43,6 +43,12 @@ grafana:
         access: proxy
         jsonData:
           maxLines: 1000
+      - name: prometheus
+        type: prometheus
+        url: http://{{ .Release.Name }}-prometheus-server:80
+        access: proxy
+        jsonData:
+          maxLines: 1000
   persistence:
     type: pvc
     enabled: true
@@ -54,7 +60,7 @@ grafana:
     finalizers:
       - kubernetes.io/pvc-protection
     ## Sub-directory of the PV to mount. Can be templated.
-    subPath: grafana
+    # subPath: grafana
     ## Name of an existing PVC. Can be templated.
     # existingClaim:
   admin:
@@ -72,7 +78,7 @@ grafana:
     tag: 8.3.5
 
 prometheus:
-  enabled: false
+  enabled: true
   isDefault: false
   url: http://{{ include "prometheus.fullname" .}}:{{ .Values.prometheus.server.service.servicePort }}{{ .Values.prometheus.server.prefixURL }}
   datasource:

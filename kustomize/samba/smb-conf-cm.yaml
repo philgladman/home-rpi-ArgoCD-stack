@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: smb-conf
+data:
+  smb.conf: |-
+    # Global parameters
+    [global]
+      log file = /var/log/samba/log.%m
+      logging = file
+      map to guest = Bad User
+      max log size = 1000
+      obey pam restrictions = Yes
+      pam password change = Yes
+      panic action = /usr/share/samba/panic-action %d
+      passwd chat = *Enter\snew\s*\spassword:* %n\n *Retype\snew\s*\spassword:* %n\n *password\supdated\ssuccessfully* .
+      passwd program = /usr/bin/passwd %u
+      server role = standalone server
+      server string = %h server (Samba, Ubuntu)
+      unix password sync = Yes
+      usershare allow guests = Yes
+      idmap config * : backend = tdb
+      ### Fixes bug where drive is read only on iphones
+      vfs objects = fruit streams_xattr
+
+    [k3s-NAS]
+      path = /nas-vol
+      read only = no
+      valid users = @smbusers
+      create mask = 0660
+      directory mask = 0770
